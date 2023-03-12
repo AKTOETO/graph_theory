@@ -1,6 +1,11 @@
 ﻿#include <iostream>
+#include "src/Graph.h"
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	setlocale(LC_ALL, "ru");
+
+	Graph gr("graph.txt");
+	return 0;
 }
