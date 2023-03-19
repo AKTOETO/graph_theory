@@ -83,17 +83,17 @@
 
 		// файл
 		std::cout << "[file: ";
-		ConsolePrint(SupportFunctions::GetToken(_fdata), CCS::Green, 22);
+		ConsolePrint(SupportFunctions::GetToken(_fdata), CCS::Green, 0);
 		std::cout << "] ";
 
 		// функция
 		std::cout << "[func: ";
-		ConsolePrint(SupportFunctions::GetToken(_fdata), CCS::Green, 37);
+		ConsolePrint(SupportFunctions::GetToken(_fdata), CCS::Green, 0);
 		std::cout << "] ";
 
 		// строка
 		std::cout << "[line: ";
-		ConsolePrint(SupportFunctions::GetToken(_fdata), CCS::Green, 5);
+		ConsolePrint(SupportFunctions::GetToken(_fdata), CCS::Green, 0);
 		std::cout << "] ";
 
 		// сообщение
@@ -122,9 +122,7 @@
 
 		PrintFuncData(_fdata);
 
-#ifdef _DEBUG
-		system("pause");
-#endif
+		exit(1);
 	};	
 
 	// информация о функции

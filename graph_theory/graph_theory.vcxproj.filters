@@ -32,7 +32,7 @@
     <ClInclude Include="src\pch.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\logger\Logger.h">
+    <ClInclude Include="src\logger\Logger.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\Support.h">
@@ -40,6 +40,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="graph.txt" />
+    <Text Include="assets\adjacency_list.txt" />
+    <Text Include="assets\adjacency_matrix.txt" />
+    <Text Include="assets\edges_list.txt" />
   </ItemGroup>
 </Project>

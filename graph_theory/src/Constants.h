@@ -3,6 +3,9 @@
 
 #include "pch.h"
 
+// путь до папки с файлами для графа
+const std::string FILE_PATH = "assets/";
+
 
 //==================//
 //	В Е Р Ш И Н А	//

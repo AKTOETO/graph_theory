@@ -1,43 +1,87 @@
 ﻿#ifndef GRAPH_H
 #define GRAPH_H
 
-#include "logger/Logger.h"
+#include "logger/Logger.hpp"
+
+// типы входных файлов с графами
+enum class INPUT_FILE_TYPE
+{
+	//	список ребер - это двумерная матрица, в которой
+	//	(в11) (в12) (вес)
+	// 	.................
+	// 	(вn1) (вn2) (вес), где:
+	// 
+	// 	в(индекс)1 - вершина, из которой выходит ребро
+	// 	в(индекс)2 - вершина, в которую входит ребро 
+	//	вес - вес ребра
+	//
+	EDGES_LIST,
+
+	//	матрица смежности представляет из себя:
+	//		к у д а
+	//	от	a11 a12 ... a1n
+	//	ку	a21 a22 ... a2n
+	//	да	...............
+	//		an1 an2 ... ann
+	//	где откуда - вершины, из которых выходит ребро
+	//	куда - вершины, куда входит ребро
+	//  коэффициенты aii - вес ребра: 
+	//	0 - если ребра нет
+	//	N - любое натуральное число, если ребро есть
+	//  и оно имеет вес N
+	//
+	ADJACENCY_MATRIX,
+
+	//	список смежности представляет из себя:
+	//	1) a1 ... an
+	//	.) .........
+	//	d) c1 ... cm
+	//	где номера строк - вершины, из которых исходят ребра,
+	//  а числа a1,...,an,...,c1,...,cm - вершины, в которые
+	//	входят ребра
+	//
+	ADJACENCY_LIST
+};
 
 // класс, содержащий граф
 class Graph
 {
 private:
 
-	// путь до файла с графом
-	std::string m_filepath;
-
 	// матрица смежности
 	VertexMatrix m_adjacency_matrix;
 
+	/// <summary>
+	/// Считывание списка смежносит из файла
+	/// </summary>
+	/// <param name="_ifstream"> - входной файл</param>
+	void ReadAdjacencyListFromFile(std::ifstream& _ifstream);
 
 	/// <summary>
-	/// Чтение графа из файла с определенной структурой:
-	/// (в11) (в12) (вес)
-	/// .................
-	/// (вn1) (вn2) (вес), где:
-	/// 
-	/// в(индекс)1 - вершина, из которой выходит ребро 
-	/// в(индекс)2 - вершина, в которую входит ребро 
-	/// вес - вес ребра
-	/// 
+	/// Считывание матрицы смежности из файла
 	/// </summary>
-	void ReadGraphFromFile(std::ifstream& _ifstream);
+	/// <param name="_ifstream"></param>
+	void ReadAdjacencyMatrixFromFile(std::ifstream& _ifstream);
+
+	/// <summary>
+	/// Считывание списка ребер из файла
+	/// </summary>
+	/// <param name="_ifstream"></param>
+	void ReadEdgesListFromFile(std::ifstream& _ifstream);
+
 
 public:
 	/// <summary>
 	/// Конструктор класса Graph
 	/// </summary>
 	/// <param name="_filepath"> - путь к файлу, содержащий название файла с его расширением</param>
-	Graph(std::string _filepath);
+	Graph(std::string _filepath, INPUT_FILE_TYPE);
 	
 	// деструктор класса
 	~Graph();
 
+	// вывод матрицы смежности
+	void PrintAdjacencyMatrix() const;
 	
 	/// <summary>
 	/// Возвращает вес ребра, связывающего вершины _vi и _vj
