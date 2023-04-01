@@ -1,8 +1,8 @@
 ﻿#ifndef LOGGER_H
 #define LOGGER_H
 
-#include "../Constants.h"
-#include "../Support.h"
+#include "Constants.h"
+#include "Support.h"
 
 
 	// возможные цвета текста в консоли
@@ -78,39 +78,41 @@
 	{
 		// вывод текущего времени 
 		std::cout << "[";
-		ConsolePrint(SupportFunctions::GetCurrentTime(), CCS::Green);
+		ConsolePrint(GetCurrentTime(), CCS::Green);
 		std::cout << "] ";
 
 		// файл
 		std::cout << "[file: ";
-		ConsolePrint(SupportFunctions::GetToken(_fdata), CCS::Green, 0);
+		ConsolePrint(GetToken(_fdata), CCS::Green, 0);
 		std::cout << "] ";
 
 		// функция
 		std::cout << "[func: ";
-		ConsolePrint(SupportFunctions::GetToken(_fdata), CCS::Green, 0);
+		ConsolePrint(GetToken(_fdata), CCS::Green, 0);
 		std::cout << "] ";
 
 		// строка
 		std::cout << "[line: ";
-		ConsolePrint(SupportFunctions::GetToken(_fdata), CCS::Green, 0);
+		ConsolePrint(GetToken(_fdata), CCS::Green, 0);
 		std::cout << "] ";
 
 		// сообщение
 		std::cout << "[msg: ";
-		ConsolePrint(SupportFunctions::GetToken(_fdata), CCS::Green, 0);
+		ConsolePrint(GetToken(_fdata), CCS::Green, 0);
 		std::cout << "]\n";
 	};		
 
 	// вывод сообщения определенного типа
 	static void Info(std::string _fdata)
 	{
+#ifdef _DEBUG
 		// вывод типа сообщения
 		std::cout << "[";
 		ConsolePrint("INFO", CCS::Green);
 		std::cout << "] ";
 
 		PrintFuncData(_fdata);
+#endif // DEBUG
 	};
 
 	static void Error(std::string _fdata)

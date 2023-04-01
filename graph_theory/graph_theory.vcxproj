@@ -133,9 +133,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CommandManager.cpp" />
     <ClCompile Include="graph_theory.cpp" />
-    <ClCompile Include="src\dialog\command.cpp" />
-    <ClCompile Include="src\dialog\menu.cpp" />
     <ClCompile Include="src\Graph.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -143,18 +142,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CommandManager.h" />
     <ClInclude Include="src\Constants.h" />
-    <ClInclude Include="src\dialog\command.h" />
-    <ClInclude Include="src\dialog\menu.h" />
     <ClInclude Include="src\Graph.h" />
-    <ClInclude Include="src\logger\Logger.hpp" />
+    <ClInclude Include="src\Logger.hpp" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Support.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="assets\adjacency_list.txt" />
-    <Text Include="assets\adjacency_matrix.txt" />
-    <Text Include="assets\edges_list.txt" />
+    <Text Include="assets\graphs\adjacency_list.txt" />
+    <Text Include="assets\graphs\adjacency_matrix.txt" />
+    <Text Include="assets\graphs\edges_list.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

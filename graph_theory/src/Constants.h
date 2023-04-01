@@ -4,7 +4,10 @@
 #include "pch.h"
 
 // путь до папки с файлами для графа
-const std::string FILE_PATH = "assets/";
+const std::string GRAPH_FILE_PATH = "assets/graphs/";
+
+// путь до папки с файлами вывода программы
+const std::string RESULT_FILE_PATH = "assets/results/";
 
 
 //==================//
@@ -38,36 +41,20 @@ struct Edge
 // список ребер
 using EdgeArr = std::vector<Edge>;
 
+//==================//
+//	С П Р А В К А	//
+//==================//
 
-//==============//
-//	Д И А Л О Г	//
-//==============//
-
-// путь к описаниям команд
-const std::string MSG_DECR_FOLDER = "assets/messages/";
-
-// строка слева от введенной команды
-const std::string DBMS_CONSOLE_REQUEST_COMMAND = "\n[СУБД v1.0]> ";
-
-// сообщение о некорректных данных
-const std::string NOT_CORRECT_DATA = "-";
-
-// сообщение об ошибочном вводе команды
-const std::string NOT_CORRECT_COMMAND = " такой команды не существует\n\
-Если неизвестны команды, введите: помощь\n\
-Если не знаете, как пользоваться командой, \
-введите: помощь <неизвестная команда>\n";
-
-// количество команд
-const int NUMBER_OF_COMMANDS = 1;
-
-// ПРИ ДОБАВЛЕНИИ КОМАНДЫ НАДО ЕЩЕ ДОБАВИТЬ 
-// В COMMAND_CHECK_FUNCTIONS УКАЗАТЕЛИ НА СОТВЕТСТВУЮЩИЕ 
-// ФУНКЦИИ В КОНСТРУКТОРЕ Menu()
-// массив с файлами, в которых лежит описание команд
-const std::string COMMAND_DESCRIPTION_FILES[NUMBER_OF_COMMANDS] =
-{
-	"help.txt",
-};
+const std::string DEVELOPER_DATA = 
+"\
+Автор: Плоцкий Богдан\n\
+Группа: М3О-211Б-21\n\
+Описание комманд:\n\
+-m считывание матрицы смежности\n\
+-e считывание списка ребер\n\
+-l считывание списка смежности\n\
+-o если указан ключ, то результат программы выведется в файл, стоящий после этого ключа\n\
+-h вывод справки о программе\n\
+";
 
 #endif // CONSTANTS_H

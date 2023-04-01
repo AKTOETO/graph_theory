@@ -21,13 +21,10 @@
     <ClCompile Include="src\Graph.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\dialog\command.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dialog\menu.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="src\pch.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CommandManager.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,22 +38,19 @@
     <ClInclude Include="src\pch.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\logger\Logger.hpp">
+    <ClInclude Include="src\Logger.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\Support.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\dialog\command.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dialog\menu.h">
+    <ClInclude Include="src\CommandManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="assets\adjacency_list.txt" />
-    <Text Include="assets\adjacency_matrix.txt" />
-    <Text Include="assets\edges_list.txt" />
+    <Text Include="assets\graphs\adjacency_list.txt" />
+    <Text Include="assets\graphs\adjacency_matrix.txt" />
+    <Text Include="assets\graphs\edges_list.txt" />
   </ItemGroup>
 </Project>

@@ -6,54 +6,69 @@
 //==========================//
 //	ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ	//
 //==========================//
-namespace SupportFunctions
+
+// получение текущего времени
+inline std::string GetCurrentTime()
 {
-	// получение текущего времени
-	inline std::string GetCurrentTime()
-	{
-		time_t now = time(0);
-		tm* tstruct = new tm;
-		char buf[9];
-		localtime_s(tstruct ,&now);
-		strftime(buf, sizeof(buf), "%H:%M:%S", tstruct);
+	time_t now = time(0);
+	tm* tstruct = new tm;
+	char buf[9];
+	localtime_s(tstruct, &now);
+	strftime(buf, sizeof(buf), "%H:%M:%S", tstruct);
 
-		return std::string(buf);
+	return std::string(buf);
+}
+
+// получение текущей даты
+inline std::string GetCurrentDate()
+{
+	time_t now = time(0);
+	tm* tstruct = new tm;
+	char buf[120];
+	localtime_s(tstruct, &now);
+	strftime(buf, sizeof(buf), "%d-%m-%Y(%H-%M-%S)", tstruct);
+
+	return std::string(buf);
+}
+
+// получение подстроки отделенной с помощью delim
+// и удаление этой подстроки из изначальной строки
+inline std::string GetToken(std::string& _str, char _delim = ';')
+{
+	// позиция делителя
+	size_t delim_pos = _str.find(_delim);
+
+	// если делитель не был найден, переносим всю строку
+	if (delim_pos == -1)
+	{
+		delim_pos = _str.size();
 	}
 
-	// получение текущей даты
-	inline std::string GetCurrentDate()
-	{
-		time_t now = time(0);
-		tm* tstruct = new tm;
-		char buf[120];
-		localtime_s(tstruct, &now);
-		strftime(buf, sizeof(buf), "%d-%m-%Y(%H-%M-%S)", tstruct);
+	// строка с нужной подстрокой
+	// копирование нужной строки
+	std::string new_str = _str.substr(0, delim_pos);
 
-		return std::string(buf);
-	}
+	// сдвиг всех символов в начало
+	_str.erase(0, delim_pos + 1);
 
-	// получение подстроки отделенной с помощью delim
-	// и удаление этой подстроки из изначальной строки
-	inline std::string GetToken(std::string& _str, char _delim = ';')
-	{
-		// позиция делителя
-		size_t delim_pos = _str.find(_delim);
+	return new_str;
+}
 
-		// если делитель не был найден, переносим всю строку
-		if (delim_pos == -1)
+// получение строки из вектора путем объединения 
+// конкретных элементов этого вектора
+inline std::string GetStringFromVector(
+	std::vector<std::string>::iterator _begin,
+	std::vector<std::string>::iterator _end)
+{
+	std::string out;
+
+	std::for_each(_begin, _end, [&out](std::string str)
 		{
-			delim_pos = _str.size();
+			out += str;
 		}
+	);
 
-		// строка с нужной подстрокой
-		// копирование нужной строки
-		std::string new_str = _str.substr(0, delim_pos);
-
-		// сдвиг всех символов в начало
-		_str.erase(0, delim_pos + 1);
-
-		return new_str;
-	}
+	return out;
 }
 
 // Булевая функция по умолчанию
@@ -134,36 +149,13 @@ inline bool IsCyrillic(char _symb)
 		|| _symb == 'ё' || _symb == 'Ё';
 }
 
-// получение подстроки отделенной с помощью delim
-// и удаление этой подстроки из изначальной строки
-inline std::string GetToken(std::string& _str, char _delim = ' ')
-{
-	// позиция делителя
-	size_t delim_pos = _str.find(_delim);
-
-	// если делитель не был найден, переносим всю строку
-	if (delim_pos == -1)
-	{
-		delim_pos = _str.size();
-	}
-
-	// строка с нужной подстрокой
-	// копирование нужной строки
-	std::string new_str = _str.substr(0, delim_pos);
-
-	// сдвиг всех символов в начало
-	_str.erase(0, delim_pos + 1);
-
-	return new_str;
-}
-
 
 // проверка на корректность данных
 inline std::string IsStringNotEmpty(const std::string& _str)
 {
 	// если строка не пустая, тогда возвращаем ее
 	// иначе вернем ошибочное сообщение
-	return (_str.length() ? _str : NOT_CORRECT_DATA);
+	return (_str.length() ? _str : "-");
 }
 
 /// <summary>

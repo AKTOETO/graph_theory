@@ -1,15 +1,23 @@
 ﻿#include "Graph.h"
 
-Graph::Graph(std::string _filepath, INPUT_FILE_TYPE _in_f_type)
+Graph::Graph()
 {
 	INFO("создание графа");
+}
 
-	std::ifstream fin(FILE_PATH + _filepath);
+Graph::~Graph()
+{
+	INFO("уничтожение графа");
+}
+
+void Graph::ReadGraphFromFile(std::string _filepath, INPUT_FILE_TYPE _in_f_type)
+{
+	std::ifstream fin(GRAPH_FILE_PATH + _filepath);
 
 	// Если файл не был открыт
 	if (!fin)
 	{
-		ERROR("файл " + FILE_PATH + _filepath + " не был открыт!");
+		ERROR("файл " + GRAPH_FILE_PATH + _filepath + " не был открыт!");
 	}
 
 	// игнорирование пробелов
@@ -35,11 +43,6 @@ Graph::Graph(std::string _filepath, INPUT_FILE_TYPE _in_f_type)
 		ERROR("неизвестный тип файла");
 		break;
 	}
-}
-
-Graph::~Graph()
-{
-	INFO("уничтожение графа");
 }
 
 void Graph::PrintAdjacencyMatrix() const
@@ -78,7 +81,7 @@ void Graph::ReadAdjacencyMatrixFromFile(std::ifstream& _ifstream)
 			while (str.size() != 0)
 			{
 				// получение токена, отделенного пробелом
-				std::string token = SupportFunctions::GetToken(str, ' ');
+				std::string token = GetToken(str, ' ');
 
 				// если есть что-то помимо цифр
 				if (token.find_first_not_of("0123456789") != std::string::npos)

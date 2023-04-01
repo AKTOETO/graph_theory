@@ -1,7 +1,7 @@
 ﻿#ifndef GRAPH_H
 #define GRAPH_H
 
-#include "logger/Logger.hpp"
+#include "Logger.hpp"
 
 // типы входных файлов с графами
 enum class INPUT_FILE_TYPE
@@ -71,14 +71,18 @@ private:
 
 
 public:
-	/// <summary>
-	/// Конструктор класса Graph
-	/// </summary>
-	/// <param name="_filepath"> - путь к файлу, содержащий название файла с его расширением</param>
-	Graph(std::string _filepath, INPUT_FILE_TYPE);
+	
+	// Конструктор класса Graph
+	Graph();
 	
 	// деструктор класса
 	~Graph();
+
+	/// <summary>
+	/// считывание графа из файла
+	/// </summary>
+	/// <param name="_filepath"> - путь к файлу, содержащий название файла с его расширением</param>
+	void ReadGraphFromFile(std::string _filepath, INPUT_FILE_TYPE);
 
 	// вывод матрицы смежности
 	void PrintAdjacencyMatrix() const;

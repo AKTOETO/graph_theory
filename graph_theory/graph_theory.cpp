@@ -1,14 +1,15 @@
 ﻿#include <iostream>
-#include "src/Graph.h"
+#include "src/CommandManager.h"
 
 
-int main()
+int main(int argc, char* argv[])
 {
 	setlocale(LC_ALL, "ru");
 
-	Graph gr("adjacency_matrix.txt",INPUT_FILE_TYPE::ADJACENCY_MATRIX);
+	CommandManager cm(argc, argv);
 
-	gr.PrintAdjacencyMatrix();
+	// вызов главной функции 
+	cm.Run();
 
 	return 0;
 }
