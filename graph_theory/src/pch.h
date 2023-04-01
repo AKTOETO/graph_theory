@@ -12,5 +12,6 @@
 #include <vector>
 #include <unordered_map>
 #include <iterator>
+#include <numeric>
 
 #endif

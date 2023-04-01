@@ -161,9 +161,9 @@ void CommandManager::ReadAdjacencyList(std::string _context)
 	m_graph.ReadGraphFromFile(_context, INPUT_FILE_TYPE::ADJACENCY_LIST);
 }
 
-void CommandManager::SetOutputFilepath(std::string _filpath)
+void CommandManager::SetOutputFilepath(std::string _filepath)
 {
-
+	// TODO >_<
 }
 
 void CommandManager::GetDeveloperData(std::string _data)

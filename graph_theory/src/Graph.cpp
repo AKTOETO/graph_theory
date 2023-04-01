@@ -12,7 +12,7 @@ Graph::~Graph()
 
 void Graph::ReadGraphFromFile(std::string _filepath, INPUT_FILE_TYPE _in_f_type)
 {
-	std::ifstream fin(GRAPH_FILE_PATH + _filepath);
+	std::ifstream fin(GRAPH_FILE_PATH + _filepath, std::ifstream::binary);
 
 	// Если файл не был открыт
 	if (!fin)
@@ -61,7 +61,72 @@ void Graph::PrintAdjacencyMatrix() const
 
 void Graph::ReadAdjacencyListFromFile(std::ifstream& _ifstream)
 {
-	// хехе >_<
+	// количество строк
+	int numb_of_rows = 0;
+
+	// получение количества строк
+	while (_ifstream.peek() != EOF)
+	{
+		_ifstream.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+		numb_of_rows++;
+	}
+
+	// перемещение курсора в начало файла
+	_ifstream.clear();
+	_ifstream.seekg(0, std::ios::beg);
+
+	// установка нужного размера матрицы
+	m_adjacency_matrix.resize(numb_of_rows);
+	for (auto& vec : m_adjacency_matrix)
+		vec.resize(numb_of_rows);
+
+	// строка файла
+	std::string str;
+
+	// токен строки
+	std::string token;
+
+	// номер строки и столбца
+	int row_num = 0;
+
+	// считывание данных
+	while (_ifstream.peek() != EOF)
+	{
+		getline(_ifstream, str);
+
+		// пока строка не пустая, выписываем из нее числа
+		while (str.size() != 0)
+		{
+			// получение токена, отделенного пробелом
+			token = GetToken(str, ' ');
+
+			// поиск и удаление символа переноса каретки в начало
+			token.erase(
+				std::remove_if(token.begin(), token.end(), [](char& ch) 
+					{
+						return ch == '\r'; 
+					}),
+				token.end());
+
+			// если есть что-то помимо цифр
+			if (token.find_first_not_of("0123456789") != std::string::npos)
+			{
+				ERROR("в исходном файле на "
+					+ std::to_string(m_adjacency_matrix.size() + 1)
+					+ " строке найдено (" + token + ")");
+			}
+			// иначе сохраняем число
+			else if (token != "")
+			{
+				m_adjacency_matrix[row_num][stoi(token)-1] = 1;
+			}
+		}
+
+		// переход на следующую строку
+		row_num++;
+	}
+
+	PrintAdjacencyMatrix();
 }
 
 void Graph::ReadAdjacencyMatrixFromFile(std::ifstream& _ifstream)
