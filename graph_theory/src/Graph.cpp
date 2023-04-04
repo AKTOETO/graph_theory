@@ -273,7 +273,20 @@ const VertexMatrix& Graph::adjacency_matrix() const
 
 VertexArr Graph::adjacency_list(Vertex _v) const
 {
-	return VertexArr();
+	// выходной список смежных вершин
+	// смежными считаются досягаемые из _v вершины
+	VertexArr out;
+
+	// проходимся по всем верщинам
+	for (int i = 0; i < m_adjacency_matrix.size(); i++)
+	{
+		if (i != _v && m_adjacency_matrix[_v][i] != 0)
+		{
+			out.push_back(i);
+		}
+	}
+
+	return out;
 }
 
 EdgeArr Graph::list_of_edges() const

@@ -53,6 +53,14 @@ void CommandManager::Run()
 	INFO("Есть ли дуга от 1 к 1 = " + (m_graph.is_edge(1, 1) ? "да" : "нет"));
 	INFO("Вес дуги от 1 к 2 = " + std::to_string(m_graph.weight(1,2)));
 	INFO("Вес дуги от 1 к 1 = " + std::to_string(m_graph.weight(1,1)));
+	INFO("Список смежных вершин с 4:");
+
+	VertexArr vr = m_graph.adjacency_list(4);
+	for (auto& el : vr)
+	{
+		std::cout << el << " ";
+	}
+	std::cout << "\n";
 
 }
 
