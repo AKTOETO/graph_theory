@@ -44,6 +44,16 @@ void CommandManager::Run()
 		// удаление первого ключа с его параметрами		
 		m_param.erase(m_param.begin(), it_end);
 	}
+
+	// тестовая печать
+	m_graph.PrintAdjacencyMatrix();
+
+	INFO("Есть ли дуга от 0 к 4 = " + (m_graph.is_edge(0, 4) ? "да" : "нет"));
+	INFO("Есть ли дуга от 1 к 2 = " + (m_graph.is_edge(1, 2) ? "да" : "нет"));
+	INFO("Есть ли дуга от 1 к 1 = " + (m_graph.is_edge(1, 1) ? "да" : "нет"));
+	INFO("Вес дуги от 1 к 2 = " + std::to_string(m_graph.weight(1,2)));
+	INFO("Вес дуги от 1 к 1 = " + std::to_string(m_graph.weight(1,1)));
+
 }
 
 void CommandManager::PrintParams() const

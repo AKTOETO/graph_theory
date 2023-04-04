@@ -54,6 +54,17 @@ inline std::string GetToken(std::string& _str, char _delim = ';')
 	return new_str;
 }
 
+// поиск и удаление определенного символа в строке
+inline void FindAndDeleteChar(std::string& _str, char _to_del = '\r')
+{
+	_str.erase(
+		std::remove_if(_str.begin(), _str.end(), [_to_del](char& ch)
+			{
+				return ch == _to_del;
+			}),
+		_str.end());
+}
+
 // получение строки из вектора путем объединения 
 // конкретных элементов этого вектора
 inline std::string GetStringFromVector(

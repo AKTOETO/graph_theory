@@ -67,7 +67,7 @@ void Graph::ReadAdjacencyListFromFile(std::ifstream& _ifstream)
 	// получение количества строк
 	while (_ifstream.peek() != EOF)
 	{
-		_ifstream.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+		_ifstream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		numb_of_rows++;
 	}
 
@@ -94,19 +94,14 @@ void Graph::ReadAdjacencyListFromFile(std::ifstream& _ifstream)
 	{
 		getline(_ifstream, str);
 
+		// поиск и удаление символа переноса каретки в начало
+		FindAndDeleteChar(str);
+
 		// пока строка не пустая, выписываем из нее числа
 		while (str.size() != 0)
 		{
 			// получение токена, отделенного пробелом
 			token = GetToken(str, ' ');
-
-			// поиск и удаление символа переноса каретки в начало
-			token.erase(
-				std::remove_if(token.begin(), token.end(), [](char& ch) 
-					{
-						return ch == '\r'; 
-					}),
-				token.end());
 
 			// если есть что-то помимо цифр
 			if (token.find_first_not_of("0123456789") != std::string::npos)
@@ -118,21 +113,20 @@ void Graph::ReadAdjacencyListFromFile(std::ifstream& _ifstream)
 			// иначе сохраняем число
 			else if (token != "")
 			{
-				m_adjacency_matrix[row_num][stoi(token)-1] = 1;
+				m_adjacency_matrix[row_num][stoi(token)] = 1;
 			}
 		}
 
 		// переход на следующую строку
 		row_num++;
 	}
-
-	PrintAdjacencyMatrix();
 }
 
 void Graph::ReadAdjacencyMatrixFromFile(std::ifstream& _ifstream)
 {
 	// строка файла
 	VertexArr row;
+	std::string token;
 
 	// пока не конец файла
 	do
@@ -140,13 +134,17 @@ void Graph::ReadAdjacencyMatrixFromFile(std::ifstream& _ifstream)
 		// считывание всей строки из файла
 		std::string str;
 		getline(_ifstream, str);
+
+		// поиск и удаление символа переноса каретки в начало
+		FindAndDeleteChar(str);
+
 		if (str.length() != 0)
 		{
 			// пока строка не пустая, выписываем из нее числа
 			while (str.size() != 0)
 			{
 				// получение токена, отделенного пробелом
-				std::string token = GetToken(str, ' ');
+				token = GetToken(str, ' ');
 
 				// если есть что-то помимо цифр
 				if (token.find_first_not_of("0123456789") != std::string::npos)
@@ -193,17 +191,79 @@ void Graph::ReadAdjacencyMatrixFromFile(std::ifstream& _ifstream)
 
 void Graph::ReadEdgesListFromFile(std::ifstream& _ifstream)
 {
+	// размер матрицы
+	int size = 0;
 
+	// временные переменные
+	std::string str;
+	std::string token1, token2, token3;
+
+	// узнаем размер матрицы смежности 
+	while (_ifstream.peek() != EOF)
+	{
+		getline(_ifstream, str);
+
+		// проверка на число
+		token1 = GetToken(str, ' ');
+		token2 = GetToken(str, ' ');
+		if (!IsItANumber(token1) || !IsItANumber(token2))
+		{
+			ERROR("Найдены не числа");
+		}
+
+		size = std::max(size, std::max(stoi(token1), stoi(token2)));
+	}
+
+	// перемещение курсора в начало файла
+	_ifstream.clear();
+	_ifstream.seekg(0, std::ios::beg);
+
+	// установка нужного размера матрицы
+	m_adjacency_matrix.resize(size + 1);
+	for (auto& vec : m_adjacency_matrix)
+		vec.resize(size + 1);
+
+	// считывание самих ребер
+	while (_ifstream.peek() != EOF)
+	{
+		getline(_ifstream, str);
+
+		// проверка на число
+		token1 = GetToken(str, ' ');
+		token2 = GetToken(str, ' ');
+		token3 = GetToken(str, '\r');
+		if (
+			!IsItANumber(token1) ||
+			!IsItANumber(token2) ||
+			!IsItANumber(token3)
+			)
+		{
+			ERROR("Найдены не числа: (" + token1 + ") (" + token2 + ") (" + token3 + ")");
+		}
+
+		// если считанные значения - числа
+		m_adjacency_matrix[stoi(token1)][stoi(token2)] = stoi(token3);
+	}
 }
 
 int Graph::weight(Vertex _vi, Vertex _vj) const
 {
-	return 0;
+	if (
+		!(_vi >= 0 && _vi < m_adjacency_matrix.size() &&
+			_vj >= 0 && _vj < m_adjacency_matrix.size())
+		)
+	{
+		ERROR("Номера вершин " + std::to_string(_vi) + " " + std::to_string(_vj) +
+			" неверны. Размер матрицы смежности: " +
+			std::to_string(m_adjacency_matrix.size()) +
+			"x" + std::to_string(m_adjacency_matrix.size()));
+	}
+	return m_adjacency_matrix[_vi][_vj];
 }
 
 bool Graph::is_edge(Vertex _vi, Vertex _vj) const
 {
-	return false;
+	return weight(_vi, _vj) != 0;
 }
 
 const VertexMatrix& Graph::adjacency_matrix() const
