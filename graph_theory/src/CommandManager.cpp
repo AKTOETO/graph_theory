@@ -24,6 +24,7 @@ CommandManager::CommandManager(int argc, char* _keys[])
 
 CommandManager::~CommandManager()
 {
+	m_fout.close();
 }
 
 void CommandManager::Run()
@@ -31,7 +32,7 @@ void CommandManager::Run()
 	// пока введенные ключи с параметрами еще есть
 	while (m_param.size() != 0)
 	{
-		// итератор на конец команда (ключ + параметры)
+		// итератор на конец команды (ключ + параметры)
 		auto it_end = std::find_if(m_param.begin() + 1, m_param.end(), [](std::string el)
 			{
 				return el[0] == '-';
@@ -85,11 +86,29 @@ void CommandManager::CheckKeys()
 	if (!IsThereAExistsKey()) ERROR("Неизвестные ключи");
 
 	// проверка на наличие ключа h
-	if (IsThereAhKey())
+	if (IsThereAKey("-h"))
 	{
 		m_param.resize(1);
 		m_param[0] = "-h";
 	}
+
+	// проверка на наличие ключа o
+	if (IsThereAKey("-o"))
+	{
+		// вставка в начало команды этого ключа
+		auto it_beg = std::find(m_param.begin(), m_param.end(), "-o");
+
+		// итератор на конец команды (ключ + параметры)
+		auto it_end = std::find_if(it_beg + 1, m_param.end(), [](std::string el)
+			{
+				return el[0] == '-';
+			}
+		);
+
+		// вырезаем параметры и вставляем в начало
+		m_param.insert(m_param.begin(), it_beg, it_end);
+	}
+
 
 	// проверка на введение одновременно ключей e m l
 	else if (!CheckEML()) ERROR("Неверное количество ключей -e -m -l");
@@ -140,11 +159,11 @@ bool CommandManager::CheckEML()
 	return false;
 }
 
-bool CommandManager::IsThereAhKey()
+bool CommandManager::IsThereAKey(const std::string& _key)
 {
 	for (std::string& el : m_param)
 	{
-		if (el == "-h") return true;
+		if (el == _key) return true;
 	}
 	return false;
 }
@@ -181,7 +200,13 @@ void CommandManager::ReadAdjacencyList(std::string _context)
 
 void CommandManager::SetOutputFilepath(std::string _filepath)
 {
-	// TODO >_<
+	// просто перенаправлять cout в файловый поток
+	m_fout.open(RESULT_FILE_PATH + _filepath);
+	INFO("Вывод в файл: " + RESULT_FILE_PATH + _filepath);
+	// TODO разграничить поток, чтобы не использовать cout
+	
+	// перенаправление буфера вывода
+	std::cout.rdbuf(m_fout.rdbuf());
 }
 
 void CommandManager::GetDeveloperData(std::string _data)

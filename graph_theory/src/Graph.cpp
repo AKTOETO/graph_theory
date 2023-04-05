@@ -113,7 +113,7 @@ void Graph::ReadAdjacencyListFromFile(std::ifstream& _ifstream)
 			// иначе сохраняем число
 			else if (token != "")
 			{
-				m_adjacency_matrix[row_num][stoi(token)] = 1;
+				m_adjacency_matrix[row_num][stoi(token)-1] = 1;
 			}
 		}
 
@@ -219,9 +219,9 @@ void Graph::ReadEdgesListFromFile(std::ifstream& _ifstream)
 	_ifstream.seekg(0, std::ios::beg);
 
 	// установка нужного размера матрицы
-	m_adjacency_matrix.resize(size + 1);
+	m_adjacency_matrix.resize(size);
 	for (auto& vec : m_adjacency_matrix)
-		vec.resize(size + 1);
+		vec.resize(size);
 
 	// считывание самих ребер
 	while (_ifstream.peek() != EOF)
@@ -232,6 +232,8 @@ void Graph::ReadEdgesListFromFile(std::ifstream& _ifstream)
 		token1 = GetToken(str, ' ');
 		token2 = GetToken(str, ' ');
 		token3 = GetToken(str, '\r');
+		token3 = GetToken(token3, ' ');
+		token3 = token3 == "" ? "1" : token3;
 		if (
 			!IsItANumber(token1) ||
 			!IsItANumber(token2) ||
@@ -242,7 +244,7 @@ void Graph::ReadEdgesListFromFile(std::ifstream& _ifstream)
 		}
 
 		// если считанные значения - числа
-		m_adjacency_matrix[stoi(token1)][stoi(token2)] = stoi(token3);
+		m_adjacency_matrix[stoi(token1) - 1][stoi(token2) - 1] = stoi(token3);
 	}
 }
 
@@ -253,6 +255,9 @@ int Graph::weight(Vertex _vi, Vertex _vj) const
 			_vj >= 0 && _vj < m_adjacency_matrix.size())
 		)
 	{
+		// TODO
+		// Лучше добавить Warning, так как сдесь нужно, чтобы сообщение было видно и в релизе
+		// но не нужно, чтобы программа крашилась, как при Error'e
 		ERROR("Номера вершин " + std::to_string(_vi) + " " + std::to_string(_vj) +
 			" неверны. Размер матрицы смежности: " +
 			std::to_string(m_adjacency_matrix.size()) +
@@ -273,6 +278,8 @@ const VertexMatrix& Graph::adjacency_matrix() const
 
 VertexArr Graph::adjacency_list(Vertex _v) const
 {
+	//TODO пересмотреть определение в тетради этого термина
+
 	// выходной список смежных вершин
 	// смежными считаются досягаемые из _v вершины
 	VertexArr out;

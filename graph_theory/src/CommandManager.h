@@ -16,6 +16,8 @@ private:
 	// Введенные параметры при запуске
 	std::vector<std::string> m_param;
 
+	std::ofstream m_fout;
+
 public:
 	CommandManager(int argc, char* _keys[]);
 	~CommandManager();
@@ -43,8 +45,8 @@ public:
 	// проверка на одновременное указание ключей -e -m -l
 	bool CheckEML();
 
-	// проверка на наличие ключа h
-	bool IsThereAhKey();
+	// проверка на наличие определенного ключа 
+	bool IsThereAKey(const std::string& _key);
 
 
 	////////////////////////////////////////////
