@@ -113,7 +113,7 @@ void Graph::ReadAdjacencyListFromFile(std::ifstream& _ifstream)
 			// иначе сохраняем число
 			else if (token != "")
 			{
-				m_adjacency_matrix[row_num][stoi(token)-1] = 1;
+				m_adjacency_matrix[row_num][stoi(token) - 1] = 1;
 			}
 		}
 
@@ -256,7 +256,7 @@ int Graph::weight(Vertex _vi, Vertex _vj) const
 		)
 	{
 		// TODO
-		// Лучше добавить Warning, так как сдесь нужно, чтобы сообщение было видно и в релизе
+		// Лучше добавить Warning, так как здесь нужно, чтобы сообщение было видно и в релизе
 		// но не нужно, чтобы программа крашилась, как при Error'e
 		ERROR("Номера вершин " + std::to_string(_vi) + " " + std::to_string(_vj) +
 			" неверны. Размер матрицы смежности: " +
@@ -309,4 +309,19 @@ EdgeArr Graph::list_of_edges(Vertex _v) const
 bool Graph::is_directed() const
 {
 	return false;
+}
+
+VertexArr Graph::GetVertexDegrees() const
+{
+	VertexArr vr(m_adjacency_matrix.size(), 0);
+
+	for (int i = 0; i < m_adjacency_matrix.size(); i++)
+	{
+		for (int j = 0; j < m_adjacency_matrix.size(); j++)
+		{
+			if (is_edge(i, j)) vr[i]++;
+		}
+	}
+
+	return vr;
 }

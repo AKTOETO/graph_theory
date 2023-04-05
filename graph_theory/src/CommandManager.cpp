@@ -49,7 +49,7 @@ void CommandManager::Run()
 	// тестовая печать
 	m_graph.PrintAdjacencyMatrix();
 
-	INFO("Есть ли дуга от 0 к 4 = " + (m_graph.is_edge(0, 4) ? "да" : "нет"));
+	/*INFO("Есть ли дуга от 0 к 4 = " + (m_graph.is_edge(0, 4) ? "да" : "нет"));
 	INFO("Есть ли дуга от 1 к 2 = " + (m_graph.is_edge(1, 2) ? "да" : "нет"));
 	INFO("Есть ли дуга от 1 к 1 = " + (m_graph.is_edge(1, 1) ? "да" : "нет"));
 	INFO("Вес дуги от 1 к 2 = " + std::to_string(m_graph.weight(1,2)));
@@ -61,8 +61,12 @@ void CommandManager::Run()
 	{
 		std::cout << el << " ";
 	}
-	std::cout << "\n";
+	std::cout << "\n";*/
 
+	auto vr = m_graph.GetVertexDegrees();
+	std::cout << "deg = [";
+	PrintVector(vr, ", ");
+	std::cout << "]\n";
 }
 
 void CommandManager::PrintParams() const

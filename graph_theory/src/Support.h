@@ -7,6 +7,17 @@
 //	ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ	//
 //==========================//
 
+// печать вектора через определенный элемент
+template<typename T>
+inline void PrintVector(std::vector<T> _vec, std::string _delim = " ")
+{
+	for (int i = 0; i < _vec.size(); i++)
+	{
+		std::cout << _vec[i];
+		if (i + 1 != _vec.size())std::cout << _delim;
+	}
+}
+
 // получение текущего времени
 inline std::string GetCurrentTime()
 {

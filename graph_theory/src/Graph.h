@@ -120,14 +120,14 @@ public:
 	/// <summary>
 	/// Возврат списка ребер
 	/// </summary>
-	/// <returns></returns>
+	/// <returns> - список ребер</returns>
 	EdgeArr list_of_edges() const;
 
 	/// <summary>
 	/// Ребра графа, инцидентные вершине _v
 	/// </summary>
 	/// <param name="_v"> - исходная вершина</param>
-	/// <returns>список ребер</returns>
+	/// <returns> - список ребер</returns>
 	EdgeArr list_of_edges(Vertex _v) const;
 
 	/// <summary>
@@ -136,6 +136,12 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	bool is_directed() const;
+
+	/// <summary>
+	/// Получение степеней вершин
+	/// </summary>
+	/// <returns> - вектор степеней вершин</returns>
+	VertexArr GetVertexDegrees() const;
 };
 
 #endif // GRAPH_H
