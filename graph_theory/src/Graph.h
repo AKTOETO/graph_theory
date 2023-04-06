@@ -3,6 +3,19 @@
 
 #include "Logger.hpp"
 
+// типы степеней вершин
+enum class VERTEXES_DEGREESES
+{
+	// полустепень входа
+	IN,
+
+	// полустепень выхода
+	OUT,
+
+	// степень (вход + выход)
+	IN_OUT,
+};
+
 // типы входных файлов с графами
 enum class INPUT_FILE_TYPE
 {
@@ -138,10 +151,12 @@ public:
 	bool is_directed() const;
 
 	/// <summary>
-	/// Получение степеней вершин
+	/// Получение степени вершины
 	/// </summary>
-	/// <returns> - вектор степеней вершин</returns>
-	VertexArr GetVertexDegrees() const;
+	/// <param name="_deg"> - какую степень именно надо получить (полустепень входа/выхода, полную степень)</param>
+	/// <returns>сама степень вершины</returns>
+	VertexArr GetVertexDegrees(VERTEXES_DEGREESES _deg) const;
+
 };
 
 #endif // GRAPH_H

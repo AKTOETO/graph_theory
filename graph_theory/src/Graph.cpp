@@ -311,7 +311,7 @@ bool Graph::is_directed() const
 	return false;
 }
 
-VertexArr Graph::GetVertexDegrees() const
+VertexArr Graph::GetVertexDegrees(VERTEXES_DEGREESES _deg) const
 {
 	VertexArr vr(m_adjacency_matrix.size(), 0);
 
@@ -319,9 +319,22 @@ VertexArr Graph::GetVertexDegrees() const
 	{
 		for (int j = 0; j < m_adjacency_matrix.size(); j++)
 		{
-			if (is_edge(i, j)) vr[i]++;
+			switch (_deg)
+			{
+			case VERTEXES_DEGREESES::IN:
+				if (is_edge(j, i)) vr[i]++;
+				break;
+
+			case VERTEXES_DEGREESES::OUT:
+				if (is_edge(i, j)) vr[i]++;
+				break;
+
+			case VERTEXES_DEGREESES::IN_OUT:
+				if (is_edge(i, j) || is_edge(j, i)) vr[i]++;
+			}
 		}
 	}
 
 	return vr;
 }
+

@@ -63,8 +63,15 @@ void CommandManager::Run()
 	}
 	std::cout << "\n";*/
 
-	auto vr = m_graph.GetVertexDegrees();
-	std::cout << "deg = [";
+	// степень входа
+	auto vr = m_graph.GetVertexDegrees(VERTEXES_DEGREESES::IN);
+	std::cout << "deg+ = [";
+	PrintVector(vr, ", ");
+	std::cout << "]\n";
+
+	// степень выхода
+	vr = m_graph.GetVertexDegrees(VERTEXES_DEGREESES::OUT);
+	std::cout << "deg- = [";
 	PrintVector(vr, ", ");
 	std::cout << "]\n";
 }
