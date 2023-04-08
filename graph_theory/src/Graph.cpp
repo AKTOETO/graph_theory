@@ -43,6 +43,9 @@ void Graph::ReadGraphFromFile(std::string _filepath, INPUT_FILE_TYPE _in_f_type)
 		ERROR("неизвестный тип файла");
 		break;
 	}
+
+	// расчет кратчайших расстояний
+	CalculateShortDistMatr();
 }
 
 void Graph::PrintAdjacencyMatrix() const
@@ -248,6 +251,54 @@ void Graph::ReadEdgesListFromFile(std::ifstream& _ifstream)
 	}
 }
 
+void Graph::CalculateShortDistMatr()
+{
+	// установка размера матрицы
+	m_shortest_distance_matr.resize(m_adjacency_matrix.size());
+	for (auto& el : m_shortest_distance_matr)
+	{
+		el.resize(m_adjacency_matrix.size());
+	}
+
+	// копирование значений матрицы смежности в матрицу расстояний
+	for (int i = 0; i < m_adjacency_matrix.size(); i++)
+	{
+		for (int j = 0; j < m_adjacency_matrix.size(); j++)
+		{
+			// если это не элемент главной диагонали
+			if (i != j)
+			{
+				// если ребра нет, пишем на его месте бесконечность ,
+				// иначе саму длину ребра
+				m_shortest_distance_matr[i][j] =
+					m_adjacency_matrix[i][j] != 0 ? m_adjacency_matrix[i][j] : INF;
+			}
+			else
+			{
+				// пишем 0 на главной диагонали
+				m_shortest_distance_matr[i][j] = 0;
+			}
+		}
+	}
+
+	// алгоритм Флойда-Уоршелла получения матрицы кратчайших расстояний
+	for (int k = 0; k < m_shortest_distance_matr.size(); ++k)
+	{
+		for (int i = 0; i < m_shortest_distance_matr.size(); ++i)
+		{
+			for (int j = 0; j < m_shortest_distance_matr.size(); ++j)
+			{
+				// если дистанция ikj короче, чем ij, то запоминаем эту дистанцию
+				if (
+					m_shortest_distance_matr[i][j] >
+					m_shortest_distance_matr[i][k] + m_shortest_distance_matr[k][j]
+					)
+					m_shortest_distance_matr[i][j] = m_shortest_distance_matr[i][k] + m_shortest_distance_matr[k][j];
+			}
+		}
+	}
+}
+
 int Graph::weight(Vertex _vi, Vertex _vj) const
 {
 	if (
@@ -296,16 +347,19 @@ VertexArr Graph::adjacency_list(Vertex _v) const
 	return out;
 }
 
+// TODO
 EdgeArr Graph::list_of_edges() const
 {
 	return EdgeArr();
 }
 
+// TODO
 EdgeArr Graph::list_of_edges(Vertex _v) const
 {
 	return EdgeArr();
 }
 
+// TODO
 bool Graph::is_directed() const
 {
 	return false;
@@ -336,5 +390,27 @@ VertexArr Graph::GetVertexDegrees(VERTEXES_DEGREESES _deg) const
 	}
 
 	return vr;
+}
+
+const VertexMatrix& Graph::GetShortestDistMatr() const
+{
+	return m_shortest_distance_matr;
+}
+
+VertexArr Graph::GetEccentricity()
+{
+	// выходной вектор с эксцентриситетами
+	VertexArr out;
+
+	// вычисление эксцентриситета
+	std::for_each(
+		m_shortest_distance_matr.begin(), m_shortest_distance_matr.end(),
+		[&out](const VertexArr& row)
+		{
+			out.push_back(*std::max_element(row.begin(), row.end()));
+		}
+	);
+
+	return out;
 }
 

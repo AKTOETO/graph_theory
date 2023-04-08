@@ -9,6 +9,8 @@ const std::string GRAPH_FILE_PATH = "assets/graphs/";
 // путь до папки с файлами вывода программы
 const std::string RESULT_FILE_PATH = "assets/results/";
 
+// для алгоритма ФЛОЙДА-УОРШЕЛЛА
+#define INF 9999999;
 
 //==================//
 //	В Е Р Ш И Н А	//

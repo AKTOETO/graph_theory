@@ -47,7 +47,8 @@ void CommandManager::Run()
 	}
 
 	// тестовая печать
-	m_graph.PrintAdjacencyMatrix();
+	//INFO("печать матрицы смежности");
+	//m_graph.PrintAdjacencyMatrix();
 
 	/*INFO("Есть ли дуга от 0 к 4 = " + (m_graph.is_edge(0, 4) ? "да" : "нет"));
 	INFO("Есть ли дуга от 1 к 2 = " + (m_graph.is_edge(1, 2) ? "да" : "нет"));
@@ -73,6 +74,30 @@ void CommandManager::Run()
 	vr = m_graph.GetVertexDegrees(VERTEXES_DEGREESES::OUT);
 	std::cout << "deg- = [";
 	PrintVector(vr, ", ");
+	std::cout << "]\n";
+
+	// печать матрицы кратч. расст.
+	INFO("печать матрицы кратчайших расстояний");
+
+	std::cout << "Distancies:\n";
+	auto mat = m_graph.GetShortestDistMatr();
+	for (auto& el : mat)
+	{
+		std::cout << "[";
+		PrintVector(el, "", 4);
+		std::cout << "]\n";
+	}
+
+	// TODO
+	// нужно как-то понимать, есть ли смысл считать эксцентриситет,
+	// диаметр, радиус, ... Если посмотрет 12-ый тест, то можно увидеть,
+	// что в матрице кратчайших расстояний есть ∞, из-за чего пропадает
+	// смысл считать эксцентр.
+	// Печать массива эксцентриситетов
+	INFO("Печать массива эксцентриситетов");
+	auto ecc = m_graph.GetEccentricity();
+	std::cout << "Eccentricity:\n[";
+	PrintVector(ecc, ", ");
 	std::cout << "]\n";
 }
 
@@ -215,7 +240,7 @@ void CommandManager::SetOutputFilepath(std::string _filepath)
 	m_fout.open(RESULT_FILE_PATH + _filepath);
 	INFO("Вывод в файл: " + RESULT_FILE_PATH + _filepath);
 	// TODO разграничить поток, чтобы не использовать cout
-	
+
 	// перенаправление буфера вывода
 	std::cout.rdbuf(m_fout.rdbuf());
 }

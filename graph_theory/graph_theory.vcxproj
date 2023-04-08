@@ -154,6 +154,9 @@
     <Text Include="assets\graphs\adjacency_matrix.txt" />
     <Text Include="assets\graphs\edges_list.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

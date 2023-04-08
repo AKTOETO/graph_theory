@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CommandManager" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAIABgCAAAAAAIQAAAEgAgAEAgAAAAAAAAAAICBAI=</HashCode>
+      <FileName>src\CommandManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Graph" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>KABEABAAAAIBEgAAAAKRAAAAAABAAAggAAEIAAgAAAA=</HashCode>
+      <FileName>src\Graph.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Edge" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAIAgAAAAAAAAAAA=</HashCode>
+      <FileName>src\Constants.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="VERTEXES_DEGREESES" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQIAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>src\Graph.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="INPUT_FILE_TYPE" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAABBAAAA=</HashCode>
+      <FileName>src\Graph.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LoggingMode" Collapsed="true">
+    <Position X="2.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAQAAAAAA=</HashCode>
+      <FileName>src\Logger.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

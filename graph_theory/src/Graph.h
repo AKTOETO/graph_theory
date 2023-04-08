@@ -64,6 +64,9 @@ private:
 	// матрица смежности
 	VertexMatrix m_adjacency_matrix;
 
+	// матрица кратчайших расстояний
+	VertexMatrix m_shortest_distance_matr;
+
 	/// <summary>
 	/// Считывание списка смежносит из файла
 	/// </summary>
@@ -82,6 +85,10 @@ private:
 	/// <param name="_ifstream"></param>
 	void ReadEdgesListFromFile(std::ifstream& _ifstream);
 
+	/// <summary>
+	/// Рассчет матрицы кратчайших расстояний
+	/// </summary>
+	void CalculateShortDistMatr();
 
 public:
 	
@@ -157,6 +164,17 @@ public:
 	/// <returns>сама степень вершины</returns>
 	VertexArr GetVertexDegrees(VERTEXES_DEGREESES _deg) const;
 
+	/// <summary>
+	/// Получение матрицы кратчайших расстояний
+	/// </summary>
+	/// <returns>матрица кратчайших расстояний</returns>
+	const VertexMatrix& GetShortestDistMatr() const;
+
+	/// <summary>
+	/// получение эксцентриcитета графа
+	/// </summary>
+	/// <returns>массив с эксцентриситетом для каждой вершины</returns>
+	VertexArr GetEccentricity();
 };
 
 #endif // GRAPH_H

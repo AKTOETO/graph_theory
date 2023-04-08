@@ -9,10 +9,16 @@
 
 // печать вектора через определенный элемент
 template<typename T>
-inline void PrintVector(std::vector<T> _vec, std::string _delim = " ")
+inline void PrintVector(std::vector<T> _vec, std::string _delim = " ", int _setwidth = 1)
 {
 	for (int i = 0; i < _vec.size(); i++)
 	{
+		// настройка вывода
+		std::cout << std::fixed <<
+			std::setw((i != 0 && _setwidth > 1) ? _setwidth : _setwidth - 1) 
+			<< std::setfill(' ');
+		
+		// вывод элементов
 		std::cout << _vec[i];
 		if (i + 1 != _vec.size())std::cout << _delim;
 	}
