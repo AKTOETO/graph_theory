@@ -19,6 +19,7 @@ private:
 	std::ofstream m_fout;
 
 public:
+	CommandManager() = delete;
 	CommandManager(int argc, char* _keys[]);
 	~CommandManager();
 

@@ -61,11 +61,34 @@ class Graph
 {
 private:
 
+	//==========================
+	//   П Е Р Е М Е Н Н Ы Е
+	//==========================
+	
 	// матрица смежности
 	VertexMatrix m_adjacency_matrix;
 
 	// матрица кратчайших расстояний
 	VertexMatrix m_shortest_distance_matr;
+
+	// эксцентриситет вершин графа
+	VertexArr m_eccentricity;
+
+	// множество центральных вершин
+	VertexArr m_central_vertices;
+
+	// множество периферийных вершин
+	VertexArr m_peripheral_vertices;
+	
+	// радиус графа
+	int m_radius;
+
+	// диаметр графа
+	int m_diameter;
+
+	//==========================
+	//      Ф У Н К Ц И И
+	//==========================
 
 	/// <summary>
 	/// Считывание списка смежносит из файла
@@ -86,9 +109,34 @@ private:
 	void ReadEdgesListFromFile(std::ifstream& _ifstream);
 
 	/// <summary>
-	/// Рассчет матрицы кратчайших расстояний
+	/// Расчет матрицы кратчайших расстояний
 	/// </summary>
 	void CalculateShortDistMatr();
+
+	/// <summary>
+	/// Расчет эксцентриситета
+	/// </summary>
+	void CalculateEccentricity();
+
+	/// <summary>
+	/// Расчет радиуса
+	/// </summary>
+	void CalculateRadius();
+	
+	/// <summary>
+	/// Расчет диаметра
+	/// </summary>
+	void CalculateDiameter();
+
+	/// <summary>
+	/// Расчет центральных вершин
+	/// </summary>
+	void CalculateCentralVertices();
+
+	/// <summary>
+	/// Расчет периферийных вершин
+	/// </summary>
+	void CalculatePeripheralVertices();
 
 public:
 	
@@ -174,7 +222,31 @@ public:
 	/// получение эксцентриcитета графа
 	/// </summary>
 	/// <returns>массив с эксцентриситетом для каждой вершины</returns>
-	VertexArr GetEccentricity();
+	const VertexArr& GetEccentricity() const;
+
+	/// <summary>
+	/// Получение диаметра графа
+	/// </summary>
+	/// <returns>диаметр графа</returns>
+	const int& GetDiameter() const;
+
+	/// <summary>
+	/// Получение радиуса гарфа
+	/// </summary>
+	/// <returns>радиус гарфа</returns>
+	const int& GetRadius() const;
+
+	/// <summary>
+	/// Получение центральных вершин
+	/// </summary>
+	/// <returns>центральные вершины</returns>
+	const VertexArr& GetCentralVertices() const;
+
+	/// <summary>
+	/// Получение периферийных вершин
+	/// </summary>
+	/// <returns>периферийные вершины</returns>
+	const VertexArr& GetPeripheralVertices() const;
 };
 
 #endif // GRAPH_H

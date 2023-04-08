@@ -1,6 +1,7 @@
 ﻿#include "Graph.h"
 
 Graph::Graph()
+	:m_radius(0), m_diameter(0)
 {
 	INFO("создание графа");
 }
@@ -44,8 +45,23 @@ void Graph::ReadGraphFromFile(std::string _filepath, INPUT_FILE_TYPE _in_f_type)
 		break;
 	}
 
+	//====================
+	//   Р А С Ч Е Т Ы
+	//====================
+
 	// расчет кратчайших расстояний
 	CalculateShortDistMatr();
+
+	// расчет эксцентриситетов вершин
+	CalculateEccentricity();
+
+	// расчет диаметра и радиуса
+	CalculateDiameter();
+	CalculateRadius();
+
+	// расчет центральных и периферийнфх вершин
+	CalculateCentralVertices();
+	CalculatePeripheralVertices();
 }
 
 void Graph::PrintAdjacencyMatrix() const
@@ -253,6 +269,8 @@ void Graph::ReadEdgesListFromFile(std::ifstream& _ifstream)
 
 void Graph::CalculateShortDistMatr()
 {
+	INFO("расчет кратчайших расстояний");
+
 	// установка размера матрицы
 	m_shortest_distance_matr.resize(m_adjacency_matrix.size());
 	for (auto& el : m_shortest_distance_matr)
@@ -295,6 +313,61 @@ void Graph::CalculateShortDistMatr()
 					)
 					m_shortest_distance_matr[i][j] = m_shortest_distance_matr[i][k] + m_shortest_distance_matr[k][j];
 			}
+		}
+	}
+}
+
+void Graph::CalculateEccentricity()
+{
+	INFO("расчет эксцентриситета");
+
+	// вычисление эксцентриситета
+	for (auto& el : m_shortest_distance_matr)
+	{
+		m_eccentricity.push_back(*std::max_element(el.begin(), el.end()));
+	}
+}
+
+void Graph::CalculateRadius()
+{
+	INFO("расчет радиуса");
+
+	m_radius = *std::min_element(m_eccentricity.begin(), m_eccentricity.end());
+}
+
+void Graph::CalculateDiameter()
+{
+	INFO("расчет диаметра");
+
+	m_diameter = *std::max_element(m_eccentricity.begin(), m_eccentricity.end());
+}
+
+void Graph::CalculateCentralVertices()
+{
+	INFO("расчет центральных вершин");
+
+	// если эксцентриситет вершины минимален (равен радиусу графа),
+	// то она центральная
+	for (int i = 0; i < m_eccentricity.size(); i++)
+	{
+		if (m_eccentricity[i] == m_radius)
+		{
+			m_central_vertices.push_back(i + 1);
+		}
+	}
+}
+
+void Graph::CalculatePeripheralVertices()
+{
+	INFO("расчет периферийных вершин");
+
+	// если эксцентриситет вершины максимален (равен диаметру графа),
+	// то она периферийная
+	for (int i = 0; i < m_eccentricity.size(); i++)
+	{
+		if (m_eccentricity[i] == m_diameter)
+		{
+			m_peripheral_vertices.push_back(i + 1);
 		}
 	}
 }
@@ -397,20 +470,28 @@ const VertexMatrix& Graph::GetShortestDistMatr() const
 	return m_shortest_distance_matr;
 }
 
-VertexArr Graph::GetEccentricity()
+const VertexArr& Graph::GetEccentricity() const
 {
-	// выходной вектор с эксцентриситетами
-	VertexArr out;
+	return m_eccentricity;
+}
 
-	// вычисление эксцентриситета
-	std::for_each(
-		m_shortest_distance_matr.begin(), m_shortest_distance_matr.end(),
-		[&out](const VertexArr& row)
-		{
-			out.push_back(*std::max_element(row.begin(), row.end()));
-		}
-	);
+const int& Graph::GetDiameter() const
+{
+	return m_diameter;
+}
 
-	return out;
+const int& Graph::GetRadius() const
+{
+	return m_radius;
+}
+
+const VertexArr& Graph::GetCentralVertices() const
+{
+	return m_central_vertices;
+}
+
+const VertexArr& Graph::GetPeripheralVertices() const
+{
+	return m_peripheral_vertices;
 }
 

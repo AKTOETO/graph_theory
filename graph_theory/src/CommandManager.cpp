@@ -99,6 +99,22 @@ void CommandManager::Run()
 	std::cout << "Eccentricity:\n[";
 	PrintVector(ecc, ", ");
 	std::cout << "]\n";
+
+	// диаметр
+	std::cout << "D = " << m_graph.GetDiameter() << std::endl;
+
+	// радиус
+	std::cout << "R = " << m_graph.GetRadius() << std::endl;
+
+	// центральные вершины
+	std::cout << "Z = [";
+	PrintVector(m_graph.GetCentralVertices(), ", ");
+	std::cout << "]\n";
+
+	// периферийные вершины
+	std::cout << "P = [";
+	PrintVector(m_graph.GetPeripheralVertices(), ", ");
+	std::cout << "]\n";
 }
 
 void CommandManager::PrintParams() const
