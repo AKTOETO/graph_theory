@@ -19,7 +19,7 @@ inline void PrintVector(std::vector<T> _vec, std::string _delim = " ", int _setw
 			<< std::setfill(' ');
 		
 		// вывод элементов
-		std::cout << _vec[i];
+		std::cout << (_vec[i] < INF ? _vec[i] : "inf");
 		if (i + 1 != _vec.size())std::cout << _delim;
 	}
 }

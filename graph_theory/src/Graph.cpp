@@ -435,6 +435,18 @@ EdgeArr Graph::list_of_edges(Vertex _v) const
 // TODO
 bool Graph::is_directed() const
 {
+	// проходимся по всем элементам и сравниваем их с 
+	// элементами симметричнми им относительно главной диагонали
+	for (int i = 0; i < m_adjacency_matrix.size(); i++)
+	{
+		for (int j = 0; j <= i; j++)
+		{
+			// если m_adj_mtr[i][j] != m_adj_mtr[j][i]
+			// значит граф ориентированный
+			//INFO(std::to_string(m_adjacency_matrix[i][j]) + " " + std::to_string(m_adjacency_matrix[j][i]));
+			if (m_adjacency_matrix[i][j] != m_adjacency_matrix[j][i])return true;
+		}
+	}
 	return false;
 }
 

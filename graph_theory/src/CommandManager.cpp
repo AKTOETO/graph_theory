@@ -115,6 +115,9 @@ void CommandManager::Run()
 	std::cout << "P = [";
 	PrintVector(m_graph.GetPeripheralVertices(), ", ");
 	std::cout << "]\n";
+
+	// ориентированный граф или нет
+	std::cout << ((m_graph.is_directed() == 0) ? "not dir\n" : "dir\n");
 }
 
 void CommandManager::PrintParams() const
