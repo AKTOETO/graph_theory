@@ -7,16 +7,22 @@
 //	ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ	//
 //==========================//
 
+// подсчет количество цифр в числе
+inline int CountDigit(const int& number) {
+	return int(log10(number) + 1);
+}
+
 // печать вектора через определенный элемент
 template<typename T>
-inline void PrintVector(std::vector<T> _vec, std::string _delim = " ", int _setwidth = 1)
+inline void PrintVector(std::vector<T> _vec, std::string _delim = " ", int _setwidth = 0)
 {
+	// нужен ли автоматический подбор ширины вывода числа
+	bool auto_width = (_setwidth == 0 ? 1 : 0);
+
 	for (int i = 0; i < _vec.size(); i++)
 	{
-		// настройка вывода
-		std::cout << std::fixed <<
-			std::setw((i != 0 && _setwidth > 1) ? _setwidth : _setwidth - 1)
-			<< std::setfill(' ');
+		// если нужен автоматическое вычисление ширины вывода
+		if (auto_width)_setwidth = CountDigit((_vec[i] != INF) ? _vec[i] : 1);
 
 		// вывод элементов
 		// вывод символа бесконечности
@@ -25,12 +31,13 @@ inline void PrintVector(std::vector<T> _vec, std::string _delim = " ", int _setw
 			// смена локали на стандартную для С
 			std::locale::global(std::locale::classic());
 
-			// смена кодовой панели консоли на 437
-			//system("chcp 437 > nul");
+			// смена кодовой панели консоли на 65001
 			system("chcp 65001 > nul");
 
 			// вывод символа бесконечности
-			std::cout << std::fixed<<std::setw(_setwidth+2)<<std::setfill(' ')<< u8"∞";
+			std::cout << std::fixed
+				<< std::setw(_setwidth + INF_PRINT_WIDTH)
+				<< std::setfill(' ') << u8"∞";
 
 			// смена локали на русскую
 			std::locale::global(std::locale("ru"));
@@ -41,11 +48,60 @@ inline void PrintVector(std::vector<T> _vec, std::string _delim = " ", int _setw
 		// иначе просто выводим текущий символ
 		else
 		{
+			// если это первый символ в сторке, выводим на 1 меньшую ширину			
+			std::cout << std::fixed <<
+				std::setw(_setwidth)
+				<< std::setfill(' ');
+
 			std::cout << _vec[i];
 		}
 
+
 		if (i + 1 != _vec.size())std::cout << _delim;
 	}
+}
+
+// подсчет максимального числа цифр в числе в векторе
+inline int CountDigitInVector(const VertexArr& _vec)
+{
+	int num = 0;
+	std::for_each(_vec.begin(), _vec.end(), [&num](const int& el)
+		{
+			if (el != INF)
+				num = std::max(CountDigit(el), num);
+		}
+	);
+	return num;
+}
+
+// подсчет максимального числа цифр в числе в матрице
+inline int CountDigitInMatrix(const VertexMatrix& _vec)
+{
+	int num = 0;
+	std::for_each(_vec.begin(), _vec.end(), [&num](const VertexArr& el)
+		{
+			num = std::max(CountDigitInVector(el), num);
+		}
+	);
+	return num;
+}
+
+// проверка на наличие определенного элемента в матрице
+template<typename T>
+inline bool IsThereElementInMatrix(
+	const std::vector<std::vector<T>>& _mat,
+	const T& _el
+)
+{
+	// проходимся по всем строкам и смотрим, есть ли там элемент _el
+	for (const std::vector<T>& row : _mat)
+	{
+		if (std::find(row.begin(), row.end(), _el) != row.end())
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 // получение текущего времени

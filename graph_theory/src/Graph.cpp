@@ -52,16 +52,27 @@ void Graph::ReadGraphFromFile(std::string _filepath, INPUT_FILE_TYPE _in_f_type)
 	// расчет кратчайших расстояний
 	CalculateShortDistMatr();
 
-	// расчет эксцентриситетов вершин
-	CalculateEccentricity();
+	// если в матрице кратчайших расстояний есть бесконечность
+	// то нет смысла считать остальные характеристики
 
-	// расчет диаметра и радиуса
-	CalculateDiameter();
-	CalculateRadius();
+	if(!IsThereElementInMatrix(m_shortest_distance_matr,INF))
+	{
+		// расчет эксцентриситетов вершин
+		CalculateEccentricity();
 
-	// расчет центральных и периферийнфх вершин
-	CalculateCentralVertices();
-	CalculatePeripheralVertices();
+		// если граф ориентированный, то нет смысла считать
+		// остальные параметры
+		if(!is_directed())
+		{
+			// расчет диаметра и радиуса
+			CalculateDiameter();
+			CalculateRadius();
+
+			// расчет центральных и периферийнфх вершин
+			CalculateCentralVertices();
+			CalculatePeripheralVertices();
+		}
+	}
 }
 
 void Graph::PrintAdjacencyMatrix() const
@@ -403,8 +414,6 @@ const VertexMatrix& Graph::adjacency_matrix() const
 
 VertexArr Graph::adjacency_list(Vertex _v) const
 {
-	//TODO пересмотреть определение в тетради этого термина
-
 	// выходной список смежных вершин
 	// смежными считаются досягаемые из _v вершины
 	VertexArr out;

@@ -47,45 +47,42 @@ void CommandManager::Run()
 	}
 
 	// тестовая печать
-	//INFO("печать матрицы смежности");
-	//m_graph.PrintAdjacencyMatrix();
-
-	/*INFO("Есть ли дуга от 0 к 4 = " + (m_graph.is_edge(0, 4) ? "да" : "нет"));
-	INFO("Есть ли дуга от 1 к 2 = " + (m_graph.is_edge(1, 2) ? "да" : "нет"));
-	INFO("Есть ли дуга от 1 к 1 = " + (m_graph.is_edge(1, 1) ? "да" : "нет"));
-	INFO("Вес дуги от 1 к 2 = " + std::to_string(m_graph.weight(1,2)));
-	INFO("Вес дуги от 1 к 1 = " + std::to_string(m_graph.weight(1,1)));
-	INFO("Список смежных вершин с 4:");
-
-	VertexArr vr = m_graph.adjacency_list(4);
-	for (auto& el : vr)
-	{
-		std::cout << el << " ";
-	}
-	std::cout << "\n";*/
 
 	// степень входа
-	auto vr = m_graph.GetVertexDegrees(VERTEXES_DEGREESES::IN);
-	std::cout << "deg+ = [";
-	PrintVector(vr, ", ");
-	std::cout << "]\n";
+	// если граф ориентированный
+	if(m_graph.is_directed())
+	{
+		auto vr = m_graph.GetVertexDegrees(VERTEXES_DEGREESES::IN);
+		std::cout << "deg+ = [";
+		PrintVector(vr, ", ");
+		std::cout << "]\n";
 
-	// степень выхода
-	vr = m_graph.GetVertexDegrees(VERTEXES_DEGREESES::OUT);
-	std::cout << "deg- = [";
-	PrintVector(vr, ", ");
-	std::cout << "]\n";
+		// степень выхода
+		vr = m_graph.GetVertexDegrees(VERTEXES_DEGREESES::OUT);
+		std::cout << "deg- = [";
+		PrintVector(vr, ", ");
+		std::cout << "]\n";
+	}
+	else
+	{
+		auto vr = m_graph.GetVertexDegrees(VERTEXES_DEGREESES::IN_OUT);
+		std::cout << "deg = [";
+		PrintVector(vr, ", ");
+		std::cout << "]\n";
+	}
 
 	// печать матрицы кратч. расст.
 	INFO("печать матрицы кратчайших расстояний");
 
 	std::cout << "Distancies:\n";
 	auto mat = m_graph.GetShortestDistMatr();
+	int print_width = CountDigitInMatrix(mat);
+	INFO(std::to_string(print_width));
 	for (auto& el : mat)
 	{
 		std::cout << "[";
-		PrintVector(el, "", 4);
-		std::cout << " ]\n";
+		PrintVector(el, " ", print_width);
+		std::cout << "]\n";
 	}
 
 	// TODO
@@ -93,31 +90,34 @@ void CommandManager::Run()
 	// диаметр, радиус, ... Если посмотрет 12-ый тест, то можно увидеть,
 	// что в матрице кратчайших расстояний есть ∞, из-за чего пропадает
 	// смысл считать эксцентр.
-	// Печать массива эксцентриситетов
-	INFO("Печать массива эксцентриситетов");
-	auto ecc = m_graph.GetEccentricity();
-	std::cout << "Eccentricity:\n[";
-	PrintVector(ecc, ", ");
-	std::cout << "]\n";
+	if (!IsThereElementInMatrix(mat, INF))
+	{
+		// Печать массива эксцентриситетов
+		INFO("Печать массива эксцентриситетов");
+		auto ecc = m_graph.GetEccentricity();
+		std::cout << "Eccentricity: [";
+		PrintVector(ecc, ", ");
+		std::cout << "]\n";
 
-	// диаметр
-	std::cout << "D = " << m_graph.GetDiameter() << std::endl;
+		if (!m_graph.is_directed())
+		{
+			// диаметр
+			std::cout << "D = " << m_graph.GetDiameter() << std::endl;
 
-	// радиус
-	std::cout << "R = " << m_graph.GetRadius() << std::endl;
+			// радиус
+			std::cout << "R = " << m_graph.GetRadius() << std::endl;
 
-	// центральные вершины
-	std::cout << "Z = [";
-	PrintVector(m_graph.GetCentralVertices(), ", ");
-	std::cout << "]\n";
+			// центральные вершины
+			std::cout << "Z = [";
+			PrintVector(m_graph.GetCentralVertices(), ", ");
+			std::cout << "]\n";
 
-	// периферийные вершины
-	std::cout << "P = [";
-	PrintVector(m_graph.GetPeripheralVertices(), ", ");
-	std::cout << "]\n";
-
-	// ориентированный граф или нет
-	std::cout << ((m_graph.is_directed() == 0) ? "not dir\n" : "dir\n");
+			// периферийные вершины
+			std::cout << "P = [";
+			PrintVector(m_graph.GetPeripheralVertices(), ", ");
+			std::cout << "]\n";
+		}
+	}
 }
 
 void CommandManager::PrintParams() const
