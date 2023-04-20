@@ -15,11 +15,11 @@ inline void PrintVector(std::vector<T> _vec, std::string _delim = " ", int _setw
 	{
 		// настройка вывода
 		std::cout << std::fixed <<
-			std::setw((i != 0 && _setwidth > 1) ? _setwidth : _setwidth - 1) 
+			std::setw((i != 0 && _setwidth > 1) ? _setwidth : _setwidth - 1)
 			<< std::setfill(' ');
-		
+
 		// вывод элементов
-		std::cout << (_vec[i] < INF ? _vec[i] : "inf");
+		std::cout << (_vec[i] < INF ? std::to_string(_vec[i]) : "∞"/*"inf"*/);
 		if (i + 1 != _vec.size())std::cout << _delim;
 	}
 }
@@ -85,14 +85,17 @@ inline void FindAndDeleteChar(std::string& _str, char _to_del = '\r')
 // получение строки из вектора путем объединения 
 // конкретных элементов этого вектора
 inline std::string GetStringFromVector(
-	std::vector<std::string>::iterator _begin,
-	std::vector<std::string>::iterator _end)
+	std::vector<std::string>::const_iterator _begin,
+	std::vector<std::string>::const_iterator  _end,
+	const std::string _wrapper = "",
+	const std::string _delim = ""
+)
 {
 	std::string out;
 
-	std::for_each(_begin, _end, [&out](std::string str)
+	std::for_each(_begin, _end, [&](std::string str)
 		{
-			out += str;
+			out += _wrapper + str + _wrapper + _delim;
 		}
 	);
 

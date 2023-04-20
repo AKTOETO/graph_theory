@@ -122,14 +122,9 @@ void CommandManager::Run()
 
 void CommandManager::PrintParams() const
 {
-	std::string out;
-	std::for_each(m_param.begin(), m_param.end(), [&out](std::string str)
-		{
-			out += "\'" + str + "\' ";
-		}
+	INFO("ключи с параметрами: " +
+		GetStringFromVector(m_param.begin(), m_param.end(), "\"", " ")
 	);
-
-	INFO("ключи с параметрами: " + out);
 }
 
 void CommandManager::CheckKeys()
@@ -146,27 +141,29 @@ void CommandManager::CheckKeys()
 		m_param.resize(1);
 		m_param[0] = "-h";
 	}
-
-	// проверка на наличие ключа o
-	if (IsThereAKey("-o"))
+	else
 	{
-		// вставка в начало команды этого ключа
-		auto it_beg = std::find(m_param.begin(), m_param.end(), "-o");
+		// проверка на наличие ключа o
+		if (IsThereAKey("-o"))
+		{
+			// вставка в начало команды этого ключа
+			auto it_beg = std::find(m_param.begin(), m_param.end(), "-o");
 
-		// итератор на конец команды (ключ + параметры)
-		auto it_end = std::find_if(it_beg + 1, m_param.end(), [](std::string el)
-			{
-				return el[0] == '-';
-			}
-		);
+			// итератор на конец команды (ключ + параметры)
+			auto it_end = std::find_if(it_beg + 1, m_param.end(), [](std::string el)
+				{
+					return el[0] == '-';
+				}
+			);
 
-		// вырезаем параметры и вставляем в начало
-		m_param.insert(m_param.begin(), it_beg, it_end);
+			// вырезаем параметры и вставляем в начало
+			m_param.insert(m_param.begin(), it_beg, it_end);
+		}
+
+
+		// проверка на введение одновременно ключей e m l
+		if (CheckEML()) ERROR("Неверное количество ключей -e -m -l");
 	}
-
-
-	// проверка на введение одновременно ключей e m l
-	else if (!CheckEML()) ERROR("Неверное количество ключей -e -m -l");
 }
 
 bool CommandManager::IsThereAExistsKey()

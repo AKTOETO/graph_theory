@@ -247,6 +247,7 @@ void Graph::ReadEdgesListFromFile(std::ifstream& _ifstream)
 	{
 		getline(_ifstream, str);
 
+		// TODO исправить кучу GetToken (это костыль)
 		// проверка на число
 		token1 = GetToken(str, ' ');
 		token2 = GetToken(str, ' ');
