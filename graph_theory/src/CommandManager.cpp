@@ -85,7 +85,7 @@ void CommandManager::Run()
 	{
 		std::cout << "[";
 		PrintVector(el, "", 4);
-		std::cout << "]\n";
+		std::cout << " ]\n";
 	}
 
 	// TODO
@@ -162,7 +162,7 @@ void CommandManager::CheckKeys()
 
 
 		// проверка на введение одновременно ключей e m l
-		if (CheckEML()) ERROR("Неверное количество ключей -e -m -l");
+		if (!IsCorrectNumberOfEML()) ERROR("Неверное количество ключей -e -m -l");
 	}
 }
 
@@ -179,7 +179,7 @@ bool CommandManager::IsThereAExistsKey()
 	return false;
 }
 
-bool CommandManager::CheckEML()
+bool CommandManager::IsCorrectNumberOfEML()
 {
 	// map для подсчета количества ключей eml
 	std::unordered_map<std::string, int> _eml =
@@ -252,10 +252,10 @@ void CommandManager::ReadAdjacencyList(std::string _context)
 
 void CommandManager::SetOutputFilepath(std::string _filepath)
 {
-	// просто перенаправлять cout в файловый поток
+	// открытие файла
 	m_fout.open(RESULT_FILE_PATH + _filepath);
+
 	INFO("Вывод в файл: " + RESULT_FILE_PATH + _filepath);
-	// TODO разграничить поток, чтобы не использовать cout
 
 	// перенаправление буфера вывода
 	std::cout.rdbuf(m_fout.rdbuf());

@@ -19,7 +19,31 @@ inline void PrintVector(std::vector<T> _vec, std::string _delim = " ", int _setw
 			<< std::setfill(' ');
 
 		// вывод элементов
-		std::cout << (_vec[i] < INF ? std::to_string(_vec[i]) : "∞"/*"inf"*/);
+		// вывод символа бесконечности
+		if (_vec[i] >= INF)
+		{
+			// смена локали на стандартную для С
+			std::locale::global(std::locale::classic());
+
+			// смена кодовой панели консоли на 437
+			//system("chcp 437 > nul");
+			system("chcp 65001 > nul");
+
+			// вывод символа бесконечности
+			std::cout << std::fixed<<std::setw(_setwidth+2)<<std::setfill(' ')<< u8"∞";
+
+			// смена локали на русскую
+			std::locale::global(std::locale("ru"));
+
+			// смена кодовой панели консоли на 866
+			system("chcp 866 > nul");
+		}
+		// иначе просто выводим текущий символ
+		else
+		{
+			std::cout << _vec[i];
+		}
+
 		if (i + 1 != _vec.size())std::cout << _delim;
 	}
 }

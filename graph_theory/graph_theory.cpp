@@ -4,8 +4,7 @@
 
 int main(int argc, char* argv[])
 {
-	setlocale(LC_ALL, "ru");
-
+	std::locale::global(std::locale("ru"));
 	CommandManager cm(argc, argv);
 
 	// вызов главной функции 

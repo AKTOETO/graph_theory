@@ -44,7 +44,7 @@ public:
 	bool IsThereAExistsKey();
 
 	// проверка на одновременное указание ключей -e -m -l
-	bool CheckEML();
+	bool IsCorrectNumberOfEML();
 
 	// проверка на наличие определенного ключа 
 	bool IsThereAKey(const std::string& _key);
