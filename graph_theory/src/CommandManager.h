@@ -18,6 +18,8 @@ private:
 
 	std::ofstream m_fout;
 
+	void PrintGraphInfo();
+
 public:
 	CommandManager() = delete;
 	CommandManager(int argc, char* _keys[]);
