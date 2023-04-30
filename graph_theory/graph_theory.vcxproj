@@ -133,7 +133,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\GraphManager.cpp" />
     <ClCompile Include="src\CommandManager.cpp" />
     <ClCompile Include="graph_theory.cpp" />
     <ClCompile Include="src\Graph.cpp" />
@@ -143,7 +142,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\GraphManager.h" />
     <ClInclude Include="src\CommandManager.h" />
     <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\Graph.h" />
