@@ -442,7 +442,6 @@ EdgeArr Graph::list_of_edges(Vertex _v) const
 	return EdgeArr();
 }
 
-// TODO
 bool Graph::is_directed() const
 {
 	// проходимся по всем элементам и сравниваем их с 
