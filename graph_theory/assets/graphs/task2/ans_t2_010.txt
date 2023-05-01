@@ -1,0 +1,6 @@
+Diraph is not connected and contains 3 connected components.
+Connected components:
+[[3, 6, 7, 14, 15, 16, 17, 19, 21, 25], [4, 5, 8, 9, 12, 13, 18, 20, 22], [1, 2, 10, 11, 23, 24]]
+Digraph is weakly connected and contains 16 strongly connected components.
+Strongly connected components:
+[[1], [2], [21], [17], [7, 19, 25], [3], [18], [22], [4, 5, 8, 9, 12, 13, 20], [6], [10, 23], [11], [14], [16], [15], [24]]

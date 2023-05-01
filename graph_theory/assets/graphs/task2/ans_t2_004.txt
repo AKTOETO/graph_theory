@@ -1,0 +1,6 @@
+Diraph is connected.
+Connected components:
+[[1, 2, 3, 4, 5, 6, 7]]
+Digraph is weakly connected and contains 2 strongly connected components.
+Strongly connected components:
+[[1, 5, 6, 7], [2, 3, 4]]
