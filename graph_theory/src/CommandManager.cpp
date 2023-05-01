@@ -1,73 +1,9 @@
-﻿#include "CommandManager.h"
-
-void CommandManager::PrintGraphInfo()
-{
-	if (m_graph.is_directed())
-	{
-		auto vr = m_graph.GetVertexDegrees(VERTEXES_DEGREESES::IN);
-		std::cout << "deg+ = [";
-		PrintVector(vr, ", ");
-		std::cout << "]\n";
-
-		// степень выхода
-		vr = m_graph.GetVertexDegrees(VERTEXES_DEGREESES::OUT);
-		std::cout << "deg- = [";
-		PrintVector(vr, ", ");
-		std::cout << "]\n";
-	}
-	else
-	{
-		auto vr = m_graph.GetVertexDegrees(VERTEXES_DEGREESES::IN_OUT);
-		std::cout << "deg = [";
-		PrintVector(vr, ", ");
-		std::cout << "]\n";
-	}
-
-	// печать матрицы кратч. расст.
-	INFO("печать матрицы кратчайших расстояний");
-
-	std::cout << "Distancies:\n";
-	auto mat = m_graph.GetShortestDistMatr();
-	int print_width = CountDigitInMatrix(mat);
-	INFO(std::to_string(print_width));
-	for (auto& el : mat)
-	{
-		std::cout << "[";
-		PrintVector(el, " ", print_width);
-		std::cout << "]\n";
-	}
-
-	if (!IsThereElementInMatrix(mat, INF))
-	{
-		// Печать массива эксцентриситетов
-		INFO("Печать массива эксцентриситетов");
-		auto ecc = m_graph.GetEccentricity();
-		std::cout << "Eccentricity: [";
-		PrintVector(ecc, ", ");
-		std::cout << "]\n";
-
-		if (!m_graph.is_directed())
-		{
-			// диаметр
-			std::cout << "D = " << m_graph.GetDiameter() << std::endl;
-
-			// радиус
-			std::cout << "R = " << m_graph.GetRadius() << std::endl;
-
-			// центральные вершины
-			std::cout << "Z = [";
-			PrintVector(m_graph.GetCentralVertices(), ", ");
-			std::cout << "]\n";
-
-			// периферийные вершины
-			std::cout << "P = [";
-			PrintVector(m_graph.GetPeripheralVertices(), ", ");
-			std::cout << "]\n";
-		}
-	}
-}
+﻿#include "pch.h"
+#include "CommandManager.h"
 
 CommandManager::CommandManager(int argc, char* _keys[])
+	//: m_graph(std::make_shared<Graph>())
+	:m_script_manager(nullptr)
 {
 	// задание возможных ключей и функций их обработки
 	m_commands =
@@ -112,6 +48,8 @@ void CommandManager::Run()
 		// удаление первого ключа с его параметрами		
 		m_param.erase(m_param.begin(), it_end);
 	}
+
+	m_script_manager->Run();
 }
 
 void CommandManager::PrintParams() const
@@ -228,29 +166,35 @@ void CommandManager::ConverCharArrayToStrVec(int argc, char* _keys[])
 
 void CommandManager::ReadEdgesList(std::string _context)
 {
-	// вызов функции считывания графа 
-	m_graph.ReadGraphFromFile(_context, INPUT_FILE_TYPE::EDGES_LIST);
+	// здесь будет происходить создание скрипт менеджера
+	// и передача ему сценария
 
-	// печать информации
-	PrintGraphInfo();
+	m_script_manager =
+		std::make_unique<ScriptPrintManager>(
+			_context, INPUT_FILE_TYPE::EDGES_LIST, TASK_SCRIPT
+	);
 }
 
 void CommandManager::ReadAdjacencyMatrix(std::string _context)
 {
-	// вызов функции считывания графа 
-	m_graph.ReadGraphFromFile(_context, INPUT_FILE_TYPE::ADJACENCY_MATRIX);
+	// здесь будет происходить создание скрипт менеджера
+	// и передача ему сценария
 
-	// печать информации
-	PrintGraphInfo();
+	m_script_manager =
+		std::make_unique<ScriptPrintManager>(
+			_context, INPUT_FILE_TYPE::ADJACENCY_MATRIX, TASK_SCRIPT
+		);
 }
 
 void CommandManager::ReadAdjacencyList(std::string _context)
 {
-	// вызов функции считывания графа 
-	m_graph.ReadGraphFromFile(_context, INPUT_FILE_TYPE::ADJACENCY_LIST);
-
-	// печать информации
-	PrintGraphInfo();
+	// здесь будет происходить создание скрипт менеджера
+	// и передача ему сценария
+	
+	m_script_manager =
+		std::make_unique<ScriptPrintManager>(
+			_context, INPUT_FILE_TYPE::ADJACENCY_LIST, TASK_SCRIPT
+		);
 }
 
 void CommandManager::SetOutputFilepath(std::string _filepath)

@@ -15,6 +15,49 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 // ширина при выводе символа бесконечности 
 #define INF_PRINT_WIDTH 2
 
+// Количество характеристик
+#define NUMBER_OF_SPECIFIERS 9
+
+// возможные характеристики, которые есть у графа
+// и которые можно просчитать
+enum class SPEC
+{
+	SHORTEST_DIST_MATR,
+	ECCENTR,
+	CENTRAL_VERT,
+	PERIPHERAL_VERT,
+	RADIUS,
+	DIAMETER,
+	DEGREES_IN,
+	DEGREES_OUT,
+	DEGREES_IN_OUT,
+};
+
+// тип данных сценария выполнения программы
+using Script = std::list<SPEC>;
+
+//===================//
+//  С Ц Е Н А Р И Й  //
+//===================//
+static const Script TASK_SCRIPT = Script
+{
+	SPEC::DEGREES_IN_OUT,
+	SPEC::DEGREES_IN,
+	SPEC::DEGREES_OUT,
+	SPEC::SHORTEST_DIST_MATR,
+	SPEC::ECCENTR,
+	SPEC::DIAMETER,
+	SPEC::RADIUS,
+	SPEC::CENTRAL_VERT,
+	SPEC::PERIPHERAL_VERT
+};
+
+//===================//
+// У К А З А Т Е Л И //
+//===================//
+
+#define U_PTR(type) std::unique_ptr<type>
+#define S_PTR(type) std::shared_ptr<type>
 
 //==================//
 //	В Е Р Ш И Н А	//

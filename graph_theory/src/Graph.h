@@ -3,19 +3,6 @@
 
 #include "Logger.hpp"
 
-// типы степеней вершин
-enum class VERTEXES_DEGREESES
-{
-	// полустепень входа
-	IN,
-
-	// полустепень выхода
-	OUT,
-
-	// степень (вход + выход)
-	IN_OUT,
-};
-
 // типы входных файлов с графами
 enum class INPUT_FILE_TYPE
 {
@@ -68,24 +55,6 @@ private:
 	// матрица смежности
 	VertexMatrix m_adjacency_matrix;
 
-	// матрица кратчайших расстояний
-	VertexMatrix m_shortest_distance_matr;
-
-	// эксцентриситет вершин графа
-	VertexArr m_eccentricity;
-
-	// множество центральных вершин
-	VertexArr m_central_vertices;
-
-	// множество периферийных вершин
-	VertexArr m_peripheral_vertices;
-	
-	// радиус графа
-	int m_radius;
-
-	// диаметр графа
-	int m_diameter;
-
 	//==========================
 	//      Ф У Н К Ц И И
 	//==========================
@@ -108,38 +77,12 @@ private:
 	/// <param name="_ifstream"></param>
 	void ReadEdgesListFromFile(std::ifstream& _ifstream);
 
-	/// <summary>
-	/// Расчет матрицы кратчайших расстояний
-	/// </summary>
-	void CalculateShortDistMatr();
-
-	/// <summary>
-	/// Расчет эксцентриситета
-	/// </summary>
-	void CalculateEccentricity();
-
-	/// <summary>
-	/// Расчет радиуса
-	/// </summary>
-	void CalculateRadius();
-	
-	/// <summary>
-	/// Расчет диаметра
-	/// </summary>
-	void CalculateDiameter();
-
-	/// <summary>
-	/// Расчет центральных вершин
-	/// </summary>
-	void CalculateCentralVertices();
-
-	/// <summary>
-	/// Расчет периферийных вершин
-	/// </summary>
-	void CalculatePeripheralVertices();
-
 public:
+
+	// конструктор с путем до файла и типом файла
+	Graph(std::string _filepath, INPUT_FILE_TYPE);
 	
+	// TODO заблокировать конструктор по умолчанию
 	// Конструктор класса Graph
 	Graph();
 	
@@ -204,49 +147,6 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	bool is_directed() const;
-
-	/// <summary>
-	/// Получение степени вершины
-	/// </summary>
-	/// <param name="_deg"> - какую степень именно надо получить (полустепень входа/выхода, полную степень)</param>
-	/// <returns>сама степень вершины</returns>
-	VertexArr GetVertexDegrees(VERTEXES_DEGREESES _deg) const;
-
-	/// <summary>
-	/// Получение матрицы кратчайших расстояний
-	/// </summary>
-	/// <returns>матрица кратчайших расстояний</returns>
-	const VertexMatrix& GetShortestDistMatr() const;
-
-	/// <summary>
-	/// получение эксцентриcитета графа
-	/// </summary>
-	/// <returns>массив с эксцентриситетом для каждой вершины</returns>
-	const VertexArr& GetEccentricity() const;
-
-	/// <summary>
-	/// Получение диаметра графа
-	/// </summary>
-	/// <returns>диаметр графа</returns>
-	const int& GetDiameter() const;
-
-	/// <summary>
-	/// Получение радиуса гарфа
-	/// </summary>
-	/// <returns>радиус гарфа</returns>
-	const int& GetRadius() const;
-
-	/// <summary>
-	/// Получение центральных вершин
-	/// </summary>
-	/// <returns>центральные вершины</returns>
-	const VertexArr& GetCentralVertices() const;
-
-	/// <summary>
-	/// Получение периферийных вершин
-	/// </summary>
-	/// <returns>периферийные вершины</returns>
-	const VertexArr& GetPeripheralVertices() const;
 };
 
 #endif // GRAPH_H

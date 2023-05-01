@@ -133,6 +133,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ScriptPrintManager.cpp" />
+    <ClCompile Include="src\GraphManager.cpp" />
     <ClCompile Include="src\CommandManager.cpp" />
     <ClCompile Include="graph_theory.cpp" />
     <ClCompile Include="src\Graph.cpp" />
@@ -142,6 +144,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ScriptPrintManager.h" />
+    <ClInclude Include="src\GraphManager.h" />
     <ClInclude Include="src\CommandManager.h" />
     <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\Graph.h" />
@@ -155,7 +159,7 @@
     <Text Include="assets\graphs\edges_list.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

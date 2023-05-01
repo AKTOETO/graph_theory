@@ -1,6 +1,6 @@
 ﻿#ifndef COMMANDMANAGER_H
 #define COMMANDMANAGER_H
-#include "Graph.h"
+#include "ScriptPrintManager.h"
 
 // обработчик введенных ключей
 class CommandManager
@@ -10,15 +10,14 @@ private:
 	// выполняющие эти команды
 	std::unordered_map<std::string, void(CommandManager::*)(std::string)> m_commands;
 
-	// Граф
-	Graph m_graph;
+	// Управляющий сценарием выполнения программы
+	U_PTR(ScriptPrintManager) m_script_manager;
 
 	// Введенные параметры при запуске
 	std::vector<std::string> m_param;
 
 	std::ofstream m_fout;
 
-	void PrintGraphInfo();
 
 public:
 	CommandManager() = delete;
@@ -85,8 +84,6 @@ public:
 	/// </summary>
 	/// <param name="_data"></param>
 	void GetDeveloperData(std::string _data);
-
-
 };
 
 #endif // COMMANDMANAGER_H
