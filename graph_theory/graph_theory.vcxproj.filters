@@ -27,10 +27,16 @@
     <ClCompile Include="src\CommandManager.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\GraphManager.cpp">
+    <ClCompile Include="src\task1\GraphManagerT1.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\ScriptPrintManager.cpp">
+    <ClCompile Include="src\task1\ScriptPrintManagerT1.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\task2\GraphManagerT2.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\task2\ScriptPrintManagerT2.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,10 +59,22 @@
     <ClInclude Include="src\CommandManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\GraphManager.h">
+    <ClInclude Include="src\task1\GraphManagerT1.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\ScriptPrintManager.h">
+    <ClInclude Include="src\task1\ScriptPrintManagerT1.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task2\GraphManagerT2.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task2\ScriptPrintManagerT2.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BaseGraphManager.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BaseScriptPrintManager.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

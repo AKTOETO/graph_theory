@@ -133,8 +133,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\ScriptPrintManager.cpp" />
-    <ClCompile Include="src\GraphManager.cpp" />
     <ClCompile Include="src\CommandManager.cpp" />
     <ClCompile Include="graph_theory.cpp" />
     <ClCompile Include="src\Graph.cpp" />
@@ -142,16 +140,24 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\task1\GraphManagerT1.cpp" />
+    <ClCompile Include="src\task1\ScriptPrintManagerT1.cpp" />
+    <ClCompile Include="src\task2\GraphManagerT2.cpp" />
+    <ClCompile Include="src\task2\ScriptPrintManagerT2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ScriptPrintManager.h" />
-    <ClInclude Include="src\GraphManager.h" />
+    <ClInclude Include="src\BaseGraphManager.hpp" />
+    <ClInclude Include="src\BaseScriptPrintManager.hpp" />
     <ClInclude Include="src\CommandManager.h" />
     <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\Graph.h" />
     <ClInclude Include="src\Logger.hpp" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Support.h" />
+    <ClInclude Include="src\task1\GraphManagerT1.h" />
+    <ClInclude Include="src\task1\ScriptPrintManagerT1.h" />
+    <ClInclude Include="src\task2\GraphManagerT2.h" />
+    <ClInclude Include="src\task2\ScriptPrintManagerT2.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\graphs\adjacency_list.txt" />

@@ -3,10 +3,14 @@
 
 #include "pch.h"
 
-// TODO добавить дефайн с номером задания
-// чтобы на этапе компиляции было понятно, 
-// какой задание делать, то есть будет 
-// использовано ifdef для script'a
+//=========================//
+// КАКОЕ ЗАДАНИЕ ЗАПУСКАТЬ //
+//=========================//
+#define T1
+
+//===================//
+// К О Н С Т А Н Т Ы //
+//===================//
 
 // путь до папки с файлами для графа
 const std::string GRAPH_FILE_PATH = "assets/graphs/";
@@ -22,6 +26,10 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 
 // Количество характеристик
 #define NUMBER_OF_SPECIFIERS 17
+
+//===========================//
+// С П Е Ц И Ф И К А Т О Р Ы //
+//===========================//
 
 // возможные характеристики, которые есть у графа
 // и которые можно просчитать
@@ -57,6 +65,24 @@ using Script = std::list<SPEC>;
 //===================//
 //  С Ц Е Н А Р И Й  //
 //===================//
+
+#if defined(T1)
+// сценарий для первого задания
+static const Script TASK_SCRIPT = Script
+{
+	SPEC::DEGREES_IN_OUT,
+	SPEC::DEGREES_IN,
+	SPEC::DEGREES_OUT,
+	SPEC::SHORTEST_DIST_MATR,
+	SPEC::ECCENTR,
+	SPEC::DIAMETER,
+	SPEC::RADIUS,
+	SPEC::CENTRAL_VERT,
+	SPEC::PERIPHERAL_VERT
+};
+
+#elif defined(T2)
+// сценарий для второго задания
 static const Script TASK_SCRIPT = Script
 {
 	SPEC::IS_CONNECTED,
@@ -68,6 +94,29 @@ static const Script TASK_SCRIPT = Script
 	SPEC::IS_STRONGLY_CONNECTED,
 	SPEC::STRONGLY_CONNECTED_COMPONENTS
 };
+
+#elif defined(T3)
+
+#elif defined(T4)
+
+#elif defined(T5)
+
+#elif defined(T6)
+
+#elif defined(T7)
+
+#elif defined(T8)
+
+#elif defined(T9)
+
+#elif defined(T10)
+
+#elif defined(T11)
+
+
+#endif 
+
+
 
 //===================//
 // У К А З А Т Е Л И //

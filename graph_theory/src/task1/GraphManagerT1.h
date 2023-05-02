@@ -1,20 +1,12 @@
 ﻿#pragma once
-#include "Graph.h"
+#include "../BaseGraphManager.hpp"
 
 /// <summary>
 /// Класс для управления графом
 /// </summary>
-class GraphManager
+class GraphManagerT1 : public BaseGraphManager<GraphManagerT1>
 {
-private:
-
-	// Сам граф
-	U_PTR(Graph) m_graph;
-
-	// просчитана ли характеристика
-	// 1 - просчитана
-	// 0 - не просчитана
-	U_PTR(std::vector<bool>) m_state_of_spec;
+protected:
 
 	// матрица кратчайших расстояний
 	U_PTR(VertexMatrix) m_shortest_distance_matr;
@@ -43,29 +35,15 @@ private:
 	// массив степеней входа и выхода из вершины
 	U_PTR(VertexArr) m_degrees_in_out;
 
-	// установить состояние характеристики
-	// 1 - просчитана
-	// 0 - не просчитана
-	void SetStateOfSpec(SPEC, bool);
-
 public:
 
 	// конструктор с путем до файла и типом файла
-	GraphManager(std::string _filepath, INPUT_FILE_TYPE);
-	~GraphManager();
+	GraphManagerT1(std::string _filepath, INPUT_FILE_TYPE _in_f_type);
+	~GraphManagerT1() override;
 
 	//==================================//
 	//         CALCULATE МЕТОДЫ         //
 	//==================================//
-
-	// TASK 1
-
-	/// <summary>
-	/// Расчет определенной характеристики
-	/// </summary>
-	/// <param name="_spec"> - характеристика, которую надо расчитать</param>
-	/// <returns></returns>
-	void CalculateSpecifier(SPEC _spec);
 
 	/// <summary>
 	/// Расчет степени входа вершины
@@ -121,37 +99,9 @@ public:
 	/// <returns>периферийные вершины</returns>
 	bool CalculatePeripheralVertices();
 
-	// TASK 2
-
-	// расчет: связен ли граф
-	bool CalculateIsConnected();
-
-	// расчет: не связен ли граф
-	bool CalculateIsNotConnected();
-
-	// расчет: компоненты связности
-	bool CalculateConnectedComponents();
-
-	// расчет: связен ли диграф
-	bool CalculateIsDigraphConnected();
-
-	// расчет: не связен ли диграф
-	bool CalculateIsDigraphNotConnected();
-
-	// расчет: слабо ли свзяен диграф
-	bool CalculateIsDigraphWeaklyConnected();
-
-	// расчет: сильно ли свзяен диграф
-	bool CalculateIsDigraphStronglyConnected();
-
-	// расчет: компоненты сильной связности
-	bool CalculateStronglyConnectedComponents();
-
 	//==================================//
 	//            GET МЕТОДЫ            //
 	//==================================//
-
-	// TASK 1
 
 	/// <summary>
 	/// Получение степени вершины входа
@@ -206,22 +156,6 @@ public:
 	/// </summary>
 	/// <returns>периферийные вершины</returns>
 	const U_PTR(VertexArr)& GetPeripheralVertices() const;
-
-	/// <summary>
-	/// получение состояния всех характеристик
-	/// </summary>
-	/// <returns>указатель на вектор</returns>
-	const U_PTR(std::vector<bool>)& GetStatesOfSpecs() const;
-
-	// TASK 2
-
-	// получение: количество компонент связности
-
-	// получение: компоненты связности
-
-	// получение: компоненты сильной связности
-
-	// получение: количество компонент сильной связности
 
 };
 

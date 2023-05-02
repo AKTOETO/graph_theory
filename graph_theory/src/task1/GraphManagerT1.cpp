@@ -1,14 +1,9 @@
-﻿#include "pch.h"
-#include "GraphManager.h"
+﻿#include "../pch.h"
+#include "GraphManagerT1.h"
 
-void GraphManager::SetStateOfSpec(SPEC _spec, bool _state)
-{
-	(*m_state_of_spec)[int(_spec)] = _state;
-}
-
-GraphManager::GraphManager(std::string _filepath, INPUT_FILE_TYPE _in_f_type)
+GraphManagerT1::GraphManagerT1(std::string _filepath, INPUT_FILE_TYPE _in_f_type)
 // инициализация всех полей
-	:m_state_of_spec(std::make_unique<std::vector<bool>>(NUMBER_OF_SPECIFIERS, 0)),
+	:BaseGraphManager(_filepath, _in_f_type),
 	m_shortest_distance_matr(nullptr),
 	m_eccentricity(nullptr),
 	m_central_vertices(nullptr),
@@ -19,14 +14,22 @@ GraphManager::GraphManager(std::string _filepath, INPUT_FILE_TYPE _in_f_type)
 	m_degrees_out(nullptr),
 	m_degrees_in_out(nullptr)
 {
-	// создание графа
-	m_graph = std::make_unique<Graph>(_filepath, _in_f_type);
+	m_specs =
+	{
+		{SPEC::SHORTEST_DIST_MATR,	&GraphManagerT1::CalculateShortestDistMatr},
+		{SPEC::ECCENTR,				&GraphManagerT1::CalculateEccentricity},
+		{SPEC::CENTRAL_VERT,		&GraphManagerT1::CalculateCentralVertices},
+		{SPEC::PERIPHERAL_VERT,		&GraphManagerT1::CalculatePeripheralVertices},
+		{SPEC::RADIUS,				&GraphManagerT1::CalculateRadius},
+		{SPEC::DIAMETER,			&GraphManagerT1::CalculateDiameter},
+		{SPEC::DEGREES_IN,			&GraphManagerT1::CalculateVertexDegreesIn},
+		{SPEC::DEGREES_OUT,			&GraphManagerT1::CalculateVertexDegreesOut},
+		{SPEC::DEGREES_IN_OUT,		&GraphManagerT1::CalculateVertexDegreesInOut},
+	};
 };
-GraphManager::~GraphManager()
+GraphManagerT1::~GraphManagerT1()
 {
 	// очистка памяти
-	m_graph.reset();
-	m_state_of_spec.reset();
 	m_shortest_distance_matr.reset();
 	m_eccentricity.reset();
 	m_central_vertices.reset();
@@ -45,98 +48,7 @@ GraphManager::~GraphManager()
 #define IF_CALC(_spec) if((*m_state_of_spec)[int(_spec)])
 #define IF_NOT_CALC(_spec) if(!(*m_state_of_spec)[int(_spec)])
 
-void GraphManager::CalculateSpecifier(SPEC _spec)
-{
-	// если раньше не рассчитывали
-	IF_NOT_CALC(_spec)
-	{
-		// TODO создать unoredered map
-		// в котором будут храниться следующие данные:
-		// характеристика - ее функция расчета
-		// характеристика - ее функция расчета
-		// характеристика - ее функция расчета
-		// ...
-		// характеристика - ее функция расчета
-		
-		// расчет этой характеристики
-		switch (_spec)
-		{
-			// TASK 1
-		case SPEC::SHORTEST_DIST_MATR:
-			SetStateOfSpec(SPEC::SHORTEST_DIST_MATR, CalculateShortestDistMatr());
-			break;
-
-		case SPEC::ECCENTR:
-			SetStateOfSpec(SPEC::ECCENTR, CalculateEccentricity());
-			break;
-
-		case SPEC::CENTRAL_VERT:
-			SetStateOfSpec(SPEC::CENTRAL_VERT, CalculateCentralVertices());
-			break;
-
-		case SPEC::PERIPHERAL_VERT:
-			SetStateOfSpec(SPEC::PERIPHERAL_VERT, CalculatePeripheralVertices());
-			break;
-
-		case SPEC::RADIUS:
-			SetStateOfSpec(SPEC::RADIUS, CalculateRadius());
-			break;
-
-		case SPEC::DIAMETER:
-			SetStateOfSpec(SPEC::DIAMETER, CalculateDiameter());
-			break;
-
-		case SPEC::DEGREES_IN:
-			SetStateOfSpec(SPEC::DEGREES_IN, CalculateVertexDegreesIn());
-			break;
-
-		case SPEC::DEGREES_OUT:
-			SetStateOfSpec(SPEC::DEGREES_OUT, CalculateVertexDegreesOut());
-			break;
-
-		case SPEC::DEGREES_IN_OUT:
-			SetStateOfSpec(SPEC::DEGREES_IN_OUT, CalculateVertexDegreesInOut());
-			break;
-
-			// TASK 2
-		case SPEC::IS_CONNECTED:
-			SetStateOfSpec(SPEC::IS_CONNECTED, CalculateIsConnected());
-			break;
-		case SPEC::IS_NOT_CONNECTED:
-			SetStateOfSpec(SPEC::IS_NOT_CONNECTED, CalculateIsNotConnected());
-			break;
-		case SPEC::CONNECTED_COMPONENTS:
-			SetStateOfSpec(SPEC::CONNECTED_COMPONENTS, CalculateConnectedComponents());
-			break;
-		case SPEC::IS_DIGRAPH_CONNECTED:
-			SetStateOfSpec(SPEC::IS_DIGRAPH_CONNECTED, CalculateIsDigraphConnected());
-			break;
-		case SPEC::IS_DIGRAPH_NOT_CONNECTED:
-			SetStateOfSpec(SPEC::IS_DIGRAPH_NOT_CONNECTED, CalculateIsDigraphNotConnected());
-			break;
-		case SPEC::IS_WEAKLY_CONNECTED:
-			SetStateOfSpec(SPEC::IS_WEAKLY_CONNECTED, CalculateIsDigraphWeaklyConnected());
-			break;
-		case SPEC::IS_STRONGLY_CONNECTED:
-			SetStateOfSpec(SPEC::IS_STRONGLY_CONNECTED, CalculateIsDigraphStronglyConnected());
-			break;
-		case SPEC::STRONGLY_CONNECTED_COMPONENTS:
-			SetStateOfSpec(SPEC::STRONGLY_CONNECTED_COMPONENTS, CalculateStronglyConnectedComponents());
-			break;
-
-		default:
-			INFO("Неизвесная характеристика под номером " + std::to_string(int(_spec)));
-			break;
-		}
-	}
-	else
-	{
-		INFO("Уже был осуществлен расчет характеристики под номером " + std::to_string(int(_spec)));
-	}
-
-}
-
-bool GraphManager::CalculateVertexDegreesIn()
+bool GraphManagerT1::CalculateVertexDegreesIn()
 {
 	// если граф направленный, расчитываем степень входа
 	if (m_graph->is_directed())
@@ -159,7 +71,7 @@ bool GraphManager::CalculateVertexDegreesIn()
 	return false;
 }
 
-bool GraphManager::CalculateVertexDegreesOut()
+bool GraphManagerT1::CalculateVertexDegreesOut()
 {
 	// если граф направленный, расчитываем степень выхода
 	if (m_graph->is_directed())
@@ -182,7 +94,7 @@ bool GraphManager::CalculateVertexDegreesOut()
 	return false;
 }
 
-bool GraphManager::CalculateVertexDegreesInOut()
+bool GraphManagerT1::CalculateVertexDegreesInOut()
 {
 	// если граф не направленный, расчитываем степень входа и выхода
 	if (!m_graph->is_directed())
@@ -209,7 +121,7 @@ bool GraphManager::CalculateVertexDegreesInOut()
 /// Расчет матрицы кратчайших расстояний
 /// </summary>
 /// <returns>матрица кратчайших расстояний</returns>
-bool GraphManager::CalculateShortestDistMatr()
+bool GraphManagerT1::CalculateShortestDistMatr()
 {
 	INFO("расчет кратчайших расстояний");
 	// выделение памяти под матрицу кратчайших расстояний 
@@ -265,7 +177,7 @@ bool GraphManager::CalculateShortestDistMatr()
 /// Расчет эксцентриcитета графа
 /// </summary>
 /// <returns>массив с эксцентриситетом для каждой вершины</returns>
-bool GraphManager::CalculateEccentricity()
+bool GraphManagerT1::CalculateEccentricity()
 {
 	// если не расчитана матрица кратч. расст., расчитываем ее
 	IF_NOT_CALC(SPEC::SHORTEST_DIST_MATR) CalculateShortestDistMatr();
@@ -293,7 +205,7 @@ bool GraphManager::CalculateEccentricity()
 /// Расчет диаметра графа
 /// </summary>
 /// <returns>диаметр графа</returns>
-bool GraphManager::CalculateDiameter()
+bool GraphManagerT1::CalculateDiameter()
 {
 	IF_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
 
@@ -318,7 +230,7 @@ bool GraphManager::CalculateDiameter()
 /// Расчет радиуса гарфа
 /// </summary>
 /// <returns>радиус гарфа</returns>
-bool GraphManager::CalculateRadius()
+bool GraphManagerT1::CalculateRadius()
 {
 	IF_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
 
@@ -341,7 +253,7 @@ bool GraphManager::CalculateRadius()
 /// Расчет центральных вершин
 /// </summary>
 /// <returns>центральные вершины</returns>
-bool GraphManager::CalculateCentralVertices()
+bool GraphManagerT1::CalculateCentralVertices()
 {
 	IF_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
 	IF_NOT_CALC(SPEC::RADIUS) CalculateRadius();
@@ -373,7 +285,7 @@ bool GraphManager::CalculateCentralVertices()
 /// Расчет периферийных вершин
 /// </summary>
 /// <returns>периферийные вершины</returns>
-bool GraphManager::CalculatePeripheralVertices()
+bool GraphManagerT1::CalculatePeripheralVertices()
 {
 	IF_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
 	IF_NOT_CALC(SPEC::DIAMETER) CalculateRadius();
@@ -401,61 +313,19 @@ bool GraphManager::CalculatePeripheralVertices()
 	return false;
 }
 
-
-bool GraphManager::CalculateIsConnected()
-{
-
-	return false;
-}
-
-bool GraphManager::CalculateIsNotConnected()
-{
-	return false;
-}
-
-bool GraphManager::CalculateConnectedComponents()
-{
-	return false;
-}
-
-bool GraphManager::CalculateIsDigraphConnected()
-{
-	return false;
-}
-
-bool GraphManager::CalculateIsDigraphNotConnected()
-{
-	return false;
-}
-
-bool GraphManager::CalculateIsDigraphWeaklyConnected()
-{
-	return false;
-}
-
-bool GraphManager::CalculateIsDigraphStronglyConnected()
-{
-	return false;
-}
-
-bool GraphManager::CalculateStronglyConnectedComponents()
-{
-	return false;
-}
-
 //==================================//
 //            GET МЕТОДЫ            //
 //==================================//
 
-const U_PTR(VertexArr)& GraphManager::GetVertexDegreesIn() const
+const U_PTR(VertexArr)& GraphManagerT1::GetVertexDegreesIn() const
 {
 	return m_degrees_in;
 }
-const U_PTR(VertexArr)& GraphManager::GetVertexDegreesOut() const
+const U_PTR(VertexArr)& GraphManagerT1::GetVertexDegreesOut() const
 {
 	return m_degrees_out;
 }
-const U_PTR(VertexArr)& GraphManager::GetVertexDegreesInOut() const
+const U_PTR(VertexArr)& GraphManagerT1::GetVertexDegreesInOut() const
 {
 	return m_degrees_in_out;
 }
@@ -464,7 +334,7 @@ const U_PTR(VertexArr)& GraphManager::GetVertexDegreesInOut() const
 /// Получение матрицы кратчайших расстояний
 /// </summary>
 /// <returns>матрица кратчайших расстояний</returns>
-const U_PTR(VertexMatrix)& GraphManager::GetShortestDistMatr() const
+const U_PTR(VertexMatrix)& GraphManagerT1::GetShortestDistMatr() const
 {
 	return m_shortest_distance_matr;
 };
@@ -473,7 +343,7 @@ const U_PTR(VertexMatrix)& GraphManager::GetShortestDistMatr() const
 /// получение эксцентриcитета графа
 /// </summary>
 /// <returns>массив с эксцентриситетом для каждой вершины</returns>
-const U_PTR(VertexArr)& GraphManager::GetEccentricity() const
+const U_PTR(VertexArr)& GraphManagerT1::GetEccentricity() const
 {
 	return m_eccentricity;
 };
@@ -482,7 +352,7 @@ const U_PTR(VertexArr)& GraphManager::GetEccentricity() const
 /// Получение диаметра графа
 /// </summary>
 /// <returns>диаметр графа</returns>
-const U_PTR(int)& GraphManager::GetDiameter() const
+const U_PTR(int)& GraphManagerT1::GetDiameter() const
 {
 	return m_diameter;
 };
@@ -491,7 +361,7 @@ const U_PTR(int)& GraphManager::GetDiameter() const
 /// Получение радиуса гарфа
 /// </summary>
 /// <returns>радиус гарфа</returns>
-const U_PTR(int)& GraphManager::GetRadius() const
+const U_PTR(int)& GraphManagerT1::GetRadius() const
 {
 	return m_radius;
 };
@@ -500,7 +370,7 @@ const U_PTR(int)& GraphManager::GetRadius() const
 /// Получение центральных вершин
 /// </summary>
 /// <returns>центральные вершины</returns>
-const U_PTR(VertexArr)& GraphManager::GetCentralVertices() const
+const U_PTR(VertexArr)& GraphManagerT1::GetCentralVertices() const
 {
 	return m_central_vertices;
 };
@@ -509,13 +379,9 @@ const U_PTR(VertexArr)& GraphManager::GetCentralVertices() const
 /// Получение периферийных вершин
 /// </summary>
 /// <returns>периферийные вершины</returns>
-const U_PTR(VertexArr)& GraphManager::GetPeripheralVertices() const
+const U_PTR(VertexArr)& GraphManagerT1::GetPeripheralVertices() const
 {
 	return m_peripheral_vertices;
-}
-const U_PTR(std::vector<bool>)& GraphManager::GetStatesOfSpecs() const
-{
-	return m_state_of_spec;
 }
  
 

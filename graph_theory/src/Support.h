@@ -13,8 +13,8 @@ inline int CountDigit(const int& number) {
 }
 
 // печать вектора через определенный элемент
-template<typename T>
-inline void PrintVector(std::vector<T> _vec, std::string _delim = " ", int _setwidth = 0)
+template<typename ScriptMan>
+inline void PrintVector(std::vector<ScriptMan> _vec, std::string _delim = " ", int _setwidth = 0)
 {
 	// нужен ли автоматический подбор ширины вывода числа
 	bool auto_width = (_setwidth == 0 ? 1 : 0);
@@ -87,14 +87,14 @@ inline int CountDigitInMatrix(const VertexMatrix& _vec)
 }
 
 // проверка на наличие определенного элемента в матрице
-template<typename T>
+template<typename ScriptMan>
 inline bool IsThereElementInMatrix(
-	const std::vector<std::vector<T>>& _mat,
-	const T& _el
+	const std::vector<std::vector<ScriptMan>>& _mat,
+	const ScriptMan& _el
 )
 {
 	// проходимся по всем строкам и смотрим, есть ли там элемент _el
-	for (const std::vector<T>& row : _mat)
+	for (const std::vector<ScriptMan>& row : _mat)
 	{
 		if (std::find(row.begin(), row.end(), _el) != row.end())
 		{
