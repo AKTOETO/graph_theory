@@ -58,6 +58,8 @@ public:
 	//         CALCULATE МЕТОДЫ         //
 	//==================================//
 
+	// TASK 1
+
 	/// <summary>
 	/// Расчет определенной характеристики
 	/// </summary>
@@ -119,9 +121,37 @@ public:
 	/// <returns>периферийные вершины</returns>
 	bool CalculatePeripheralVertices();
 
+	// TASK 2
+
+	// расчет: связен ли граф
+	bool CalculateIsConnected();
+
+	// расчет: не связен ли граф
+	bool CalculateIsNotConnected();
+
+	// расчет: компоненты связности
+	bool CalculateConnectedComponents();
+
+	// расчет: связен ли диграф
+	bool CalculateIsDigraphConnected();
+
+	// расчет: не связен ли диграф
+	bool CalculateIsDigraphNotConnected();
+
+	// расчет: слабо ли свзяен диграф
+	bool CalculateIsDigraphWeaklyConnected();
+
+	// расчет: сильно ли свзяен диграф
+	bool CalculateIsDigraphStronglyConnected();
+
+	// расчет: компоненты сильной связности
+	bool CalculateStronglyConnectedComponents();
+
 	//==================================//
 	//            GET МЕТОДЫ            //
 	//==================================//
+
+	// TASK 1
 
 	/// <summary>
 	/// Получение степени вершины входа
@@ -177,11 +207,21 @@ public:
 	/// <returns>периферийные вершины</returns>
 	const U_PTR(VertexArr)& GetPeripheralVertices() const;
 
-
 	/// <summary>
 	/// получение состояния всех характеристик
 	/// </summary>
 	/// <returns>указатель на вектор</returns>
 	const U_PTR(std::vector<bool>)& GetStatesOfSpecs() const;
+
+	// TASK 2
+
+	// получение: количество компонент связности
+
+	// получение: компоненты связности
+
+	// получение: компоненты сильной связности
+
+	// получение: количество компонент сильной связности
+
 };
 

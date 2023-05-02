@@ -26,6 +26,8 @@ public:
 	// МЕТОДЫ ПЕЧАТИ ХАРАКТЕРИСТИК ГРАФА //
 	//===================================//
 
+	// TASK 1
+
 	// печать матрицы кратчайших расстояний
 	void PrintShortestDistMatrix() const;
 
@@ -52,5 +54,32 @@ public:
 
 	// печать степени входа и выхода вершины
 	void PrintVertexDegreesInOut() const;
+
+	// TASK 2
+
+	// печать: связен ли граф
+	void PrintIsConnected() const;
+
+	// печать: не связен ли граф
+	void PrintIsNotConnected() const;
+
+	// печать: компоненты связности
+	void PrintConnectedComponents() const;
+
+	// печать: связен ли диграф
+	void PrintIsDigraphConnected() const;
+
+	// печать: не связен ли диграф
+	void PrintIsDigraphNotConnected() const;
+
+	// печать: слабо ли свзяен диграф
+	void PrintIsDigraphWeaklyConnected() const;
+	
+	// печать: сильно ли свзяен диграф
+	void PrintIsDigraphStronglyConnected() const;
+
+	// печать: компоненты сильной связности
+	void PrintStronglyConnectedComponents() const;
+
 };
 

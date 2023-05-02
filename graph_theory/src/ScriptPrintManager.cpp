@@ -155,3 +155,46 @@ void ScriptPrintManager::PrintVertexDegreesInOut() const
 		std::cout << "]\n";
 	}
 }
+
+void ScriptPrintManager::PrintIsConnected() const
+{
+	IF_CALC(SPEC::IS_CONNECTED)
+	{
+		INFO("печать: граф связен");
+		std::cout << "Graph is connected.\n";
+	}
+}
+
+void ScriptPrintManager::PrintIsNotConnected() const
+{
+}
+
+void ScriptPrintManager::PrintConnectedComponents() const
+{
+}
+
+void ScriptPrintManager::PrintIsDigraphConnected() const
+{
+
+}
+
+void ScriptPrintManager::PrintIsDigraphNotConnected() const
+{
+}
+
+void ScriptPrintManager::PrintIsDigraphWeaklyConnected() const
+{
+}
+
+void ScriptPrintManager::PrintIsDigraphStronglyConnected() const
+{
+	IF_CALC(SPEC::IS_STRONGLY_CONNECTED)
+	{
+		INFO("печать: граф сильно связен");
+		std::cout << "Digraph is strongly connected.\n";
+	}
+}
+
+void ScriptPrintManager::PrintStronglyConnectedComponents() const
+{
+}

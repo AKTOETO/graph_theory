@@ -50,9 +50,18 @@ void GraphManager::CalculateSpecifier(SPEC _spec)
 	// если раньше не рассчитывали
 	IF_NOT_CALC(_spec)
 	{
+		// TODO создать unoredered map
+		// в котором будут храниться следующие данные:
+		// характеристика - ее функция расчета
+		// характеристика - ее функция расчета
+		// характеристика - ее функция расчета
+		// ...
+		// характеристика - ее функция расчета
+		
 		// расчет этой характеристики
 		switch (_spec)
 		{
+			// TASK 1
 		case SPEC::SHORTEST_DIST_MATR:
 			SetStateOfSpec(SPEC::SHORTEST_DIST_MATR, CalculateShortestDistMatr());
 			break;
@@ -89,15 +98,41 @@ void GraphManager::CalculateSpecifier(SPEC _spec)
 			SetStateOfSpec(SPEC::DEGREES_IN_OUT, CalculateVertexDegreesInOut());
 			break;
 
+			// TASK 2
+		case SPEC::IS_CONNECTED:
+			SetStateOfSpec(SPEC::IS_CONNECTED, CalculateIsConnected());
+			break;
+		case SPEC::IS_NOT_CONNECTED:
+			SetStateOfSpec(SPEC::IS_NOT_CONNECTED, CalculateIsNotConnected());
+			break;
+		case SPEC::CONNECTED_COMPONENTS:
+			SetStateOfSpec(SPEC::CONNECTED_COMPONENTS, CalculateConnectedComponents());
+			break;
+		case SPEC::IS_DIGRAPH_CONNECTED:
+			SetStateOfSpec(SPEC::IS_DIGRAPH_CONNECTED, CalculateIsDigraphConnected());
+			break;
+		case SPEC::IS_DIGRAPH_NOT_CONNECTED:
+			SetStateOfSpec(SPEC::IS_DIGRAPH_NOT_CONNECTED, CalculateIsDigraphNotConnected());
+			break;
+		case SPEC::IS_WEAKLY_CONNECTED:
+			SetStateOfSpec(SPEC::IS_WEAKLY_CONNECTED, CalculateIsDigraphWeaklyConnected());
+			break;
+		case SPEC::IS_STRONGLY_CONNECTED:
+			SetStateOfSpec(SPEC::IS_STRONGLY_CONNECTED, CalculateIsDigraphStronglyConnected());
+			break;
+		case SPEC::STRONGLY_CONNECTED_COMPONENTS:
+			SetStateOfSpec(SPEC::STRONGLY_CONNECTED_COMPONENTS, CalculateStronglyConnectedComponents());
+			break;
+
 		default:
 			INFO("Неизвесная характеристика под номером " + std::to_string(int(_spec)));
 			break;
 		}
 	}
-else
-{
-	INFO("Уже был осуществлен расчет характеристики под номером " + std::to_string(int(_spec)));
-}
+	else
+	{
+		INFO("Уже был осуществлен расчет характеристики под номером " + std::to_string(int(_spec)));
+	}
 
 }
 
@@ -363,6 +398,48 @@ bool GraphManager::CalculatePeripheralVertices()
 			return true;
 		}
 
+	return false;
+}
+
+
+bool GraphManager::CalculateIsConnected()
+{
+
+	return false;
+}
+
+bool GraphManager::CalculateIsNotConnected()
+{
+	return false;
+}
+
+bool GraphManager::CalculateConnectedComponents()
+{
+	return false;
+}
+
+bool GraphManager::CalculateIsDigraphConnected()
+{
+	return false;
+}
+
+bool GraphManager::CalculateIsDigraphNotConnected()
+{
+	return false;
+}
+
+bool GraphManager::CalculateIsDigraphWeaklyConnected()
+{
+	return false;
+}
+
+bool GraphManager::CalculateIsDigraphStronglyConnected()
+{
+	return false;
+}
+
+bool GraphManager::CalculateStronglyConnectedComponents()
+{
 	return false;
 }
 

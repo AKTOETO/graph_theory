@@ -3,6 +3,11 @@
 
 #include "pch.h"
 
+// TODO добавить дефайн с номером задания
+// чтобы на этапе компиляции было понятно, 
+// какой задание делать, то есть будет 
+// использовано ifdef для script'a
+
 // путь до папки с файлами для графа
 const std::string GRAPH_FILE_PATH = "assets/graphs/";
 
@@ -16,12 +21,13 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 #define INF_PRINT_WIDTH 2
 
 // Количество характеристик
-#define NUMBER_OF_SPECIFIERS 9
+#define NUMBER_OF_SPECIFIERS 17
 
 // возможные характеристики, которые есть у графа
 // и которые можно просчитать
 enum class SPEC
 {
+	// task1
 	SHORTEST_DIST_MATR,
 	ECCENTR,
 	CENTRAL_VERT,
@@ -31,6 +37,18 @@ enum class SPEC
 	DEGREES_IN,
 	DEGREES_OUT,
 	DEGREES_IN_OUT,
+
+	// task2
+	// не ориентированный граф
+	IS_CONNECTED,
+	IS_NOT_CONNECTED,
+	CONNECTED_COMPONENTS,
+	// ориентированный граф
+	IS_DIGRAPH_CONNECTED,
+	IS_DIGRAPH_NOT_CONNECTED,
+	IS_WEAKLY_CONNECTED,
+	IS_STRONGLY_CONNECTED,
+	STRONGLY_CONNECTED_COMPONENTS
 };
 
 // тип данных сценария выполнения программы
@@ -41,15 +59,14 @@ using Script = std::list<SPEC>;
 //===================//
 static const Script TASK_SCRIPT = Script
 {
-	SPEC::DEGREES_IN_OUT,
-	SPEC::DEGREES_IN,
-	SPEC::DEGREES_OUT,
-	SPEC::SHORTEST_DIST_MATR,
-	SPEC::ECCENTR,
-	SPEC::DIAMETER,
-	SPEC::RADIUS,
-	SPEC::CENTRAL_VERT,
-	SPEC::PERIPHERAL_VERT
+	SPEC::IS_CONNECTED,
+	SPEC::IS_NOT_CONNECTED,
+	SPEC::IS_DIGRAPH_CONNECTED,
+	SPEC::IS_DIGRAPH_NOT_CONNECTED,
+	SPEC::CONNECTED_COMPONENTS,
+	SPEC::IS_WEAKLY_CONNECTED,
+	SPEC::IS_STRONGLY_CONNECTED,
+	SPEC::STRONGLY_CONNECTED_COMPONENTS
 };
 
 //===================//
