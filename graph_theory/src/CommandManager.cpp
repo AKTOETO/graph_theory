@@ -170,7 +170,7 @@ void CommandManager::ReadEdgesList(std::string _context)
 	// и передача ему сценария
 
 	m_script_manager =
-		std::make_unique<ScriptPrintManagerT1>(
+		std::make_unique<ScriptManager>(
 			_context, INPUT_FILE_TYPE::EDGES_LIST, TASK_SCRIPT
 	);
 }
@@ -181,7 +181,7 @@ void CommandManager::ReadAdjacencyMatrix(std::string _context)
 	// и передача ему сценария
 
 	m_script_manager =
-		std::make_unique<ScriptPrintManagerT1>(
+		std::make_unique<ScriptManager>(
 			_context, INPUT_FILE_TYPE::ADJACENCY_MATRIX, TASK_SCRIPT
 		);
 }
@@ -192,7 +192,7 @@ void CommandManager::ReadAdjacencyList(std::string _context)
 	// и передача ему сценария
 	
 	m_script_manager =
-		std::make_unique<ScriptPrintManagerT1>(
+		std::make_unique<ScriptManager>(
 			_context, INPUT_FILE_TYPE::ADJACENCY_LIST, TASK_SCRIPT
 		);
 }

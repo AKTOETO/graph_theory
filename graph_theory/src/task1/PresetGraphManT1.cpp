@@ -1,9 +1,9 @@
 ﻿#include "../pch.h"
-#include "GraphManagerT1.h"
+#include "PresetGraphManT1.h"
 
-GraphManagerT1::GraphManagerT1(std::string _filepath, INPUT_FILE_TYPE _in_f_type)
+PresetGraphManT1::PresetGraphManT1(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states)
 // инициализация всех полей
-	:BaseGraphManager(_filepath, _in_f_type),
+	:BaseGraphManager(_graph, _states),
 	m_shortest_distance_matr(nullptr),
 	m_eccentricity(nullptr),
 	m_central_vertices(nullptr),
@@ -14,20 +14,20 @@ GraphManagerT1::GraphManagerT1(std::string _filepath, INPUT_FILE_TYPE _in_f_type
 	m_degrees_out(nullptr),
 	m_degrees_in_out(nullptr)
 {
-	m_specs =
+	/*m_specs =
 	{
-		{SPEC::SHORTEST_DIST_MATR,	&GraphManagerT1::CalculateShortestDistMatr},
-		{SPEC::ECCENTR,				&GraphManagerT1::CalculateEccentricity},
-		{SPEC::CENTRAL_VERT,		&GraphManagerT1::CalculateCentralVertices},
-		{SPEC::PERIPHERAL_VERT,		&GraphManagerT1::CalculatePeripheralVertices},
-		{SPEC::RADIUS,				&GraphManagerT1::CalculateRadius},
-		{SPEC::DIAMETER,			&GraphManagerT1::CalculateDiameter},
-		{SPEC::DEGREES_IN,			&GraphManagerT1::CalculateVertexDegreesIn},
-		{SPEC::DEGREES_OUT,			&GraphManagerT1::CalculateVertexDegreesOut},
-		{SPEC::DEGREES_IN_OUT,		&GraphManagerT1::CalculateVertexDegreesInOut},
-	};
+		{SPEC::SHORTEST_DIST_MATR,	&PresetGraphManT1::CalculateShortestDistMatr},
+		{SPEC::ECCENTR,				&PresetGraphManT1::CalculateEccentricity},
+		{SPEC::CENTRAL_VERT,		&PresetGraphManT1::CalculateCentralVertices},
+		{SPEC::PERIPHERAL_VERT,		&PresetGraphManT1::CalculatePeripheralVertices},
+		{SPEC::RADIUS,				&PresetGraphManT1::CalculateRadius},
+		{SPEC::DIAMETER,			&PresetGraphManT1::CalculateDiameter},
+		{SPEC::DEGREES_IN,			&PresetGraphManT1::CalculateVertexDegreesIn},
+		{SPEC::DEGREES_OUT,			&PresetGraphManT1::CalculateVertexDegreesOut},
+		{SPEC::DEGREES_IN_OUT,		&PresetGraphManT1::CalculateVertexDegreesInOut},
+	};*/
 };
-GraphManagerT1::~GraphManagerT1()
+PresetGraphManT1::~PresetGraphManT1()
 {
 	// очистка памяти
 	m_shortest_distance_matr.reset();
@@ -45,10 +45,10 @@ GraphManagerT1::~GraphManagerT1()
 //         CALCULATE МЕТОДЫ         //
 //==================================//
 
-#define IF_CALC(_spec) if((*m_state_of_spec)[int(_spec)])
-#define IF_NOT_CALC(_spec) if(!(*m_state_of_spec)[int(_spec)])
+//#define IF_CALC(_spec) if((*m_state_of_spec)[int(_spec)])
+//#define IF_NOT_CALC(_spec) if(!(*m_state_of_spec)[int(_spec)])
 
-bool GraphManagerT1::CalculateVertexDegreesIn()
+bool PresetGraphManT1::CalculateVertexDegreesIn()
 {
 	// если граф направленный, расчитываем степень входа
 	if (m_graph->is_directed())
@@ -71,7 +71,7 @@ bool GraphManagerT1::CalculateVertexDegreesIn()
 	return false;
 }
 
-bool GraphManagerT1::CalculateVertexDegreesOut()
+bool PresetGraphManT1::CalculateVertexDegreesOut()
 {
 	// если граф направленный, расчитываем степень выхода
 	if (m_graph->is_directed())
@@ -94,7 +94,7 @@ bool GraphManagerT1::CalculateVertexDegreesOut()
 	return false;
 }
 
-bool GraphManagerT1::CalculateVertexDegreesInOut()
+bool PresetGraphManT1::CalculateVertexDegreesInOut()
 {
 	// если граф не направленный, расчитываем степень входа и выхода
 	if (!m_graph->is_directed())
@@ -121,7 +121,7 @@ bool GraphManagerT1::CalculateVertexDegreesInOut()
 /// Расчет матрицы кратчайших расстояний
 /// </summary>
 /// <returns>матрица кратчайших расстояний</returns>
-bool GraphManagerT1::CalculateShortestDistMatr()
+bool PresetGraphManT1::CalculateShortestDistMatr()
 {
 	INFO("расчет кратчайших расстояний");
 	// выделение памяти под матрицу кратчайших расстояний 
@@ -177,10 +177,10 @@ bool GraphManagerT1::CalculateShortestDistMatr()
 /// Расчет эксцентриcитета графа
 /// </summary>
 /// <returns>массив с эксцентриситетом для каждой вершины</returns>
-bool GraphManagerT1::CalculateEccentricity()
+bool PresetGraphManT1::CalculateEccentricity()
 {
 	// если не расчитана матрица кратч. расст., расчитываем ее
-	IF_NOT_CALC(SPEC::SHORTEST_DIST_MATR) CalculateShortestDistMatr();
+	IF_ST_NOT_CALC(SPEC::SHORTEST_DIST_MATR) CalculateShortestDistMatr();
 
 	// если в матрице критчайших расстояний нет бесконечностей, 
 	// расчитываем эксцентриситеты
@@ -205,13 +205,13 @@ bool GraphManagerT1::CalculateEccentricity()
 /// Расчет диаметра графа
 /// </summary>
 /// <returns>диаметр графа</returns>
-bool GraphManagerT1::CalculateDiameter()
+bool PresetGraphManT1::CalculateDiameter()
 {
-	IF_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
+	IF_ST_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
 
 	// если эксцентриситеты были расчитаны и граф неориентированный,
 	// считаем диаметр
-	IF_CALC(SPEC::ECCENTR)
+	IF_ST_CALC(SPEC::ECCENTR)
 		if (!m_graph->is_directed())
 		{
 			INFO("расчет диаметра");
@@ -230,13 +230,13 @@ bool GraphManagerT1::CalculateDiameter()
 /// Расчет радиуса гарфа
 /// </summary>
 /// <returns>радиус гарфа</returns>
-bool GraphManagerT1::CalculateRadius()
+bool PresetGraphManT1::CalculateRadius()
 {
-	IF_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
+	IF_ST_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
 
 	// если эксцентриситеты были расчитаны и граф неориентированный,
 	// считаем радиус
-	IF_CALC(SPEC::ECCENTR)
+	IF_ST_CALC(SPEC::ECCENTR)
 		if (!m_graph->is_directed())
 		{
 			INFO("расчет радиуса");
@@ -253,15 +253,15 @@ bool GraphManagerT1::CalculateRadius()
 /// Расчет центральных вершин
 /// </summary>
 /// <returns>центральные вершины</returns>
-bool GraphManagerT1::CalculateCentralVertices()
+bool PresetGraphManT1::CalculateCentralVertices()
 {
-	IF_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
-	IF_NOT_CALC(SPEC::RADIUS) CalculateRadius();
+	IF_ST_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
+	IF_ST_NOT_CALC(SPEC::RADIUS) CalculateRadius();
 
 	// если посчитан эксцентриситет и радиус и граф неориентированный,
 	// тогда считаем центральные вершины
-	IF_CALC(SPEC::ECCENTR)
-		IF_CALC(SPEC::RADIUS)
+	IF_ST_CALC(SPEC::ECCENTR)
+		IF_ST_CALC(SPEC::RADIUS)
 		if (!m_graph->is_directed())
 		{
 			INFO("расчет центральных вершин");
@@ -285,14 +285,14 @@ bool GraphManagerT1::CalculateCentralVertices()
 /// Расчет периферийных вершин
 /// </summary>
 /// <returns>периферийные вершины</returns>
-bool GraphManagerT1::CalculatePeripheralVertices()
+bool PresetGraphManT1::CalculatePeripheralVertices()
 {
-	IF_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
-	IF_NOT_CALC(SPEC::DIAMETER) CalculateRadius();
+	IF_ST_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
+	IF_ST_NOT_CALC(SPEC::DIAMETER) CalculateRadius();
 	// если посчитан эксцентриситет и диаметр и граф неориентированный,
 	// тогда считаем периферийные вершины
-	IF_CALC(SPEC::ECCENTR)
-		IF_CALC(SPEC::DIAMETER)
+	IF_ST_CALC(SPEC::ECCENTR)
+		IF_ST_CALC(SPEC::DIAMETER)
 		if (!m_graph->is_directed())
 		{
 			INFO("расчет периферийных вершин");
@@ -317,15 +317,15 @@ bool GraphManagerT1::CalculatePeripheralVertices()
 //            GET МЕТОДЫ            //
 //==================================//
 
-const U_PTR(VertexArr)& GraphManagerT1::GetVertexDegreesIn() const
+const U_PTR(VertexArr)& PresetGraphManT1::GetVertexDegreesIn() const
 {
 	return m_degrees_in;
 }
-const U_PTR(VertexArr)& GraphManagerT1::GetVertexDegreesOut() const
+const U_PTR(VertexArr)& PresetGraphManT1::GetVertexDegreesOut() const
 {
 	return m_degrees_out;
 }
-const U_PTR(VertexArr)& GraphManagerT1::GetVertexDegreesInOut() const
+const U_PTR(VertexArr)& PresetGraphManT1::GetVertexDegreesInOut() const
 {
 	return m_degrees_in_out;
 }
@@ -334,7 +334,7 @@ const U_PTR(VertexArr)& GraphManagerT1::GetVertexDegreesInOut() const
 /// Получение матрицы кратчайших расстояний
 /// </summary>
 /// <returns>матрица кратчайших расстояний</returns>
-const U_PTR(VertexMatrix)& GraphManagerT1::GetShortestDistMatr() const
+const U_PTR(VertexMatrix)& PresetGraphManT1::GetShortestDistMatr() const
 {
 	return m_shortest_distance_matr;
 };
@@ -343,7 +343,7 @@ const U_PTR(VertexMatrix)& GraphManagerT1::GetShortestDistMatr() const
 /// получение эксцентриcитета графа
 /// </summary>
 /// <returns>массив с эксцентриситетом для каждой вершины</returns>
-const U_PTR(VertexArr)& GraphManagerT1::GetEccentricity() const
+const U_PTR(VertexArr)& PresetGraphManT1::GetEccentricity() const
 {
 	return m_eccentricity;
 };
@@ -352,7 +352,7 @@ const U_PTR(VertexArr)& GraphManagerT1::GetEccentricity() const
 /// Получение диаметра графа
 /// </summary>
 /// <returns>диаметр графа</returns>
-const U_PTR(int)& GraphManagerT1::GetDiameter() const
+const U_PTR(int)& PresetGraphManT1::GetDiameter() const
 {
 	return m_diameter;
 };
@@ -361,7 +361,7 @@ const U_PTR(int)& GraphManagerT1::GetDiameter() const
 /// Получение радиуса гарфа
 /// </summary>
 /// <returns>радиус гарфа</returns>
-const U_PTR(int)& GraphManagerT1::GetRadius() const
+const U_PTR(int)& PresetGraphManT1::GetRadius() const
 {
 	return m_radius;
 };
@@ -370,7 +370,7 @@ const U_PTR(int)& GraphManagerT1::GetRadius() const
 /// Получение центральных вершин
 /// </summary>
 /// <returns>центральные вершины</returns>
-const U_PTR(VertexArr)& GraphManagerT1::GetCentralVertices() const
+const U_PTR(VertexArr)& PresetGraphManT1::GetCentralVertices() const
 {
 	return m_central_vertices;
 };
@@ -379,7 +379,7 @@ const U_PTR(VertexArr)& GraphManagerT1::GetCentralVertices() const
 /// Получение периферийных вершин
 /// </summary>
 /// <returns>периферийные вершины</returns>
-const U_PTR(VertexArr)& GraphManagerT1::GetPeripheralVertices() const
+const U_PTR(VertexArr)& PresetGraphManT1::GetPeripheralVertices() const
 {
 	return m_peripheral_vertices;
 }

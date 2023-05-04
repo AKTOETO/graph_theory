@@ -1,6 +1,6 @@
 ﻿#ifndef COMMANDMANAGER_H
 #define COMMANDMANAGER_H
-#include "task1/ScriptPrintManagerT1.h"
+#include "Managers/ScriptManager.h"
 
 // обработчик введенных ключей
 class CommandManager
@@ -11,7 +11,7 @@ private:
 	std::unordered_map<std::string, void(CommandManager::*)(std::string)> m_commands;
 
 	// Управляющий сценарием выполнения программы
-	U_PTR(ScriptPrintManagerT1) m_script_manager;
+	U_PTR(ScriptManager) m_script_manager;
 
 	// Введенные параметры при запуске
 	std::vector<std::string> m_param;

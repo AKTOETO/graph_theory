@@ -1,70 +1,112 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CommandManager" Collapsed="true">
-    <Position X="1.5" Y="2" Width="1.5" />
+    <Position X="6.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAIABgCAAAAAAIAAAAEAAgAEAgAAAAAAAAAAICBAI=</HashCode>
       <FileName>src\CommandManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Graph" Collapsed="true">
-    <Position X="3.25" Y="2" Width="1.25" />
+    <Position X="6.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAEABAAAAIBEAAAAACRAAAAAABAAAggAAAIAAgAAAA=</HashCode>
       <FileName>src\Graph.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGraphManager&lt;GraphMan&gt;" Collapsed="true">
-    <Position X="1.5" Y="7.25" Width="1.5" />
+  <Class Name="PresetGraphManT1" Collapsed="true">
+    <Position X="2.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAEAAAAAAAAAAAAIAAEAAAAAAAAAEAAQAAAAAAAA=</HashCode>
-      <FileName>src\BaseGraphManager.hpp</FileName>
+      <HashCode>EAEAQABAAgAAA4AAIgIAAAAAgAAAAAAAAAEAABgAUIA=</HashCode>
+      <FileName>src\task1\PresetGraphManT1.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseScriptPrintManager&lt;ScriptMan, GraphMan&gt;" Collapsed="true">
-    <Position X="9.25" Y="7.25" Width="1.5" />
+  <Class Name="PresetScriptManrT1" Collapsed="true">
+    <Position X="11.25" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAACAEAAAAAAAAAAI=</HashCode>
-      <FileName>src\BaseScriptPrintManager.hpp</FileName>
+      <HashCode>AAAgAAAAAAAQAAACAAACQAQACAAAgAAAACQAAAAAAAA=</HashCode>
+      <FileName>src\task1\PresetScriptManT1.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GraphManagerT1" Collapsed="true">
-    <Position X="1.5" Y="8.5" Width="1.5" />
+  <Class Name="BaseGraphManager" Collapsed="true">
+    <Position X="4.25" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EAEAQABAAgAAA4AAIgAAAgAAgCAAAAAQAAEAABgAUAA=</HashCode>
-      <FileName>src\task1\GraphManagerT1.h</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAEAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>src\BasePresetGraphMan.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ScriptPrintManagerT1" Collapsed="true">
-    <Position X="9.25" Y="8.5" Width="1.5" />
+  <Class Name="BaseScriptPreset" Collapsed="true">
+    <Position X="9.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAgAAAAAAAwAAAAAAACQAAACAAAgAAAACQAAAAAgAA=</HashCode>
-      <FileName>src\task1\ScriptPrintManagerT1.h</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAEAAAAA=</HashCode>
+      <FileName>src\BasePresetScriptMan.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PresetGraphManT2" Collapsed="true">
+    <Position X="5.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FQAAAAAgAAAIAIAAAAAAAAAAAAAAAAIAABAAABgAAAA=</HashCode>
+      <FileName>src\task2\PresetGraphManT2.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MajorGraphManPreset" Collapsed="true">
+    <Position X="4.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAEAAAAgAAAACAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>src\MajorGraphManPreset.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MajorScriptManPreset" Collapsed="true">
+    <Position X="9.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAKAAAAAAAAAAAEAAAAAAAAAAI=</HashCode>
+      <FileName>src\MajorScriptManPreset.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PresetScriptManrT2" Collapsed="true">
+    <Position X="8.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAACCAAAACAAAggAAAAAACAAABAABAAAAIAAA=</HashCode>
+      <FileName>src\task2\PresetScriptManT2.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphManager" Collapsed="true">
+    <Position X="6.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>src\GraphManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ScriptManager" Collapsed="true">
+    <Position X="6.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAACAAAAAAI=</HashCode>
+      <FileName>src\ScriptManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="Edge">
-    <Position X="12.5" Y="2" Width="1.5" />
+    <Position X="17" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAIAgAAAAAAAAAAA=</HashCode>
       <FileName>src\Constants.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Enum Name="INPUT_FILE_TYPE">
-    <Position X="10.75" Y="2" Width="1.5" />
+    <Position X="15.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAABBAAAA=</HashCode>
       <FileName>src\Graph.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="LoggingMode">
-    <Position X="10.75" Y="3.5" Width="1.5" />
+    <Position X="15.25" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAQAAAAAA=</HashCode>
       <FileName>src\Logger.hpp</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="SPEC">
-    <Position X="9" Y="2" Width="1.5" />
+  <Enum Name="SPEC" Collapsed="true">
+    <Position X="13.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ADAAAAAAAQgABAIEAgAAACAABACAAAEAEwAAAAAAAQg=</HashCode>
       <FileName>src\Constants.h</FileName>

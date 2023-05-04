@@ -27,16 +27,28 @@
     <ClCompile Include="src\CommandManager.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\task1\GraphManagerT1.cpp">
+    <ClCompile Include="src\task1\PresetGraphManT1.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\task1\ScriptPrintManagerT1.cpp">
+    <ClCompile Include="src\task1\PresetScriptManT1.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\task2\GraphManagerT2.cpp">
+    <ClCompile Include="src\task2\PresetGraphManT2.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\task2\ScriptPrintManagerT2.cpp">
+    <ClCompile Include="src\task2\PresetScriptManT2.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Managers\PresetsManangers\MajorScriptManPreset.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Managers\PresetsManangers\MajorGraphManPreset.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Managers\GraphManager.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Managers\ScriptManager.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,22 +71,34 @@
     <ClInclude Include="src\CommandManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\task1\GraphManagerT1.h">
+    <ClInclude Include="src\task1\PresetGraphManT1.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\task1\ScriptPrintManagerT1.h">
+    <ClInclude Include="src\task1\PresetScriptManT1.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\task2\GraphManagerT2.h">
+    <ClInclude Include="src\task2\PresetGraphManT2.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\task2\ScriptPrintManagerT2.h">
+    <ClInclude Include="src\task2\PresetScriptManT2.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\BaseGraphManager.hpp">
+    <ClInclude Include="src\base\BasePresetGraphMan.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\BaseScriptPrintManager.hpp">
+    <ClInclude Include="src\base\BasePresetScriptMan.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Managers\PresetsManangers\MajorScriptManPreset.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Managers\PresetsManangers\MajorGraphManPreset.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Managers\GraphManager.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Managers\ScriptManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

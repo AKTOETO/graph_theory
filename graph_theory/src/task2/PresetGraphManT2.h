@@ -1,10 +1,10 @@
 ﻿#pragma once
-#include "../BaseGraphManager.hpp"
+#include "../base/BasePresetGraphMan.hpp"
 
 /// <summary>
 /// Класс для управления графом
 /// </summary>
-class GraphManagerT2 : public BaseGraphManager<GraphManagerT2>
+class PresetGraphManT2 : virtual public BaseGraphManager
 {
 protected:
 	// поля класса
@@ -12,8 +12,8 @@ protected:
 public:
 
 	// конструктор с путем до файла и типом файла
-	GraphManagerT2(std::string _filepath, INPUT_FILE_TYPE);
-	~GraphManagerT2() override;
+	PresetGraphManT2(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states);
+	~PresetGraphManT2() override;
 
 	//==================================//
 	//         CALCULATE МЕТОДЫ         //

@@ -1,12 +1,12 @@
 ﻿#pragma once
-#include "GraphManagerT1.h"
-#include "../BaseScriptPrintManager.hpp"
+#include "../base/BasePresetScriptMan.hpp"
 
-class ScriptPrintManagerT1 : public BaseScriptPrintManager<ScriptPrintManagerT1, GraphManagerT1>
+class PresetScriptManrT1 : virtual public BaseScriptPreset
 {
 public:
-	ScriptPrintManagerT1(std::string _filepath, INPUT_FILE_TYPE _in_f_type, Script _script);
-	virtual ~ScriptPrintManagerT1() override;
+
+	PresetScriptManrT1(const S_PTR(GraphManager)& _graph_man);
+	virtual ~PresetScriptManrT1() override;
 
 	//===================================//
 	// МЕТОДЫ ПЕЧАТИ ХАРАКТЕРИСТИК ГРАФА //

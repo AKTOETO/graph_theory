@@ -1,12 +1,14 @@
-﻿#pragma once
-#include "GraphManagerT2.h"
-#include "../BaseScriptPrintManager.hpp"
+﻿#ifndef PRESETSCRIPTMANT2_H
+#define PRESETSCRIPTMANT2_H
 
-class ScriptPrintManagerT2 : public BaseScriptPrintManager<ScriptPrintManagerT2, GraphManagerT2>
+#include "../base/BasePresetScriptMan.hpp"
+
+class PresetScriptManrT2 : virtual public BaseScriptPreset
 {
 public:
-	ScriptPrintManagerT2(std::string _filepath, INPUT_FILE_TYPE, Script);
-	virtual ~ScriptPrintManagerT2() override;
+
+	PresetScriptManrT2(const S_PTR(GraphManager)& _graph_man);
+	virtual ~PresetScriptManrT2() override;
 
 	//===================================//
 	// МЕТОДЫ ПЕЧАТИ ХАРАКТЕРИСТИК ГРАФА //
@@ -38,3 +40,4 @@ public:
 
 };
 
+#endif // PRESETSCRIPTMANT2_H

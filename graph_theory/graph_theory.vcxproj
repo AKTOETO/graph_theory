@@ -133,6 +133,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Managers\ScriptManager.cpp" />
+    <ClCompile Include="src\Managers\GraphManager.cpp" />
+    <ClCompile Include="src\Managers\PresetsManangers\MajorGraphManPreset.cpp" />
+    <ClCompile Include="src\Managers\PresetsManangers\MajorScriptManPreset.cpp" />
     <ClCompile Include="src\CommandManager.cpp" />
     <ClCompile Include="graph_theory.cpp" />
     <ClCompile Include="src\Graph.cpp" />
@@ -140,24 +144,28 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\task1\GraphManagerT1.cpp" />
-    <ClCompile Include="src\task1\ScriptPrintManagerT1.cpp" />
-    <ClCompile Include="src\task2\GraphManagerT2.cpp" />
-    <ClCompile Include="src\task2\ScriptPrintManagerT2.cpp" />
+    <ClCompile Include="src\task1\PresetGraphManT1.cpp" />
+    <ClCompile Include="src\task1\PresetScriptManT1.cpp" />
+    <ClCompile Include="src\task2\PresetGraphManT2.cpp" />
+    <ClCompile Include="src\task2\PresetScriptManT2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\BaseGraphManager.hpp" />
-    <ClInclude Include="src\BaseScriptPrintManager.hpp" />
+    <ClInclude Include="src\Managers\ScriptManager.h" />
+    <ClInclude Include="src\Managers\GraphManager.h" />
+    <ClInclude Include="src\Managers\PresetsManangers\MajorGraphManPreset.h" />
+    <ClInclude Include="src\Managers\PresetsManangers\MajorScriptManPreset.h" />
+    <ClInclude Include="src\base\BasePresetGraphMan.hpp" />
+    <ClInclude Include="src\base\BasePresetScriptMan.hpp" />
     <ClInclude Include="src\CommandManager.h" />
     <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\Graph.h" />
     <ClInclude Include="src\Logger.hpp" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Support.h" />
-    <ClInclude Include="src\task1\GraphManagerT1.h" />
-    <ClInclude Include="src\task1\ScriptPrintManagerT1.h" />
-    <ClInclude Include="src\task2\GraphManagerT2.h" />
-    <ClInclude Include="src\task2\ScriptPrintManagerT2.h" />
+    <ClInclude Include="src\task1\PresetGraphManT1.h" />
+    <ClInclude Include="src\task1\PresetScriptManT1.h" />
+    <ClInclude Include="src\task2\PresetGraphManT2.h" />
+    <ClInclude Include="src\task2\PresetScriptManT2.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\graphs\adjacency_list.txt" />
