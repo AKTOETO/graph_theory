@@ -2,7 +2,6 @@
 #include "CommandManager.h"
 
 CommandManager::CommandManager(int argc, char* _keys[])
-	//: m_graph(std::make_shared<Graph>())
 	:m_script_manager(nullptr)
 {
 	// задание возможных ключей и функций их обработки
@@ -49,7 +48,8 @@ void CommandManager::Run()
 		m_param.erase(m_param.begin(), it_end);
 	}
 
-	m_script_manager->Run();
+	if(m_script_manager)
+		m_script_manager->Run();
 }
 
 void CommandManager::PrintParams() const
