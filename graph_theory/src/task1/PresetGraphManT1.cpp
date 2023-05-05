@@ -383,7 +383,3 @@ const U_PTR(VertexArr)& PresetGraphManT1::GetPeripheralVertices() const
 {
 	return m_peripheral_vertices;
 }
- 
-
-#undef IF_CALC
-#undef IF_NOT_CALC

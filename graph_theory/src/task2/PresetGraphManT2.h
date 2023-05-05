@@ -7,7 +7,14 @@
 class PresetGraphManT2 : virtual public BaseGraphManager
 {
 protected:
-	// поля класса
+	// маркированные веришны
+	// индекс в массиве    = номер вершины
+	// значение по индексу = номер компоненты связности
+	U_PTR(VertexArr) m_marked_vertices;
+	
+	// количество компонент связности
+	int m_numb_of_conn_compon;
+
 
 public:
 
@@ -48,6 +55,7 @@ public:
 	//==================================//
 
 	// получение: количество компонент связности
+	const int& GetNumbOfConnComp() const;
 
 	// получение: компоненты связности
 

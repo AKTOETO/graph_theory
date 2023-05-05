@@ -2,7 +2,7 @@
 #include "MajorGraphManPreset.h"
 
 MajorGraphManPreset::MajorGraphManPreset(
-	const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states)
+	const S_PTR(Graph)& _graph, const S_PTR(State) _states)
 	:BaseGraphManager(_graph, _states), 
 
 	PresetGraphManT1(_graph, _states),

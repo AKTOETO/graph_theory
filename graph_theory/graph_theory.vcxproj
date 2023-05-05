@@ -150,6 +150,7 @@
     <ClCompile Include="src\task2\PresetScriptManT2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Algorithms.hpp" />
     <ClInclude Include="src\Managers\ScriptManager.h" />
     <ClInclude Include="src\Managers\GraphManager.h" />
     <ClInclude Include="src\Managers\PresetsManangers\MajorGraphManPreset.h" />

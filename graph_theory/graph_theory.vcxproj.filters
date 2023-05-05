@@ -101,6 +101,9 @@
     <ClInclude Include="src\Managers\ScriptManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="src\Algorithms.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\graphs\adjacency_list.txt" />

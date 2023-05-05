@@ -135,8 +135,14 @@ static const Script TASK_SCRIPT = Script
 // тип данных вершины
 using Vertex = int;
 
-// список вершин
+// массив вершин
 using VertexArr = std::vector<Vertex>;
+
+// список вершин
+using VertexList = std::list<Vertex>;
+
+// очередь вершин
+using VertexQueue = std::queue<Vertex>;
 
 // матрица
 using VertexMatrix = std::vector<VertexArr>;

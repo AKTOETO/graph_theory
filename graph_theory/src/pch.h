@@ -13,5 +13,7 @@
 #include <unordered_map>
 #include <iterator>
 #include <numeric>
+#include <queue>
+#include <list>
 
 #endif

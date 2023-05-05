@@ -6,11 +6,6 @@ Graph::Graph(std::string _filepath, INPUT_FILE_TYPE _in_f_type)
 	ReadGraphFromFile(_filepath, _in_f_type);
 }
 
-Graph::Graph()
-{
-	INFO("создание графа");
-}
-
 Graph::~Graph()
 {
 	INFO("уничтожение графа");
@@ -283,11 +278,15 @@ const VertexMatrix& Graph::adjacency_matrix() const
 	return m_adjacency_matrix;
 }
 
-VertexArr Graph::adjacency_list(Vertex _v) const
+VertexList Graph::adjacency_list(Vertex _v) const
 {
+	// если такой вершины не существует
+	if (_v >= m_adjacency_matrix.size())
+		ERROR("Вершины под номером " + std::to_string(_v) + " НЕ существует");
+
 	// выходной список смежных вершин
 	// смежными считаются досягаемые из _v вершины
-	VertexArr out;
+	VertexList out;
 
 	// проходимся по всем верщинам
 	for (int i = 0; i < m_adjacency_matrix.size(); i++)

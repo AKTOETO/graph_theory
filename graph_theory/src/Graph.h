@@ -82,10 +82,6 @@ public:
 	// конструктор с путем до файла и типом файла
 	Graph(std::string _filepath, INPUT_FILE_TYPE);
 	
-	// TODO заблокировать конструктор по умолчанию
-	// Конструктор класса Graph
-	Graph();
-	
 	// деструктор класса
 	~Graph();
 
@@ -126,7 +122,7 @@ public:
 	/// </summary>
 	/// <param name="_v"> - исходная вершина</param>
 	/// <returns>список вершин</returns>
-	VertexArr adjacency_list(Vertex _v) const;
+	VertexList adjacency_list(Vertex _v) const;
 
 	/// <summary>
 	/// Возврат списка ребер

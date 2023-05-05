@@ -1,5 +1,6 @@
 ﻿#pragma once
-#include "../Graph.h"
+//#include "../Graph.h"
+#include "../Algorithms.hpp"
 
 class BaseGraphManager
 {
