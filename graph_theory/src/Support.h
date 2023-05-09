@@ -1,7 +1,7 @@
 ﻿#ifndef SUPPORT_H
 #define SUPPORT_H
 
-#include "pch.h"
+#include "Constants.h"
 
 //==========================//
 //	ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ	//
@@ -10,6 +10,31 @@
 // подсчет количество цифр в числе
 inline int CountDigit(const int& number) {
 	return int(log10(number) + 1);
+}
+
+// подсчет максимального числа цифр в числе в векторе
+inline int CountDigitInVector(const VertexArr& _vec)
+{
+	int num = 0;
+	std::for_each(_vec.begin(), _vec.end(), [&num](const int& el)
+		{
+			if (el != INF)
+				num = std::max(CountDigit(el), num);
+		}
+	);
+	return num;
+}
+
+// подсчет максимального числа цифр в числе в матрице
+inline int CountDigitInMatrix(const VertexMatrix& _vec)
+{
+	int num = 0;
+	std::for_each(_vec.begin(), _vec.end(), [&num](const VertexArr& el)
+		{
+			num = std::max(CountDigitInVector(el), num);
+		}
+	);
+	return num;
 }
 
 // печать вектора через определенный элемент
@@ -55,35 +80,62 @@ inline void PrintVector(std::vector<ScriptMan> _vec, std::string _delim = " ", i
 
 			std::cout << _vec[i];
 		}
-
-
 		if (i + 1 != _vec.size())std::cout << _delim;
 	}
 }
 
-// подсчет максимального числа цифр в числе в векторе
-inline int CountDigitInVector(const VertexArr& _vec)
+// печать компонент связности, используя маркированные вершины графа
+inline void PrintConnectedComponentsInConsole(
+	VertexArr _marked_vertices,	// маркированные вершины
+	std::string _delim = ", ",	// разделитель элементов при печати
+	int _setwidth = 0			// ширина печати одного элемента
+)
 {
-	int num = 0;
-	std::for_each(_vec.begin(), _vec.end(), [&num](const int& el)
-		{
-			if (el != INF)
-				num = std::max(CountDigit(el), num);
-		}
-	);
-	return num;
-}
+	// ищем максимальный номер компоннеты
+	int max_comp = *std::max_element(_marked_vertices.begin(), _marked_vertices.end());
 
-// подсчет максимального числа цифр в числе в матрице
-inline int CountDigitInMatrix(const VertexMatrix& _vec)
-{
-	int num = 0;
-	std::for_each(_vec.begin(), _vec.end(), [&num](const VertexArr& el)
+	// массив вершин в текущей компоненте
+	VertexArr vert_in_comp;
+
+	// перечисляем в цикле все номера компонент, параллельно собрая
+	// массив вершин в текущей компоненте
+	// массив вершин в текущей компоненте
+	for (int comp_number = max_comp - 1; comp_number >= 0; comp_number--)
+	{
+		std::cout << "[";
+
+		// узнаем количество вершин в iой компоненте связности
+		auto numb_of_vert = std::count_if(
+			_marked_vertices.begin(), _marked_vertices.end(), [&comp_number](Vertex& _v)
+			{
+				return _v - 1 == comp_number;
+			}
+		);
+		// изменяем размер массива вершин в текущей компоненте
+		vert_in_comp.resize(numb_of_vert);
+
+		// итератор на начало массива вершин в текущей компоненте
+		// для заполнения вершин
+		auto it = vert_in_comp.begin();
+
+		// ищем подходящие вершины
+		for (int vertex_number = 0; vertex_number < _marked_vertices.size() && it != vert_in_comp.end(); vertex_number++)
 		{
-			num = std::max(CountDigitInVector(el), num);
+			if (_marked_vertices[vertex_number] - 1 == comp_number)
+			{
+				*it = vertex_number + 1;
+				it++;
+			}
 		}
-	);
-	return num;
+
+		// печатаем массив вершин
+		PrintVector(vert_in_comp, _delim, _setwidth);
+
+		std::cout << "]";
+
+		// печатаем разедлитель
+		if (comp_number)std::cout << _delim;
+	}
 }
 
 // проверка на наличие определенного элемента в матрице

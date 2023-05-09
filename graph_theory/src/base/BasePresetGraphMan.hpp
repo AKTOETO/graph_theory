@@ -39,3 +39,4 @@ public:
 
 #define IF_ST_CALC(_spec) if((*m_state_of_spec)[int(_spec)])
 #define IF_ST_NOT_CALC(_spec) if(!(*m_state_of_spec)[int(_spec)])
+#define IF_ST_SHOULD_BE_CALC(_spec, _calc_func) IF_ST_NOT_CALC(_spec) SetStateOfSpec(_spec,_calc_func);

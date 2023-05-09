@@ -9,11 +9,16 @@ int main(int argc, char* argv[])
 	
 	// вызов главной функции 
 	cm.Run();
-	/*Graph gr("task2/matrix_t2_001.txt", INPUT_FILE_TYPE::ADJACENCY_MATRIX);
-	for (auto& el : gr.adjacency_list(5))
+	/*EdgeList ed =
 	{
-		std::cout << el << " ";
-	}*/
+		{1,1,1},
+		{2,3,5},
+		{3,1,8},
+		{1,6,10},
+	};
+
+	Graph gr(ed);
+	gr.PrintAdjacencyMatrix();*/
 
 	return 0;
 }

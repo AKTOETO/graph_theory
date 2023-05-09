@@ -14,6 +14,7 @@
 #include <iterator>
 #include <numeric>
 #include <queue>
+#include <stack>
 #include <list>
 
 #endif

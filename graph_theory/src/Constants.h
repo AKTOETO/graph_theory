@@ -6,7 +6,7 @@
 //=========================//
 // КАКОЕ ЗАДАНИЕ ЗАПУСКАТЬ //
 //=========================//
-#define T1
+#define T2
 
 //===================//
 // К О Н С Т А Н Т Ы //
@@ -25,7 +25,7 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 #define INF_PRINT_WIDTH 2
 
 // Количество характеристик
-#define NUMBER_OF_SPECIFIERS 17
+#define NUMBER_OF_SPECIFIERS 18
 
 //===========================//
 // С П Е Ц И Ф И К А Т О Р Ы //
@@ -51,12 +51,14 @@ enum class SPEC
 	IS_CONNECTED,
 	IS_NOT_CONNECTED,
 	CONNECTED_COMPONENTS,
+
 	// ориентированный граф
 	IS_DIGRAPH_CONNECTED,
 	IS_DIGRAPH_NOT_CONNECTED,
-	IS_WEAKLY_CONNECTED,
-	IS_STRONGLY_CONNECTED,
-	STRONGLY_CONNECTED_COMPONENTS
+	DIGRAPH_WEAKLY_CONNECTED_COMPONENTS,
+	DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,
+	IS_DIGRAPH_WEAKLY_CONNECTED,
+	IS_DIGRAPH_STRONGLY_CONNECTED, 
 };
 
 // тип данных сценария выполнения программы
@@ -92,10 +94,14 @@ static const Script TASK_SCRIPT = Script
 	SPEC::IS_NOT_CONNECTED,
 	SPEC::IS_DIGRAPH_CONNECTED,
 	SPEC::IS_DIGRAPH_NOT_CONNECTED,
+
 	SPEC::CONNECTED_COMPONENTS,
-	SPEC::IS_WEAKLY_CONNECTED,
-	SPEC::IS_STRONGLY_CONNECTED,
-	SPEC::STRONGLY_CONNECTED_COMPONENTS
+	SPEC::DIGRAPH_WEAKLY_CONNECTED_COMPONENTS,
+
+	SPEC::IS_DIGRAPH_STRONGLY_CONNECTED,
+	SPEC::IS_DIGRAPH_WEAKLY_CONNECTED,
+
+	SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,
 };
 
 #elif defined(T3)
@@ -147,6 +153,9 @@ using VertexQueue = std::queue<Vertex>;
 // матрица
 using VertexMatrix = std::vector<VertexArr>;
 
+// список вершин в компонентах связности
+using ConnectCompList = std::list<VertexArr>;
+
 //==============//
 //	Р Е Б Р О	//
 //==============//
@@ -163,7 +172,7 @@ struct Edge
 };
 
 // список ребер
-using EdgeArr = std::vector<Edge>;
+using EdgeList = std::list<Edge>;
 
 //==================//
 //	С П Р А В К А	//

@@ -5,28 +5,12 @@ PresetScriptManrT1::PresetScriptManrT1(
 	const S_PTR(GraphManager)& _graph_man
 )
 	: BaseScriptPreset(_graph_man)
-{
-	/*m_specs =
-	{
-		{SPEC::SHORTEST_DIST_MATR,	&PresetScriptManrT1::PrintShortestDistMatrix},
-		{SPEC::ECCENTR,				&PresetScriptManrT1::PrintEccentricity},
-		{SPEC::CENTRAL_VERT,		&PresetScriptManrT1::PrintCentralVertices},
-		{SPEC::PERIPHERAL_VERT,		&PresetScriptManrT1::PrintPeripheralVertices},
-		{SPEC::RADIUS,				&PresetScriptManrT1::PrintRadius},
-		{SPEC::DIAMETER,			&PresetScriptManrT1::PrintDiameter},
-		{SPEC::DEGREES_IN,			&PresetScriptManrT1::PrintVertexDegreesIn},
-		{SPEC::DEGREES_OUT,			&PresetScriptManrT1::PrintVertexDegreesOut},
-		{SPEC::DEGREES_IN_OUT,		&PresetScriptManrT1::PrintVertexDegreesInOut},
-	};*/
-}
+{}
 
 PresetScriptManrT1::~PresetScriptManrT1()
 {
 	m_graph_manager.reset();
 }
-
-//#define G_MAN_PRES m_graph_manager->GetMajorPreset()
-//#define IF_CALC(_spec) if((*G_MAN_PRES->GetStatesOfSpecs())[int(_spec)])
 
 void PresetScriptManrT1::PrintShortestDistMatrix() const
 {

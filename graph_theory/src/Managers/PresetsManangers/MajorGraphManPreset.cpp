@@ -3,7 +3,7 @@
 
 MajorGraphManPreset::MajorGraphManPreset(
 	const S_PTR(Graph)& _graph, const S_PTR(State) _states)
-	:BaseGraphManager(_graph, _states), 
+	:BaseGraphManager(_graph, _states),
 
 	PresetGraphManT1(_graph, _states),
 	PresetGraphManT2(_graph, _states)
@@ -22,6 +22,15 @@ MajorGraphManPreset::MajorGraphManPreset(
 		{SPEC::DEGREES_IN_OUT,		&PresetGraphManT1::CalculateVertexDegreesInOut},
 
 		// Task 2
+		{SPEC::IS_CONNECTED,							&PresetGraphManT2::CalculateIsConnected},
+		{SPEC::IS_NOT_CONNECTED,						&PresetGraphManT2::CalculateIsNotConnected},
+		{SPEC::CONNECTED_COMPONENTS,					&PresetGraphManT2::CalculateConnectedComponents},
+		{SPEC::DIGRAPH_WEAKLY_CONNECTED_COMPONENTS,		&PresetGraphManT2::CalculateDWeaklyConnectedComponents},
+		{SPEC::IS_DIGRAPH_CONNECTED,					&PresetGraphManT2::CalculateIsDigraphConnected},
+		{SPEC::IS_DIGRAPH_NOT_CONNECTED,				&PresetGraphManT2::CalculateIsDigraphNotConnected},
+		{SPEC::IS_DIGRAPH_WEAKLY_CONNECTED,				&PresetGraphManT2::CalculateIsDigraphWeaklyConnected},
+		{SPEC::IS_DIGRAPH_STRONGLY_CONNECTED,			&PresetGraphManT2::CalculateIsDigraphStronglyConnected},
+		{SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,	&PresetGraphManT2::CalculateDStronglyConnectedComponents},
 
 	};
 }
@@ -42,7 +51,7 @@ void MajorGraphManPreset::CalculateSpecifier(SPEC _spec)
 	}
 }
 
-const S_PTR(std::vector<bool>)& MajorGraphManPreset::GetStatesOfSpecs() const
+const S_PTR(State)& MajorGraphManPreset::GetStatesOfSpecs() const
 {
 	return m_state_of_spec;
 }

@@ -82,6 +82,15 @@ public:
 	// конструктор с путем до файла и типом файла
 	Graph(std::string _filepath, INPUT_FILE_TYPE);
 	
+	// конструктор копирования графа
+	Graph(const Graph& _graph);
+
+	// конструктор графа от матрицы смежности
+	Graph(const VertexMatrix& _v_matr);
+
+	// конструктор графа от списка ребер
+	Graph(const EdgeList& _e_list);
+
 	// деструктор класса
 	~Graph();
 
@@ -128,14 +137,14 @@ public:
 	/// Возврат списка ребер
 	/// </summary>
 	/// <returns> - список ребер</returns>
-	EdgeArr list_of_edges() const;
+	EdgeList list_of_edges() const;
 
 	/// <summary>
 	/// Ребра графа, инцидентные вершине _v
 	/// </summary>
 	/// <param name="_v"> - исходная вершина</param>
 	/// <returns> - список ребер</returns>
-	EdgeArr list_of_edges(Vertex _v) const;
+	EdgeList list_of_edges(Vertex _v) const;
 
 	/// <summary>
 	/// Возврат true, если граф ориентированный,

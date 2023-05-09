@@ -29,14 +29,17 @@ public:
 	// печать: не связен ли диграф
 	void PrintIsDigraphNotConnected() const;
 
-	// печать: слабо ли свзяен диграф
+	// печать: слабо ли связен диграф
 	void PrintIsDigraphWeaklyConnected() const;
 	
-	// печать: сильно ли свзяен диграф
+	// печать: сильно ли связен диграф
 	void PrintIsDigraphStronglyConnected() const;
 
 	// печать: компоненты сильной связности
-	void PrintStronglyConnectedComponents() const;
+	void PrintDigraphStronglyConnectedComponents() const;
+
+	// печать: компоненты слабой связности
+	void PrintDigraphWeaklyConnectedComponents() const;
 
 };
 

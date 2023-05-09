@@ -24,15 +24,16 @@ MajorScriptManPreset::MajorScriptManPreset(
 		{SPEC::DEGREES_IN_OUT,		&PresetScriptManrT1::PrintVertexDegreesInOut},
 
 		// Task 2
-		//{SPEC::SHORTEST_DIST_MATR,	&PresetScriptManrT2::  },
-		//{SPEC::ECCENTR,				&PresetScriptManrT2::  },
-		//{SPEC::CENTRAL_VERT,			&PresetScriptManrT2::  },
-		//{SPEC::PERIPHERAL_VERT,		&PresetScriptManrT2::  },
-		//{SPEC::RADIUS,				&PresetScriptManrT2::  },
-		//{SPEC::DIAMETER,				&PresetScriptManrT2::  },
-		//{SPEC::DEGREES_IN,			&PresetScriptManrT2::  },
-		//{SPEC::DEGREES_OUT,			&PresetScriptManrT2::  },
-		//{SPEC::DEGREES_IN_OUT,		&PresetScriptManrT2::  },
+		{SPEC::IS_CONNECTED,							&PresetScriptManrT2::PrintIsConnected},
+		{SPEC::IS_NOT_CONNECTED,						&PresetScriptManrT2::PrintIsNotConnected},
+		{SPEC::CONNECTED_COMPONENTS,					&PresetScriptManrT2::PrintConnectedComponents},
+
+		{SPEC::IS_DIGRAPH_CONNECTED,					&PresetScriptManrT2::PrintIsDigraphConnected},
+		{SPEC::IS_DIGRAPH_NOT_CONNECTED,				&PresetScriptManrT2::PrintIsDigraphNotConnected},
+		{SPEC::DIGRAPH_WEAKLY_CONNECTED_COMPONENTS,		&PresetScriptManrT2::PrintDigraphWeaklyConnectedComponents},
+		{SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,	&PresetScriptManrT2::PrintDigraphStronglyConnectedComponents},
+		{SPEC::IS_DIGRAPH_WEAKLY_CONNECTED,				&PresetScriptManrT2::PrintIsDigraphWeaklyConnected},
+		{SPEC::IS_DIGRAPH_STRONGLY_CONNECTED,			&PresetScriptManrT2::PrintIsDigraphStronglyConnected},
 
 	};
 }
@@ -60,4 +61,7 @@ void MajorScriptManPreset::Run()
 			(this->*m_specs[el])();
 		}
 	);
+
+	// TODO удалить это
+	//for (auto el : *m_graph_manager->GetMajorPreset()->GetStatesOfSpecs())std::cout << el << " \n";
 }

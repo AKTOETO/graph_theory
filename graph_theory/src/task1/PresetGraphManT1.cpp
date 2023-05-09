@@ -45,9 +45,6 @@ PresetGraphManT1::~PresetGraphManT1()
 //         CALCULATE МЕТОДЫ         //
 //==================================//
 
-//#define IF_CALC(_spec) if((*m_state_of_spec)[int(_spec)])
-//#define IF_NOT_CALC(_spec) if(!(*m_state_of_spec)[int(_spec)])
-
 bool PresetGraphManT1::CalculateVertexDegreesIn()
 {
 	// если граф направленный, расчитываем степень входа

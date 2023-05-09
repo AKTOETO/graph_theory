@@ -3,7 +3,42 @@
 
 Graph::Graph(std::string _filepath, INPUT_FILE_TYPE _in_f_type)
 {
+	INFO("конструктор по умолчанию");
 	ReadGraphFromFile(_filepath, _in_f_type);
+}
+
+Graph::Graph(const Graph& _graph)
+{
+	INFO("конструктор копирования");
+	this->m_adjacency_matrix = _graph.adjacency_matrix();
+}
+
+Graph::Graph(const VertexMatrix& _v_matr)
+{
+	INFO("конструктор от матрицы смежности");
+	this->m_adjacency_matrix = _v_matr;
+}
+
+Graph::Graph(const EdgeList& _e_list)
+{
+	INFO("конструктор от списка ребер");
+	// количество вершин в графе
+	int n = 0;
+	std::for_each(_e_list.begin(), _e_list.end(), [&](const Edge& _ed)
+		{
+			n = std::max({ _ed.m_from, _ed.m_to, n });
+		}
+	);
+
+	// изменение размера матрицы
+	this->m_adjacency_matrix.resize(n + 1, VertexArr(n + 1, 0));
+
+	// запись матрицы смежности
+	for (auto it = _e_list.begin(); it != _e_list.end(); it++)
+	{
+		m_adjacency_matrix[it->m_from][it->m_to] = it->m_weight;
+	}
+	INFO("конец конструктора от списка ребер");
 }
 
 Graph::~Graph()
@@ -300,16 +335,28 @@ VertexList Graph::adjacency_list(Vertex _v) const
 	return out;
 }
 
-// TODO
-EdgeArr Graph::list_of_edges() const
+EdgeList Graph::list_of_edges() const
 {
-	return EdgeArr();
+	EdgeList out;
+
+	for (int i = 0; i < m_adjacency_matrix.size(); i++)
+	{
+		for (int j = 0; j < m_adjacency_matrix.size(); j++)
+		{
+			if (is_edge(i, j))
+			{
+				out.push_back({ i,j,weight(i,j) });
+			}
+		}
+	}
+
+	return out;
 }
 
 // TODO
-EdgeArr Graph::list_of_edges(Vertex _v) const
+EdgeList Graph::list_of_edges(Vertex _v) const
 {
-	return EdgeArr();
+	return EdgeList();
 }
 
 // TODO

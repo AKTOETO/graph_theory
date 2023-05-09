@@ -7,14 +7,25 @@
 class PresetGraphManT2 : virtual public BaseGraphManager
 {
 protected:
-	// маркированные веришны
+	// маркированные вершины графа (орграфа)
 	// индекс в массиве    = номер вершины
-	// значение по индексу = номер компоненты связности
+	// значение по индексу = номер компоненты связности (комп. слабой связности орграфа)
 	U_PTR(VertexArr) m_marked_vertices;
 	
-	// количество компонент связности
+	// маркированные вершины ориентированного графа (комп. сильной связности)
+	U_PTR(VertexArr) m_digraph_marked_vertices;
+
+	// количество компонент связности (комп. слабой связности)
 	int m_numb_of_conn_compon;
 
+	// количество компонент сильной связности
+	int m_numb_of_strng_con_comp;
+
+	// связен ли граф
+	bool m_is_connected;
+
+	// сильно связен ли граф
+	bool m_is_strongly_connected;
 
 public:
 
@@ -48,20 +59,32 @@ public:
 	bool CalculateIsDigraphStronglyConnected();
 
 	// расчет: компоненты сильной связности
-	bool CalculateStronglyConnectedComponents();
+	bool CalculateDStronglyConnectedComponents();
+
+	// расчет: компоненты связности в ориентированном графе
+	bool CalculateDWeaklyConnectedComponents();
 
 	//==================================//
 	//            GET МЕТОДЫ            //
 	//==================================//
 
-	// получение: количество компонент связности
-	const int& GetNumbOfConnComp() const;
+	// получение: количество компонент слабой связности
+	const int& GetNumberOfConnectedComponents() const;
 
-	// получение: компоненты связности
+	// получение: компоненты слабой связности
+	const U_PTR(VertexArr)& GetConnectedComponents() const;
+
+	// получение: связен ли граф
+	const bool& GetIsGraphConnected() const;
 
 	// получение: компоненты сильной связности
+	const U_PTR(VertexArr)& GetStronglyConnectedComponents() const;
 
 	// получение: количество компонент сильной связности
+	const int& GetNumberOfStronglyConnectedComponents() const;
+
+	// получение: сильно связен ли орграф
+	const bool& GetIsDigraphStronglyConnected();
 
 };
 

@@ -211,4 +211,4 @@ void CommandManager::SetOutputFilepath(std::string _filepath)
 void CommandManager::GetDeveloperData(std::string _data)
 {
 	std::cout << DEVELOPER_DATA;
-}
+} 
