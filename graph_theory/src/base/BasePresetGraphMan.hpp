@@ -9,6 +9,9 @@ protected:
 	// Сам граф
 	S_PTR(Graph) m_graph;
 
+	// соотнесенный граф
+	S_PTR(Graph) m_correl_graph;
+
 	// просчитана ли характеристика
 	// 1 - просчитана
 	// 0 - не просчитана
@@ -26,7 +29,8 @@ public:
 	BaseGraphManager(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states)
 		// инициализация полей
 		:m_state_of_spec(_states),
-		m_graph(_graph)
+		m_graph(_graph),
+		m_correl_graph(NULL)
 	{};
 
 	virtual ~BaseGraphManager()

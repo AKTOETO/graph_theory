@@ -6,6 +6,7 @@
 //=========================//
 // КАКОЕ ЗАДАНИЕ ЗАПУСКАТЬ //
 //=========================//
+// T1, T2, MULTITASK
 #define T2
 
 //===================//
@@ -25,7 +26,7 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 #define INF_PRINT_WIDTH 2
 
 // Количество характеристик
-#define NUMBER_OF_SPECIFIERS 18
+#define NUMBER_OF_SPECIFIERS 22
 
 //===========================//
 // С П Е Ц И Ф И К А Т О Р Ы //
@@ -59,6 +60,15 @@ enum class SPEC
 	DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,
 	IS_DIGRAPH_WEAKLY_CONNECTED,
 	IS_DIGRAPH_STRONGLY_CONNECTED, 
+
+	// task3
+	// не ориентированный граф
+	BRIDGES,
+	PIVOT,
+
+	// ориентированный граф
+	DIGRAPH_BRIDGES,
+	DIGRAPH_PIVOT
 };
 
 // тип данных сценария выполнения программы
@@ -122,6 +132,31 @@ static const Script TASK_SCRIPT = Script
 
 #elif defined(T11)
 
+#elif defined(MULTITASK)
+static const Script TASK_SCRIPT = Script
+{
+	SPEC::DEGREES_IN_OUT,
+	SPEC::DEGREES_IN,
+	SPEC::DEGREES_OUT,
+	SPEC::SHORTEST_DIST_MATR,
+	SPEC::ECCENTR,
+	SPEC::DIAMETER,
+	SPEC::RADIUS,
+	SPEC::CENTRAL_VERT,
+	SPEC::PERIPHERAL_VERT,
+	SPEC::IS_CONNECTED,
+	SPEC::IS_NOT_CONNECTED,
+	SPEC::IS_DIGRAPH_CONNECTED,
+	SPEC::IS_DIGRAPH_NOT_CONNECTED,
+
+	SPEC::CONNECTED_COMPONENTS,
+	SPEC::DIGRAPH_WEAKLY_CONNECTED_COMPONENTS,
+
+	SPEC::IS_DIGRAPH_STRONGLY_CONNECTED,
+	SPEC::IS_DIGRAPH_WEAKLY_CONNECTED,
+
+	SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,
+};
 
 #endif 
 

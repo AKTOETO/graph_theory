@@ -4,6 +4,29 @@
 
 namespace ALGO
 {
+	// создание соотнесенного графа
+	inline Graph CorrelatedGraph(
+		const S_PTR(Graph)& _graph	// обычный граф
+	)
+	{
+		// получение матрицы смежности обычного графа
+		VertexMatrix corr_matr = _graph->adjacency_matrix();
+
+		// получение соотнесенного графа
+		for (int i = 0; i < corr_matr.size(); i++)
+		{
+			for (int j = 0; j < corr_matr.size(); j++)
+			{
+				// отображаем элементы матрицы относительно главной диагонали
+				if (corr_matr[i][j])
+					corr_matr[j][i] = 1;
+			}
+		}
+
+		// создание и возврат соотнесенного графа
+		return Graph(corr_matr);
+	}
+
 	// BFS поиск в ширину
 	inline void BFS(
 		const S_PTR(Graph)& _graph,				// граф

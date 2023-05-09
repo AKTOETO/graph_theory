@@ -262,25 +262,12 @@ bool PresetGraphManT2::CalculateDWeaklyConnectedComponents()
 		{
 			m_numb_of_conn_compon = 1;
 
-			VertexMatrix corr_matr = m_graph->adjacency_matrix();
-
-			// получение соотнесенного графа
-			for (int i = 0; i < corr_matr.size(); i++)
-			{
-				for (int j = 0; j < corr_matr.size(); j++)
-				{
-					// отображаем элементы матрицы относительно главной диагонали
-					if (corr_matr[i][j])
-						corr_matr[j][i] = 1;
-				}
-			}
-
 			// выделение памяти под массив маркированных вершин
 			m_marked_vertices =
-				std::make_unique<VertexArr>(corr_matr.size(), 0);
+				std::make_unique<VertexArr>(m_graph->adjacency_matrix().size(), 0);
 
-			// Создаем объект графа, используя соотнесенную матрицу смежности
-			std::shared_ptr<Graph> corr_graph = std::make_unique<Graph>(corr_matr);
+			// создание соотнесенного графа
+			m_correl_graph = std::make_shared<Graph>(ALGO::CorrelatedGraph(m_graph));
 
 			// цикл по всем вершинам
 			for (int vert = 0; vert < m_graph->adjacency_matrix().size(); vert++)
@@ -288,7 +275,7 @@ bool PresetGraphManT2::CalculateDWeaklyConnectedComponents()
 				// если вершина не была посещена
 				if (!(*m_marked_vertices)[vert])
 				{
-					ALGO::BFS(corr_graph, m_marked_vertices, vert, m_numb_of_conn_compon);
+					ALGO::BFS(m_correl_graph, m_marked_vertices, vert, m_numb_of_conn_compon);
 					m_numb_of_conn_compon++;
 				}
 			}

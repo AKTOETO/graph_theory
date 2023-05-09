@@ -1,9 +1,9 @@
-﻿#pragma once
+﻿#ifndef PRESETGRAPHMANT2_h
+#define PRESETGRAPHMANT2_h
+
 #include "../base/BasePresetGraphMan.hpp"
 
-/// <summary>
-/// Класс для управления графом
-/// </summary>
+// набор функций для решения второй задачи
 class PresetGraphManT2 : virtual public BaseGraphManager
 {
 protected:
@@ -29,7 +29,7 @@ protected:
 
 public:
 
-	// конструктор с путем до файла и типом файла
+	// конструктор и деструктор
 	PresetGraphManT2(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states);
 	~PresetGraphManT2() override;
 
@@ -88,3 +88,4 @@ public:
 
 };
 
+#endif // !PRESETGRAPHMANT2_h
