@@ -6,34 +6,41 @@ MajorScriptManPreset::MajorScriptManPreset(
 	const S_PTR(GraphManager)& _graph_man, const S_PTR(Script)& _script
 ) :
 	BaseScriptPreset(_graph_man),
-	PresetScriptManrT1(_graph_man),
-	PresetScriptManrT2(_graph_man),
+	PresetScriptManT1(_graph_man),
+	PresetScriptManT2(_graph_man),
+	PresetScriptManT3(_graph_man),
 	m_script(_script)
 {
 	m_specs =
 	{
 		// Task 1
-		{SPEC::SHORTEST_DIST_MATR,	&PresetScriptManrT1::PrintShortestDistMatrix},
-		{SPEC::ECCENTR,				&PresetScriptManrT1::PrintEccentricity},
-		{SPEC::CENTRAL_VERT,		&PresetScriptManrT1::PrintCentralVertices},
-		{SPEC::PERIPHERAL_VERT,		&PresetScriptManrT1::PrintPeripheralVertices},
-		{SPEC::RADIUS,				&PresetScriptManrT1::PrintRadius},
-		{SPEC::DIAMETER,			&PresetScriptManrT1::PrintDiameter},
-		{SPEC::DEGREES_IN,			&PresetScriptManrT1::PrintVertexDegreesIn},
-		{SPEC::DEGREES_OUT,			&PresetScriptManrT1::PrintVertexDegreesOut},
-		{SPEC::DEGREES_IN_OUT,		&PresetScriptManrT1::PrintVertexDegreesInOut},
+		{SPEC::SHORTEST_DIST_MATR,	&PresetScriptManT1::PrintShortestDistMatrix},
+		{SPEC::ECCENTR,				&PresetScriptManT1::PrintEccentricity},
+		{SPEC::CENTRAL_VERT,		&PresetScriptManT1::PrintCentralVertices},
+		{SPEC::PERIPHERAL_VERT,		&PresetScriptManT1::PrintPeripheralVertices},
+		{SPEC::RADIUS,				&PresetScriptManT1::PrintRadius},
+		{SPEC::DIAMETER,			&PresetScriptManT1::PrintDiameter},
+		{SPEC::DEGREES_IN,			&PresetScriptManT1::PrintVertexDegreesIn},
+		{SPEC::DEGREES_OUT,			&PresetScriptManT1::PrintVertexDegreesOut},
+		{SPEC::DEGREES_IN_OUT,		&PresetScriptManT1::PrintVertexDegreesInOut},
 
 		// Task 2
-		{SPEC::IS_CONNECTED,							&PresetScriptManrT2::PrintIsConnected},
-		{SPEC::IS_NOT_CONNECTED,						&PresetScriptManrT2::PrintIsNotConnected},
-		{SPEC::CONNECTED_COMPONENTS,					&PresetScriptManrT2::PrintConnectedComponents},
+		{SPEC::IS_CONNECTED,							&PresetScriptManT2::PrintIsConnected},
+		{SPEC::IS_NOT_CONNECTED,						&PresetScriptManT2::PrintIsNotConnected},
+		{SPEC::CONNECTED_COMPONENTS,					&PresetScriptManT2::PrintConnectedComponents},
 
-		{SPEC::IS_DIGRAPH_CONNECTED,					&PresetScriptManrT2::PrintIsDigraphConnected},
-		{SPEC::IS_DIGRAPH_NOT_CONNECTED,				&PresetScriptManrT2::PrintIsDigraphNotConnected},
-		{SPEC::DIGRAPH_WEAKLY_CONNECTED_COMPONENTS,		&PresetScriptManrT2::PrintDigraphWeaklyConnectedComponents},
-		{SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,	&PresetScriptManrT2::PrintDigraphStronglyConnectedComponents},
-		{SPEC::IS_DIGRAPH_WEAKLY_CONNECTED,				&PresetScriptManrT2::PrintIsDigraphWeaklyConnected},
-		{SPEC::IS_DIGRAPH_STRONGLY_CONNECTED,			&PresetScriptManrT2::PrintIsDigraphStronglyConnected},
+		{SPEC::IS_DIGRAPH_CONNECTED,					&PresetScriptManT2::PrintIsDigraphConnected},
+		{SPEC::IS_DIGRAPH_NOT_CONNECTED,				&PresetScriptManT2::PrintIsDigraphNotConnected},
+		{SPEC::DIGRAPH_WEAKLY_CONNECTED_COMPONENTS,		&PresetScriptManT2::PrintDigraphWeaklyConnectedComponents},
+		{SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,	&PresetScriptManT2::PrintDigraphStronglyConnectedComponents},
+		{SPEC::IS_DIGRAPH_WEAKLY_CONNECTED,				&PresetScriptManT2::PrintIsDigraphWeaklyConnected},
+		{SPEC::IS_DIGRAPH_STRONGLY_CONNECTED,			&PresetScriptManT2::PrintIsDigraphStronglyConnected},
+
+		// Task3
+		{SPEC::BRIDGES,			&PresetScriptManT3::PrintBridges},
+		{SPEC::DIGRAPH_BRIDGES,	&PresetScriptManT3::PrintDigraphBridges},
+		{SPEC::PIVOT,			&PresetScriptManT3::PrintPivots},
+		{SPEC::DIGRAPH_PIVOT,	&PresetScriptManT3::PrintDigraphPivots},
 
 	};
 }

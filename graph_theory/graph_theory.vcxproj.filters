@@ -54,6 +54,9 @@
     <ClCompile Include="src\task3\PresetGraphManT3.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\task3\PresetScriptManT3.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Constants.h">
@@ -110,11 +113,155 @@
     <ClInclude Include="src\task3\PresetGraphManT3.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="src\task3\PresetScriptManT3.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\graphs\adjacency_list.txt" />
     <Text Include="assets\graphs\adjacency_matrix.txt" />
     <Text Include="assets\graphs\edges_list.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_001.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_002.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_003.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_004.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_005.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_006.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_007.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_008.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_009.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_010.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_011.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_012.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_013.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_014.txt" />
+    <Text Include="assets\graphs\task1\ans_t1_015.txt" />
+    <Text Include="assets\graphs\task1\list_of_adjacency_t1_013.txt" />
+    <Text Include="assets\graphs\task1\list_of_adjacency_t1_014.txt" />
+    <Text Include="assets\graphs\task1\list_of_adjacency_t1_015.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_001.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_002.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_003.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_004.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_005.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_006.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_007.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_008.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_009.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_010.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_011.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_012.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_013.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_014.txt" />
+    <Text Include="assets\graphs\task1\list_of_edges_t1_015.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_001.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_002.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_003.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_004.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_005.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_006.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_007.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_008.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_009.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_010.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_011.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_012.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_013.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_014.txt" />
+    <Text Include="assets\graphs\task1\matrix_t1_015.txt" />
+    <Text Include="assets\graphs\task2\ans_t2_001.txt" />
+    <Text Include="assets\graphs\task2\ans_t2_002.txt" />
+    <Text Include="assets\graphs\task2\ans_t2_003.txt" />
+    <Text Include="assets\graphs\task2\ans_t2_004.txt" />
+    <Text Include="assets\graphs\task2\ans_t2_005.txt" />
+    <Text Include="assets\graphs\task2\ans_t2_006.txt" />
+    <Text Include="assets\graphs\task2\ans_t2_007.txt" />
+    <Text Include="assets\graphs\task2\ans_t2_008.txt" />
+    <Text Include="assets\graphs\task2\ans_t2_009.txt" />
+    <Text Include="assets\graphs\task2\ans_t2_010.txt" />
+    <Text Include="assets\graphs\task2\ans_t2_011.txt" />
+    <Text Include="assets\graphs\task2\ans_t2_012.txt" />
+    <Text Include="assets\graphs\task2\ans_t2_013.txt" />
+    <Text Include="assets\graphs\task2\ans_t2_014.txt" />
+    <Text Include="assets\graphs\task2\list_of_adjacency_t2_001.txt" />
+    <Text Include="assets\graphs\task2\list_of_adjacency_t2_002.txt" />
+    <Text Include="assets\graphs\task2\list_of_adjacency_t2_003.txt" />
+    <Text Include="assets\graphs\task2\list_of_adjacency_t2_004.txt" />
+    <Text Include="assets\graphs\task2\list_of_adjacency_t2_005.txt" />
+    <Text Include="assets\graphs\task2\list_of_adjacency_t2_006.txt" />
+    <Text Include="assets\graphs\task2\list_of_adjacency_t2_008.txt" />
+    <Text Include="assets\graphs\task2\list_of_adjacency_t2_009.txt" />
+    <Text Include="assets\graphs\task2\list_of_adjacency_t2_011.txt" />
+    <Text Include="assets\graphs\task2\list_of_adjacency_t2_013.txt" />
+    <Text Include="assets\graphs\task2\list_of_adjacency_t2_014.txt" />
+    <Text Include="assets\graphs\task2\list_of_edges_t2_001.txt" />
+    <Text Include="assets\graphs\task2\list_of_edges_t2_002.txt" />
+    <Text Include="assets\graphs\task2\list_of_edges_t2_003.txt" />
+    <Text Include="assets\graphs\task2\list_of_edges_t2_004.txt" />
+    <Text Include="assets\graphs\task2\list_of_edges_t2_005.txt" />
+    <Text Include="assets\graphs\task2\list_of_edges_t2_006.txt" />
+    <Text Include="assets\graphs\task2\list_of_edges_t2_007.txt" />
+    <Text Include="assets\graphs\task2\list_of_edges_t2_008.txt" />
+    <Text Include="assets\graphs\task2\list_of_edges_t2_009.txt" />
+    <Text Include="assets\graphs\task2\list_of_edges_t2_010.txt" />
+    <Text Include="assets\graphs\task2\list_of_edges_t2_011.txt" />
+    <Text Include="assets\graphs\task2\list_of_edges_t2_012.txt" />
+    <Text Include="assets\graphs\task2\list_of_edges_t2_013.txt" />
+    <Text Include="assets\graphs\task2\list_of_edges_t2_014.txt" />
+    <Text Include="assets\graphs\task2\matrix_t2_001.txt" />
+    <Text Include="assets\graphs\task2\matrix_t2_002.txt" />
+    <Text Include="assets\graphs\task2\matrix_t2_003.txt" />
+    <Text Include="assets\graphs\task2\matrix_t2_004.txt" />
+    <Text Include="assets\graphs\task2\matrix_t2_005.txt" />
+    <Text Include="assets\graphs\task2\matrix_t2_006.txt" />
+    <Text Include="assets\graphs\task2\matrix_t2_007.txt" />
+    <Text Include="assets\graphs\task2\matrix_t2_008.txt" />
+    <Text Include="assets\graphs\task2\matrix_t2_009.txt" />
+    <Text Include="assets\graphs\task2\matrix_t2_010.txt" />
+    <Text Include="assets\graphs\task2\matrix_t2_011.txt" />
+    <Text Include="assets\graphs\task2\matrix_t2_012.txt" />
+    <Text Include="assets\graphs\task2\matrix_t2_013.txt" />
+    <Text Include="assets\graphs\task2\matrix_t2_014.txt" />
+    <Text Include="assets\graphs\task3\ans_t3_001.txt" />
+    <Text Include="assets\graphs\task3\ans_t3_002.txt" />
+    <Text Include="assets\graphs\task3\ans_t3_003.txt" />
+    <Text Include="assets\graphs\task3\ans_t3_004.txt" />
+    <Text Include="assets\graphs\task3\ans_t3_005.txt" />
+    <Text Include="assets\graphs\task3\ans_t3_006.txt" />
+    <Text Include="assets\graphs\task3\ans_t3_007.txt" />
+    <Text Include="assets\graphs\task3\ans_t3_008.txt" />
+    <Text Include="assets\graphs\task3\ans_t3_009.txt" />
+    <Text Include="assets\graphs\task3\ans_t3_010.txt" />
+    <Text Include="assets\graphs\task3\list_of_adjacency_t3_001.txt" />
+    <Text Include="assets\graphs\task3\list_of_adjacency_t3_002.txt" />
+    <Text Include="assets\graphs\task3\list_of_adjacency_t3_003.txt" />
+    <Text Include="assets\graphs\task3\list_of_adjacency_t3_004.txt" />
+    <Text Include="assets\graphs\task3\list_of_adjacency_t3_005.txt" />
+    <Text Include="assets\graphs\task3\list_of_adjacency_t3_006.txt" />
+    <Text Include="assets\graphs\task3\list_of_adjacency_t3_007.txt" />
+    <Text Include="assets\graphs\task3\list_of_adjacency_t3_008.txt" />
+    <Text Include="assets\graphs\task3\list_of_adjacency_t3_009.txt" />
+    <Text Include="assets\graphs\task3\list_of_adjacency_t3_010.txt" />
+    <Text Include="assets\graphs\task3\list_of_edges_t3_001.txt" />
+    <Text Include="assets\graphs\task3\list_of_edges_t3_002.txt" />
+    <Text Include="assets\graphs\task3\list_of_edges_t3_003.txt" />
+    <Text Include="assets\graphs\task3\list_of_edges_t3_004.txt" />
+    <Text Include="assets\graphs\task3\list_of_edges_t3_005.txt" />
+    <Text Include="assets\graphs\task3\list_of_edges_t3_006.txt" />
+    <Text Include="assets\graphs\task3\list_of_edges_t3_007.txt" />
+    <Text Include="assets\graphs\task3\list_of_edges_t3_008.txt" />
+    <Text Include="assets\graphs\task3\list_of_edges_t3_009.txt" />
+    <Text Include="assets\graphs\task3\list_of_edges_t3_010.txt" />
+    <Text Include="assets\graphs\task3\matrix_t3_001.txt" />
+    <Text Include="assets\graphs\task3\matrix_t3_002.txt" />
+    <Text Include="assets\graphs\task3\matrix_t3_003.txt" />
+    <Text Include="assets\graphs\task3\matrix_t3_004.txt" />
+    <Text Include="assets\graphs\task3\matrix_t3_005.txt" />
+    <Text Include="assets\graphs\task3\matrix_t3_006.txt" />
+    <Text Include="assets\graphs\task3\matrix_t3_007.txt" />
+    <Text Include="assets\graphs\task3\matrix_t3_008.txt" />
+    <Text Include="assets\graphs\task3\matrix_t3_009.txt" />
+    <Text Include="assets\graphs\task3\matrix_t3_010.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

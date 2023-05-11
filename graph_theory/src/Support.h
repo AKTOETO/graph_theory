@@ -38,8 +38,12 @@ inline int CountDigitInMatrix(const VertexMatrix& _vec)
 }
 
 // печать вектора через определенный элемент
-template<typename ScriptMan>
-inline void PrintVector(std::vector<ScriptMan> _vec, std::string _delim = " ", int _setwidth = 0)
+template<typename T>
+inline void PrintVector(
+	const std::vector<T>& _vec,
+	std::string _delim = " ",
+	int _setwidth = 0
+)
 {
 	// нужен ли автоматический подбор ширины вывода числа
 	bool auto_width = (_setwidth == 0 ? 1 : 0);
@@ -86,7 +90,7 @@ inline void PrintVector(std::vector<ScriptMan> _vec, std::string _delim = " ", i
 
 // печать компонент связности, используя маркированные вершины графа
 inline void PrintConnectedComponentsInConsole(
-	VertexArr _marked_vertices,	// маркированные вершины
+	const VertexArr& _marked_vertices,	// маркированные вершины
 	std::string _delim = ", ",	// разделитель элементов при печати
 	int _setwidth = 0			// ширина печати одного элемента
 )
@@ -99,14 +103,13 @@ inline void PrintConnectedComponentsInConsole(
 
 	// перечисляем в цикле все номера компонент, параллельно собрая
 	// массив вершин в текущей компоненте
-	// массив вершин в текущей компоненте
 	for (int comp_number = max_comp - 1; comp_number >= 0; comp_number--)
 	{
 		std::cout << "[";
 
 		// узнаем количество вершин в iой компоненте связности
 		auto numb_of_vert = std::count_if(
-			_marked_vertices.begin(), _marked_vertices.end(), [&comp_number](Vertex& _v)
+			_marked_vertices.begin(), _marked_vertices.end(), [&comp_number](const Vertex& _v)
 			{
 				return _v - 1 == comp_number;
 			}
@@ -136,6 +139,54 @@ inline void PrintConnectedComponentsInConsole(
 		// печатаем разедлитель
 		if (comp_number)std::cout << _delim;
 	}
+}
+
+// печать массива ребер
+inline void PrintEdgeList(
+	const EdgeList& _edge_l,	// список ребер
+	std::string _delim = ", "	// разделитель элементов при печати
+)
+{
+	auto it = _edge_l.begin();
+	for (; it != _edge_l.end(); it++)
+	{
+		std::cout << "("
+			<< std::min(it->m_from, it->m_to) + 1
+			<< _delim
+			<< std::max(it->m_from, it->m_to) + 1
+			<< ")";
+		//печать разделителя
+		if (std::distance(it, _edge_l.end()) > 1)
+			std::cout << _delim;
+	}
+}
+
+// печать массива шарниров
+inline void PrintPivotsInConsole(
+	const PivotArr& _vec,
+	std::string _delim = ", ",
+	int _setwidth = 0
+)
+{
+	// массив шарниров
+	VertexArr p_arr(
+		std::count_if(_vec.begin(), _vec.end(), [](const Pivot& p)
+			{
+				return p == 1;
+			}), 0
+	);
+
+	// преобразование массива шарниров
+	// текущий элемент в конечном массиве шарниров
+	int ind = 0;
+	for (int i = 0; i < _vec.size(); i++)
+	{
+		if (_vec[i] == 1)
+			p_arr[ind++] = i + 1;
+	}
+
+	// печать преобразованного массива
+	PrintVector(p_arr, _delim, _setwidth);
 }
 
 // проверка на наличие определенного элемента в матрице

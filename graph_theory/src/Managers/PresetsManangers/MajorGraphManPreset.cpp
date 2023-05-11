@@ -6,7 +6,8 @@ MajorGraphManPreset::MajorGraphManPreset(
 	:BaseGraphManager(_graph, _states),
 
 	PresetGraphManT1(_graph, _states),
-	PresetGraphManT2(_graph, _states)
+	PresetGraphManT2(_graph, _states),
+	PresetGraphManT3(_graph, _states)
 {
 	m_specs =
 	{
@@ -31,6 +32,12 @@ MajorGraphManPreset::MajorGraphManPreset(
 		{SPEC::IS_DIGRAPH_WEAKLY_CONNECTED,				&PresetGraphManT2::CalculateIsDigraphWeaklyConnected},
 		{SPEC::IS_DIGRAPH_STRONGLY_CONNECTED,			&PresetGraphManT2::CalculateIsDigraphStronglyConnected},
 		{SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,	&PresetGraphManT2::CalculateDStronglyConnectedComponents},
+
+		// Task3
+		{SPEC::BRIDGES,			&PresetGraphManT3::CalculateBridges},
+		{SPEC::DIGRAPH_BRIDGES,	&PresetGraphManT3::CalculateDigraphBridges},
+		{SPEC::PIVOT,			&PresetGraphManT3::CalculatePivots},
+		{SPEC::DIGRAPH_PIVOT,	&PresetGraphManT3::CalculateDigraphPivots},
 
 	};
 }

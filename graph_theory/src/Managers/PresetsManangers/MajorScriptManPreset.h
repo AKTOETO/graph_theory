@@ -5,10 +5,12 @@
 
 #include "../../task1/PresetScriptManT1.h"
 #include "../../task2/PresetScriptManT2.h"
+#include "../../task3/PresetScriptManT3.h"
 
 class MajorScriptManPreset:
-	public PresetScriptManrT1,
-	public PresetScriptManrT2
+	public PresetScriptManT1,
+	public PresetScriptManT2,
+	public PresetScriptManT3
 {
 protected:
 	// сценарий расчета и вывода характеристик

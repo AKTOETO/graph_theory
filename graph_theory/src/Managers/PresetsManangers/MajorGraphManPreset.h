@@ -3,10 +3,12 @@
 
 #include "../../task1/PresetGraphManT1.h"
 #include "../../task2/PresetGraphManT2.h"
+#include "../../task3/PresetGraphManT3.h"
 
 class MajorGraphManPreset : 
 	public PresetGraphManT1,
-	public PresetGraphManT2
+	public PresetGraphManT2,
+	public PresetGraphManT3
 
 {
 protected:

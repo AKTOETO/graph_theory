@@ -6,8 +6,8 @@
 //=========================//
 // КАКОЕ ЗАДАНИЕ ЗАПУСКАТЬ //
 //=========================//
-// T1, T2, MULTITASK
-#define T2
+// T1, T2, T3, MULTITASK
+#define T3
 
 //===================//
 // К О Н С Т А Н Т Ы //
@@ -115,7 +115,15 @@ static const Script TASK_SCRIPT = Script
 };
 
 #elif defined(T3)
+// сценарий для третьего задания
+static const Script TASK_SCRIPT = Script
+{
+	SPEC::BRIDGES,
+	SPEC::PIVOT,
 
+	SPEC::DIGRAPH_BRIDGES,
+	SPEC::DIGRAPH_PIVOT,
+};
 #elif defined(T4)
 
 #elif defined(T5)
@@ -191,6 +199,19 @@ using VertexMatrix = std::vector<VertexArr>;
 // список вершин в компонентах связности
 using ConnectCompList = std::list<VertexArr>;
 
+// список посещенных вершин
+using VisitedVert = std::vector<bool>;
+
+//=============//
+// Ш А Р Н И Р //
+//=============//
+
+// шарнир
+using Pivot = Vertex;
+
+// список массив шарниров
+using PivotArr = std::vector<bool>;
+
 //==============//
 //	Р Е Б Р О	//
 //==============//
@@ -208,6 +229,16 @@ struct Edge
 
 // список ребер
 using EdgeList = std::list<Edge>;
+
+//===============//
+//   В Р Е М Я   //
+//===============//
+
+// время
+using Time = int;
+
+// массив времен
+using TimeArr = std::vector<Time>;
 
 //==================//
 //	С П Р А В К А	//

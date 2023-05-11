@@ -1,12 +1,12 @@
 ﻿#pragma once
 #include "../base/BasePresetScriptMan.hpp"
 
-class PresetScriptManrT1 : virtual public BaseScriptPreset
+class PresetScriptManT1 : virtual public BaseScriptPreset
 {
 public:
 
-	PresetScriptManrT1(const S_PTR(GraphManager)& _graph_man);
-	virtual ~PresetScriptManrT1() override;
+	PresetScriptManT1(const S_PTR(GraphManager)& _graph_man);
+	virtual ~PresetScriptManT1() override;
 
 	//===================================//
 	// МЕТОДЫ ПЕЧАТИ ХАРАКТЕРИСТИК ГРАФА //

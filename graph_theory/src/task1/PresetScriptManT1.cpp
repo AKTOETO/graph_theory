@@ -1,18 +1,18 @@
 ﻿#include "../pch.h"
 #include "PresetScriptManT1.h"
 
-PresetScriptManrT1::PresetScriptManrT1(
+PresetScriptManT1::PresetScriptManT1(
 	const S_PTR(GraphManager)& _graph_man
 )
 	: BaseScriptPreset(_graph_man)
 {}
 
-PresetScriptManrT1::~PresetScriptManrT1()
+PresetScriptManT1::~PresetScriptManT1()
 {
 	m_graph_manager.reset();
 }
 
-void PresetScriptManrT1::PrintShortestDistMatrix() const
+void PresetScriptManT1::PrintShortestDistMatrix() const
 {
 	// если была расчитана матрица кратчайших расстояний
 	IF_CALC(SPEC::SHORTEST_DIST_MATR)
@@ -31,7 +31,7 @@ void PresetScriptManrT1::PrintShortestDistMatrix() const
 	}
 }
 
-void PresetScriptManrT1::PrintEccentricity() const
+void PresetScriptManT1::PrintEccentricity() const
 {
 	// если были расчитаны эксцентриситеты
 	IF_CALC(SPEC::ECCENTR)
@@ -43,7 +43,7 @@ void PresetScriptManrT1::PrintEccentricity() const
 	}
 }
 
-void PresetScriptManrT1::PrintCentralVertices() const
+void PresetScriptManT1::PrintCentralVertices() const
 {
 	IF_CALC(SPEC::CENTRAL_VERT)
 	{
@@ -54,7 +54,7 @@ void PresetScriptManrT1::PrintCentralVertices() const
 	}
 }
 
-void PresetScriptManrT1::PrintPeripheralVertices() const
+void PresetScriptManT1::PrintPeripheralVertices() const
 {
 	IF_CALC(SPEC::PERIPHERAL_VERT)
 	{
@@ -65,7 +65,7 @@ void PresetScriptManrT1::PrintPeripheralVertices() const
 	}
 }
 
-void PresetScriptManrT1::PrintRadius() const
+void PresetScriptManT1::PrintRadius() const
 {
 	IF_CALC(SPEC::RADIUS)
 	{
@@ -74,7 +74,7 @@ void PresetScriptManrT1::PrintRadius() const
 	}
 }
 
-void PresetScriptManrT1::PrintDiameter() const
+void PresetScriptManT1::PrintDiameter() const
 {
 	IF_CALC(SPEC::DIAMETER)
 	{
@@ -83,7 +83,7 @@ void PresetScriptManrT1::PrintDiameter() const
 	}
 }
 
-void PresetScriptManrT1::PrintVertexDegreesIn() const
+void PresetScriptManT1::PrintVertexDegreesIn() const
 {
 	// если были расчитаны степени входа
 	IF_CALC(SPEC::DEGREES_IN)
@@ -95,7 +95,7 @@ void PresetScriptManrT1::PrintVertexDegreesIn() const
 	}
 }
 
-void PresetScriptManrT1::PrintVertexDegreesOut() const
+void PresetScriptManT1::PrintVertexDegreesOut() const
 {
 	// если были расчитаны степени выхода
 	IF_CALC(SPEC::DEGREES_OUT)
@@ -107,7 +107,7 @@ void PresetScriptManrT1::PrintVertexDegreesOut() const
 	}
 }
 
-void PresetScriptManrT1::PrintVertexDegreesInOut() const
+void PresetScriptManT1::PrintVertexDegreesInOut() const
 {
 	// если были расчитаны степени входа и выхода
 	IF_CALC(SPEC::DEGREES_IN_OUT)

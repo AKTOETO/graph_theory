@@ -3,12 +3,13 @@
 
 #include "../base/BasePresetScriptMan.hpp"
 
-class PresetScriptManrT2 : virtual public BaseScriptPreset
+class PresetScriptManT2
+	: virtual public BaseScriptPreset
 {
 public:
 
-	PresetScriptManrT2(const S_PTR(GraphManager)& _graph_man);
-	virtual ~PresetScriptManrT2() override;
+	PresetScriptManT2(const S_PTR(GraphManager)& _graph_man);
+	virtual ~PresetScriptManT2() override;
 
 	//===================================//
 	// МЕТОДЫ ПЕЧАТИ ХАРАКТЕРИСТИК ГРАФА //

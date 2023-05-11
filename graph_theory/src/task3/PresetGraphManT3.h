@@ -7,7 +7,20 @@ class PresetGraphManT3 :
    virtual public BaseGraphManager
 {
 protected:
+	// маркированные вершины графа (орграфа)
+	U_PTR(VisitedVert) m_marked_vertices;
 
+	// массив времени входа
+	U_PTR(TimeArr) m_tin;
+
+	// массив времени выхода
+	U_PTR(TimeArr) m_tout;
+
+	// список мостов
+	U_PTR(EdgeList) m_bridges;
+
+	// массив шарниров
+	U_PTR(PivotArr) m_pivots;
 
 public:
 	// конструктор и деструктор
@@ -19,24 +32,26 @@ public:
 	//==================================//
 
 	// расчет: мосты в графе
+	bool CalculateBridges();
 
 	// расчет: шарниры в графе
+	bool CalculatePivots();
 
 	// расчет: мосты в диграфе
+	bool CalculateDigraphBridges();
 
 	// расчет: шарниры в диграфе
+	bool CalculateDigraphPivots();
 
 	//==================================//
 	//            GET МЕТОДЫ            //
 	//==================================//
 
-	// получение: мосты в графе 
+	// получение: мосты в графе/ографе
+	const U_PTR(EdgeList)& GetBridges() const;
 
-	// получение: шарниры в графе 
-
-	// получение: мосты в диграфе 
-
-	// получение: шарниры в диграфе 
+	// получение: шарниры в графе/ографе
+	const U_PTR(PivotArr)& GetPivots() const;
 
 };
 
