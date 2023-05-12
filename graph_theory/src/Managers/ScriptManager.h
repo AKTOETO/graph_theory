@@ -7,17 +7,17 @@
 class ScriptManager
 {
 protected:
-	// сценарий работы программы
-	S_PTR(Script) m_script;
+	// настроки системы
+	S_PTR(SystemSetting) m_sys_settings;
 
 	// управляющий графом
 	S_PTR(GraphManager) m_graph_manager;
 
 	// упарвляющий поведением программы
-	U_PTR(MajorScriptManPreset) m_script_manager;
+	U_PTR(MajorScriptManPreset) m_script_mananger;
 
 public:
-	ScriptManager(const std::string& _filepath, const INPUT_FILE_TYPE& _in_f_type, const Script& _script);
+	ScriptManager(const SystemSetting& _settings);
 	~ScriptManager();
 
 	void Run();

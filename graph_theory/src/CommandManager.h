@@ -2,6 +2,7 @@
 #define COMMANDMANAGER_H
 #include "Managers/ScriptManager.h"
 
+
 // обработчик введенных ключей
 class CommandManager
 {
@@ -11,13 +12,16 @@ private:
 	std::unordered_map<std::string, void(CommandManager::*)(std::string)> m_commands;
 
 	// Управляющий сценарием выполнения программы
-	U_PTR(ScriptManager) m_script_manager;
+	U_PTR(ScriptManager) m_script_mananger;
 
 	// Введенные параметры при запуске
 	std::vector<std::string> m_param;
 
 	// поток вывода данных
 	std::ofstream m_fout;
+
+	// настройки системы
+	SystemSetting m_sys_settings;
 
 public:
 	CommandManager() = delete;
@@ -49,6 +53,9 @@ public:
 
 	// проверка на наличие определенного ключа 
 	bool IsThereAKey(const std::string& _key);
+
+	// Task4 проверка на наличие доп ключей: -k -p -b -s
+	bool IsCorrectNumberOfKPBS();
 
 
 	////////////////////////////////////////////
@@ -84,6 +91,24 @@ public:
 	/// </summary>
 	/// <param name="_data"></param>
 	void GetDeveloperData(std::string _data);
+
+	// TASK 4
+	// Обработка ключей
+	// -k - алгоритм Крускала
+	void SetCruscalSpec(std::string _data);
+
+	// Обработка ключей
+	// -p - алгоритм Прима
+	void SetPrimSpec(std::string _data);
+
+	// Обработка ключей
+	// -b - алгоритм Борувки
+	void SetBoruvkaSpec(std::string _data);
+
+	// Обработка ключей
+	// -s - все 3 предыдущих алгоритма вместе
+	void SetCruscalPrimBoruvkaSpec(std::string _data);
+
 };
 
 #endif // COMMANDMANAGER_H

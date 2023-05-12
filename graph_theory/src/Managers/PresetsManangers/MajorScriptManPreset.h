@@ -13,8 +13,8 @@ class MajorScriptManPreset:
 	public PresetScriptManT3
 {
 protected:
-	// сценарий расчета и вывода характеристик
-	S_PTR(Script) m_script;
+	// настройки системы
+	S_PTR(SystemSetting) m_sys_settings;
 
 	// список возможных характеристик графа
 	// с указателями на функции печати этих характеристик
@@ -22,7 +22,8 @@ protected:
 
 public:
 	MajorScriptManPreset(
-		const S_PTR(GraphManager)& _graph_man, const S_PTR(Script)& _script
+		const S_PTR(GraphManager)& _graph_man,	// управляющий графом
+		const S_PTR(SystemSetting)& _setts		// сценарий работы 
 	);
 	~MajorScriptManPreset() override;
 

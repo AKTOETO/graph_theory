@@ -2,7 +2,7 @@
 #include "CommandManager.h"
 
 CommandManager::CommandManager(int argc, char* _keys[])
-	:m_script_manager(nullptr)
+	:m_script_mananger(nullptr)
 {
 	// задание возможных ключей и функций их обработки
 	m_commands =
@@ -14,8 +14,14 @@ CommandManager::CommandManager(int argc, char* _keys[])
 		{"-h", &CommandManager::GetDeveloperData},
 
 		// Task4
-
+		{"-k", &CommandManager::SetCruscalSpec},
+		{"-p", &CommandManager::SetPrimSpec},
+		{"-b", &CommandManager::SetBoruvkaSpec},
+		{"-s", &CommandManager::SetCruscalPrimBoruvkaSpec},
 	};
+
+	// использование сценария программы по умолчанию
+	m_sys_settings.m_script = TASK_SCRIPT;
 
 	// конвертация char* _keys[] в vector<string>
 	ConverCharArrayToStrVec(argc, _keys);
@@ -51,8 +57,17 @@ void CommandManager::Run()
 		m_param.erase(m_param.begin(), it_end);
 	}
 
-	if(m_script_manager)
-		m_script_manager->Run();
+	// выделение памяти под script manager и передача ему объекта  
+	// SystemSettings для дальнейшей обработки его содержимого объектом 
+	// MajorScriptManPreset
+
+	m_script_mananger =
+		std::make_unique<ScriptManager>(
+			m_sys_settings
+		);
+
+	// запуск главного метода обработчика сценариев
+	m_script_mananger->Run();
 }
 
 void CommandManager::PrintParams() const
@@ -98,8 +113,14 @@ void CommandManager::CheckKeys()
 		// проверка на введение одновременно ключей e m l
 		if (!IsCorrectNumberOfEML()) ERROR("Неверное количество ключей -e -m -l");
 
+		
+		// Task 4
+#if defined(T4)
 		// проверка на наличие доп ключей: -k -p -b -s
 		// если нет ни одного ключа - выводим сообщение об отсутствии ключей
+		if (!IsCorrectNumberOfKPBS()) ERROR("Неверное количество ключей -k -p -b -s");
+#endif
+
 	}
 }
 
@@ -157,6 +178,17 @@ bool CommandManager::IsThereAKey(const std::string& _key)
 	return false;
 }
 
+bool CommandManager::IsCorrectNumberOfKPBS()
+{
+	// если есть любой ключ из -k -p -b -s,
+	// то все нормально
+	return std::find_if(
+		begin(m_param), end(m_param), [](const std::string& _str)
+		{
+			return _str == "-k" || _str == "-p" || _str == "-b" || _str == "-s";
+		}) != end(m_param);
+}
+
 void CommandManager::ConverCharArrayToStrVec(int argc, char* _keys[])
 {
 	// задание размера вектора
@@ -169,37 +201,32 @@ void CommandManager::ConverCharArrayToStrVec(int argc, char* _keys[])
 	}
 }
 
+////////////////////////////////////////////
+// функции, выполняющие введенные команды
+////////////////////////////////////////////
+
 void CommandManager::ReadEdgesList(std::string _context)
 {
-	// здесь будет происходить создание скрипт менеджера
-	// и передача ему сценария
-
-	m_script_manager =
-		std::make_unique<ScriptManager>(
-			_context, INPUT_FILE_TYPE::EDGES_LIST, TASK_SCRIPT
-	);
+	// вставляем в начало программы спецификатор считывания списка ребер
+	m_sys_settings.m_in_type = INPUT_FILE_TYPE::EDGES_LIST;
+	// сохраняем путь до файла
+	m_sys_settings.m_filepath = _context;
 }
 
 void CommandManager::ReadAdjacencyMatrix(std::string _context)
-{
-	// здесь будет происходить создание скрипт менеджера
-	// и передача ему сценария
-
-	m_script_manager =
-		std::make_unique<ScriptManager>(
-			_context, INPUT_FILE_TYPE::ADJACENCY_MATRIX, TASK_SCRIPT
-		);
+{	
+	// вставляем в начало программы спецификатор считывания матрицы смежности
+	m_sys_settings.m_in_type = INPUT_FILE_TYPE::ADJACENCY_MATRIX;
+	// сохраняем путь до файла
+	m_sys_settings.m_filepath = _context;
 }
 
 void CommandManager::ReadAdjacencyList(std::string _context)
 {
-	// здесь будет происходить создание скрипт менеджера
-	// и передача ему сценария
-	
-	m_script_manager =
-		std::make_unique<ScriptManager>(
-			_context, INPUT_FILE_TYPE::ADJACENCY_LIST, TASK_SCRIPT
-		);
+	// вставляем в начало программы спецификатор считывания списка смежности
+	m_sys_settings.m_in_type = INPUT_FILE_TYPE::ADJACENCY_LIST;
+	// сохраняем путь до файла
+	m_sys_settings.m_filepath = _context;
 }
 
 void CommandManager::SetOutputFilepath(std::string _filepath)
@@ -216,4 +243,44 @@ void CommandManager::SetOutputFilepath(std::string _filepath)
 void CommandManager::GetDeveloperData(std::string _data)
 {
 	std::cout << DEVELOPER_DATA;
-} 
+}
+
+// TASK 4
+// Обработка ключей
+
+void CommandManager::SetCruscalSpec(std::string _data)
+{
+	INFO("установка алгоритма Крусскала");
+
+	// добавление в настроки системы алгоритма крускала
+	m_sys_settings.m_script.push_back(SPEC::CRUSKAL);
+	m_sys_settings.m_script.push_back(SPEC::DIGRAPH_CRUSKAL);
+}
+
+void CommandManager::SetPrimSpec(std::string _data)
+{
+	INFO("установка алгоритма Прима");
+
+	// добавление в настроки системы алгоритма прима
+	m_sys_settings.m_script.push_back(SPEC::PRIM);
+	m_sys_settings.m_script.push_back(SPEC::DIGRAPH_PRIM);
+}
+
+void CommandManager::SetBoruvkaSpec(std::string _data)
+{
+	INFO("установка алгоритма Борувки");
+
+	// добавление в настроки системы алгоритма борувки
+	m_sys_settings.m_script.push_back(SPEC::BORUVKA);
+	m_sys_settings.m_script.push_back(SPEC::DIGRAPH_BORUVKA);
+}
+
+void CommandManager::SetCruscalPrimBoruvkaSpec(std::string _data)
+{
+	INFO("установка алгоритма Крускала Прима Борувки");
+
+	// добавление в настроки системы алгоритма крускала, прима, борувки
+	m_sys_settings.m_script.push_back(SPEC::CRUSKAL_PRIM_BORUVKA);
+	m_sys_settings.m_script.push_back(SPEC::DIGRAPH_CRUSKAL_PRIM_BORUVKA);
+}
+

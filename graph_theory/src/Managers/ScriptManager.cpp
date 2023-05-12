@@ -2,25 +2,28 @@
 #include "ScriptManager.h"
 
 ScriptManager::ScriptManager(
-	const std::string& _filepath, const INPUT_FILE_TYPE& _in_f_type, const Script& _script
+	const SystemSetting& _settings
 ) :
-	m_script(std::make_shared<Script>(_script))
+	m_sys_settings(std::make_shared<SystemSetting>(_settings))
 {
 	// создание графа
-	m_graph_manager = std::make_shared<GraphManager>(_filepath, _in_f_type);
+	m_graph_manager = std::make_shared<GraphManager>(
+		m_sys_settings->m_filepath,	// путь к файлу с графом
+		m_sys_settings->m_in_type	// тип файла
+	);
 
 	// создание управляющего программы
-	m_script_manager = std::make_unique<MajorScriptManPreset>(m_graph_manager, m_script);
+	m_script_mananger = std::make_unique<MajorScriptManPreset>(m_graph_manager, m_sys_settings);
 }
 
 ScriptManager::~ScriptManager()
 {
-	m_script.reset();
+	m_sys_settings.reset();
 	m_graph_manager.reset();
-	m_script_manager.reset();
+	m_script_mananger.reset();
 }
 
 void ScriptManager::Run()
 {
-	m_script_manager->Run();
+	m_script_mananger->Run();
 }

@@ -6,8 +6,8 @@
 //=========================//
 // КАКОЕ ЗАДАНИЕ ЗАПУСКАТЬ //
 //=========================//
-// T1, T2, T3, MULTITASK
-#define T3
+// T1, T2, T3, T4, MULTITASK
+#define T4
 
 //===================//
 // К О Н С Т А Н Т Ы //
@@ -26,7 +26,7 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 #define INF_PRINT_WIDTH 2
 
 // Количество характеристик
-#define NUMBER_OF_SPECIFIERS 22
+#define NUMBER_OF_SPECIFIERS 30
 
 //===========================//
 // С П Е Ц И Ф И К А Т О Р Ы //
@@ -35,8 +35,8 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 // возможные характеристики, которые есть у графа
 // и которые можно просчитать
 enum class SPEC
-{
-	// task1
+{	//===================//
+	// TASK 1
 	SHORTEST_DIST_MATR,
 	ECCENTR,
 	CENTRAL_VERT,
@@ -47,8 +47,9 @@ enum class SPEC
 	DEGREES_OUT,
 	DEGREES_IN_OUT,
 
-	// task2
-	// не ориентированный граф
+	//===================//
+	// TASK 2
+	// неориентированный граф
 	IS_CONNECTED,
 	IS_NOT_CONNECTED,
 	CONNECTED_COMPONENTS,
@@ -61,14 +62,30 @@ enum class SPEC
 	IS_DIGRAPH_WEAKLY_CONNECTED,
 	IS_DIGRAPH_STRONGLY_CONNECTED, 
 
-	// task3
-	// не ориентированный граф
+	//===================//
+	// TASK 3
+	// неориентированный граф
 	BRIDGES,
 	PIVOT,
 
 	// ориентированный граф
 	DIGRAPH_BRIDGES,
-	DIGRAPH_PIVOT
+	DIGRAPH_PIVOT,
+
+	//===================//
+	// TASK 4
+	// неориентированный граф
+	CRUSKAL,
+	PRIM,
+	BORUVKA,
+	CRUSKAL_PRIM_BORUVKA,
+
+	// ориентированный граф
+	DIGRAPH_CRUSKAL,
+	DIGRAPH_PRIM,
+	DIGRAPH_BORUVKA,
+	DIGRAPH_CRUSKAL_PRIM_BORUVKA,
+
 };
 
 // тип данных сценария выполнения программы
@@ -77,10 +94,54 @@ using Script = std::list<SPEC>;
 // тип данных массива состояний
 using State = std::vector<bool>;
 
+//===============================//
+// ТИПЫ ВХОДНЫХ ФАЙЛОВ С ГРАФАМИ //
+//===============================//
+enum class INPUT_FILE_TYPE
+{
+	//  список ребер - это двумерная матрица, в которой
+	//  (в11) (в12) (вес)
+	//  .................
+	//  (вn1) (вn2) (вес), где:
+	//  
+	//  в(индекс)1 - вершина, из которой выходит ребро
+	//  в(индекс)2 - вершина, в которую входит ребро 
+	//  вес - вес ребра
+	//  
+	EDGES_LIST,
+
+	//  матрица смежности представляет из себя:
+	//      к у д а
+	//  от  a11 a12 ... a1n
+	//  ку  a21 a22 ... a2n
+	//  да  ...............
+	//      an1 an2 ... ann
+	//  где откуда - вершины, из которых выходит ребро
+	//  куда - вершины, куда входит ребро
+	//  коэффициенты aii - вес ребра: 
+	//  0 - если ребра нет
+	//  N - любое натуральное число, если ребро есть
+	//  и оно имеет вес N
+	//  
+	ADJACENCY_MATRIX,
+
+	//  список смежности представляет из себя:
+	//  1) a1 ... an
+	//  .) .........
+	//  d) c1 ... cm
+	//  где номера строк - вершины, из которых исходят ребра,
+	//  а числа a1,...,an,...,c1,...,cm - вершины, в которые
+	//  входят ребра
+	//  
+	ADJACENCY_LIST
+};
+
 //===================//
 //  С Ц Е Н А Р И Й  //
 //===================//
 
+// В TASK_SCRIPT находятся те спецификаторы,
+// которые должны выполняться по умолчанию ВСЕГДА
 #if defined(T1)
 // сценарий для первого задания
 static const Script TASK_SCRIPT = Script
@@ -125,7 +186,12 @@ static const Script TASK_SCRIPT = Script
 	SPEC::DIGRAPH_PIVOT,
 };
 #elif defined(T4)
-
+// сценарий для четвертого задания
+static const Script TASK_SCRIPT = Script
+{
+	// пусто, так как нужные параметры для расчета
+	// выбираются путем ввода ключей
+};
 #elif defined(T5)
 
 #elif defined(T6)
@@ -168,6 +234,30 @@ static const Script TASK_SCRIPT = Script
 
 #endif 
 
+//=================================//
+// СТРУКТУРА НАСТРОЕК ВСЕЙ СИСТЕМЫ //
+//=================================//
+struct SystemSetting
+{
+	// список спецификаторов, которые ОБЯЗАТЕЛЬНО выполняются
+	// (обязательные спецификаторы копируются из TASK_SCRIPT)
+	// + спецификаторы, которые добавляются ключами программы
+	// через CommandManager
+	Script m_script;
+
+	// путь до файла с данными
+	std::string m_filepath;
+
+	// тип файла ввода данных
+	INPUT_FILE_TYPE m_in_type;
+
+	// конструктор по умолчанию
+	SystemSetting() :
+		m_script(TASK_SCRIPT),
+		m_filepath(""),
+		m_in_type(INPUT_FILE_TYPE::ADJACENCY_MATRIX)
+	{}
+};
 
 
 //===================//

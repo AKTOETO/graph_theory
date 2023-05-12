@@ -2,14 +2,14 @@
 #include "MajorScriptManPreset.h"
 
 MajorScriptManPreset::MajorScriptManPreset(
-	//std::string _filepath, INPUT_FILE_TYPE _in_f_type, Script _script
-	const S_PTR(GraphManager)& _graph_man, const S_PTR(Script)& _script
+	const S_PTR(GraphManager)& _graph_man,	// управляющий графом
+	const S_PTR(SystemSetting)& _setts		// сценарий работы 
 ) :
 	BaseScriptPreset(_graph_man),
 	PresetScriptManT1(_graph_man),
 	PresetScriptManT2(_graph_man),
 	PresetScriptManT3(_graph_man),
-	m_script(_script)
+	m_sys_settings(_setts)
 {
 	m_specs =
 	{
@@ -47,13 +47,13 @@ MajorScriptManPreset::MajorScriptManPreset(
 
 MajorScriptManPreset::~MajorScriptManPreset()
 {
-	m_script.reset();
+	m_sys_settings.reset();
 	m_graph_manager.reset();
 }
 
 void MajorScriptManPreset::Run()
 {
-	std::for_each(m_script->begin(), m_script->end(), [&](const SPEC& spec)
+	std::for_each(m_sys_settings->m_script.begin(), m_sys_settings->m_script.end(), [&](const SPEC& spec)
 		{
 			G_MAN_PRES->CalculateSpecifier(spec);
 		}
@@ -63,7 +63,7 @@ void MajorScriptManPreset::Run()
 	// для вывода спрашивать у граф менеджера: 
 	// расчитана ли эта велечина?
 	// для всего сценария вызываем соответствующие функции печати
-	std::for_each(m_script->begin(), m_script->end(), [&](const SPEC& el)
+	std::for_each(m_sys_settings->m_script.begin(), m_sys_settings->m_script.end(), [&](const SPEC& el)
 		{
 			(this->*m_specs[el])();
 		}
