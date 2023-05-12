@@ -4,7 +4,7 @@
 #include "../base/BasePresetGraphMan.hpp"
 
 // набор функций для решения второй задачи
-class PresetGraphManT2 : virtual public BaseGraphManager
+class PresetGraphManT2 : virtual public BaseGraphPresetManager
 {
 protected:
 	// маркированные вершины графа (орграфа)

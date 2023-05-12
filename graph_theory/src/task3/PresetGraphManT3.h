@@ -4,7 +4,7 @@
 #include "../base/BasePresetGraphMan.hpp"
 
 class PresetGraphManT3 :
-   virtual public BaseGraphManager
+	virtual public BaseGraphPresetManager
 {
 protected:
 	// маркированные вершины графа (орграфа)
@@ -54,6 +54,5 @@ public:
 	const U_PTR(PivotArr)& GetPivots() const;
 
 };
-
 
 #endif // !PRESETGRAPHMANT3_h

@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\task4\PresetGraphManT4.cpp" />
     <ClCompile Include="src\task3\PresetScriptManT3.cpp" />
     <ClCompile Include="src\task3\PresetGraphManT3.cpp" />
     <ClCompile Include="src\Managers\ScriptManager.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="src\task2\PresetScriptManT2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\task4\PresetGraphManT4.h" />
     <ClInclude Include="src\task3\PresetScriptManT3.h" />
     <ClInclude Include="src\task3\PresetGraphManT3.h" />
     <ClInclude Include="src\Algorithms.hpp" />

@@ -3,7 +3,7 @@
 
 PresetGraphManT2::PresetGraphManT2(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states)
 // инициализация всех полей
-	:BaseGraphManager(_graph, _states),
+	:BaseGraphPresetManager(_graph, _states),
 	m_numb_of_conn_compon(1),
 	m_numb_of_strng_con_comp(1),
 	m_is_connected(0),

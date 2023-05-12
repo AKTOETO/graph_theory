@@ -36,11 +36,13 @@ MajorScriptManPreset::MajorScriptManPreset(
 		{SPEC::IS_DIGRAPH_WEAKLY_CONNECTED,				&PresetScriptManT2::PrintIsDigraphWeaklyConnected},
 		{SPEC::IS_DIGRAPH_STRONGLY_CONNECTED,			&PresetScriptManT2::PrintIsDigraphStronglyConnected},
 
-		// Task3
+		// Task 3
 		{SPEC::BRIDGES,			&PresetScriptManT3::PrintBridges},
 		{SPEC::DIGRAPH_BRIDGES,	&PresetScriptManT3::PrintDigraphBridges},
 		{SPEC::PIVOT,			&PresetScriptManT3::PrintPivots},
 		{SPEC::DIGRAPH_PIVOT,	&PresetScriptManT3::PrintDigraphPivots},
+
+		// Task 4
 
 	};
 }
@@ -53,22 +55,17 @@ MajorScriptManPreset::~MajorScriptManPreset()
 
 void MajorScriptManPreset::Run()
 {
+	// расчитываем через управляющего графом все нужные данные
 	std::for_each(m_sys_settings->m_script.begin(), m_sys_settings->m_script.end(), [&](const SPEC& spec)
 		{
 			G_MAN_PRES->CalculateSpecifier(spec);
 		}
 	);
 
-	// TODO надо еще выводить величины
-	// для вывода спрашивать у граф менеджера: 
-	// расчитана ли эта велечина?
-	// для всего сценария вызываем соответствующие функции печати
+	// печать расчитанных величин
 	std::for_each(m_sys_settings->m_script.begin(), m_sys_settings->m_script.end(), [&](const SPEC& el)
 		{
-			(this->*m_specs[el])();
+			IF_CALC(el)	(this->*m_specs[el])();
 		}
 	);
-
-	// TODO удалить это
-	//for (auto el : *m_graph_manager->GetMajorPreset()->GetStatesOfSpecs())std::cout << el << " \n";
 }

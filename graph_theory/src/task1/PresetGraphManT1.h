@@ -4,7 +4,7 @@
 /// <summary>
 /// Класс для управления графом
 /// </summary>
-class PresetGraphManT1 : virtual public BaseGraphManager
+class PresetGraphManT1 : virtual public BaseGraphPresetManager
 {
 protected:
 

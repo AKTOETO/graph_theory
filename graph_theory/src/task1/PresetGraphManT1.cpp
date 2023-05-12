@@ -3,7 +3,7 @@
 
 PresetGraphManT1::PresetGraphManT1(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states)
 // инициализация всех полей
-	:BaseGraphManager(_graph, _states),
+	:BaseGraphPresetManager(_graph, _states),
 	m_shortest_distance_matr(nullptr),
 	m_eccentricity(nullptr),
 	m_central_vertices(nullptr),

@@ -3,7 +3,7 @@
 
 MajorGraphManPreset::MajorGraphManPreset(
 	const S_PTR(Graph)& _graph, const S_PTR(State) _states)
-	:BaseGraphManager(_graph, _states),
+	:BaseGraphPresetManager(_graph, _states),
 
 	PresetGraphManT1(_graph, _states),
 	PresetGraphManT2(_graph, _states),

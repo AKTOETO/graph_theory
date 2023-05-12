@@ -2,7 +2,7 @@
 //#include "../Graph.h"
 #include "../Algorithms.hpp"
 
-class BaseGraphManager
+class BaseGraphPresetManager
 {
 protected:
 
@@ -26,14 +26,14 @@ protected:
 	};
    
 public:
-	BaseGraphManager(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states)
+	BaseGraphPresetManager(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states)
 		// инициализация полей
 		:m_state_of_spec(_states),
 		m_graph(_graph),
 		m_correl_graph(NULL)
 	{};
 
-	virtual ~BaseGraphManager()
+	virtual ~BaseGraphPresetManager()
 	{
 		// очистка памяти
 		m_graph.reset();

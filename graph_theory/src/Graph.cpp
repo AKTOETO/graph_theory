@@ -359,11 +359,11 @@ EdgeList Graph::list_of_edges(Vertex _v) const
 	return EdgeList();
 }
 
-// TODO
+// ориентирован ли граф
 bool Graph::is_directed() const
 {
 	// проходимся по всем элементам и сравниваем их с 
-	// элементами симметричнми им относительно главной диагонали
+	// элементами симметричными им относительно главной диагонали
 	for (int i = 0; i < m_adjacency_matrix.size(); i++)
 	{
 		for (int j = 0; j <= i; j++)
