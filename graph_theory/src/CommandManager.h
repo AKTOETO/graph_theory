@@ -16,8 +16,8 @@ private:
 	// Введенные параметры при запуске
 	std::vector<std::string> m_param;
 
+	// поток вывода данных
 	std::ofstream m_fout;
-
 
 public:
 	CommandManager() = delete;

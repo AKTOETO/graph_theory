@@ -12,6 +12,9 @@ CommandManager::CommandManager(int argc, char* _keys[])
 		{"-l", &CommandManager::ReadAdjacencyList},
 		{"-o", &CommandManager::SetOutputFilepath},
 		{"-h", &CommandManager::GetDeveloperData},
+
+		// Task4
+
 	};
 
 	// конвертация char* _keys[] в vector<string>
@@ -92,9 +95,11 @@ void CommandManager::CheckKeys()
 			m_param.insert(m_param.begin(), it_beg, it_end);
 		}
 
-
 		// проверка на введение одновременно ключей e m l
 		if (!IsCorrectNumberOfEML()) ERROR("Неверное количество ключей -e -m -l");
+
+		// проверка на наличие доп ключей: -k -p -b -s
+		// если нет ни одного ключа - выводим сообщение об отсутствии ключей
 	}
 }
 
