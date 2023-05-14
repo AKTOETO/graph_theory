@@ -63,6 +63,9 @@
     <ClCompile Include="src\task4\PresetScriptManT4.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\DSU.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Constants.h">
@@ -126,6 +129,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\task4\PresetScriptManT4.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DSU.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

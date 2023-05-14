@@ -9,6 +9,8 @@ namespace ALGO
 		const S_PTR(Graph)& _graph	// обычный граф
 	)
 	{
+		INFO("получение соотнесенного графа");
+
 		// получение матрицы смежности обычного графа
 		VertexMatrix corr_matr = _graph->adjacency_matrix();
 
@@ -19,7 +21,7 @@ namespace ALGO
 			{
 				// отображаем элементы матрицы относительно главной диагонали
 				if (corr_matr[i][j])
-					corr_matr[j][i] = 1;
+					corr_matr[j][i] = corr_matr[i][j];
 			}
 		}
 
@@ -268,13 +270,13 @@ namespace ALGO
 
 	}
 
-	// Алгоритм Крускала O(MlogN+N^2) 
+	// Алгоритм Крускала O(E log V) 
 	// поиск мин. остовного дерева
-	inline SpanningTree Cruscal(
+	inline SpanningTree Kruskal(
 		const S_PTR(Graph)& _graph	// граф
 	)
 	{
-		INFO("Cruscal");
+		INFO("Kruskal");
 
 		// выходное остовное дерево
 		SpanningTree res;
@@ -287,41 +289,30 @@ namespace ALGO
 			}
 		);
 
-		// вектор принадлежности вершины какой-то компоненте
-		VertexArr tree_id(_graph->adjacency_matrix().size());
+		// создане системы неперсекающихся множеств,
+		// для хранения компонент
+		DSU comp(_graph->adjacency_matrix().size());
 
-		// заполнение его по возрастанию
-		std::iota(tree_id.begin(), tree_id.end(), 0);
-
-		// перебор всех ребер
-		for (auto it = begin(edges); it != end(edges); it++)
+		// проходимся по всем ребрам
+		for (Edge& _ed : edges)
 		{
-			// если выершины текущего ребра и разных компонент
-			if (tree_id[it->m_from] != tree_id[it->m_to])
+			// если ребро соединяет разные компоненты связности
+			// добавляем его в остовное дерево
+			if (comp.FindSet(_ed.m_from) != comp.FindSet(_ed.m_to))
 			{
-				// увеличение веса остовного дерева
-				res.m_weight += it->m_weight;
-
-				// добавление ребра в конечное дерево
-				res.m_edge_list.push_back(*it);
-
-				// объединение компонент
-				int old_id = tree_id[it->m_to];
-				int new_id = tree_id[it->m_from];
-				for (Vertex& v : tree_id)
-				{
-					if (v == old_id)
-					{
-						v = new_id;
-					}
-				}
+				// объединяем эти компоненты
+				// увеичичваем вес остовного дерева
+				// запоминаем это ребро
+				comp.UnionSet(_ed.m_from, _ed.m_to);
+				res.m_weight += _ed.m_weight;
+				res.m_edge_list.push_back(_ed);
 			}
 		}
 
 		return res;
 	}
 
-	// Алгоритм Прима O(E Log V))
+	// Алгоритм Прима O(E * logV)
 	// поиск мин. остовного дерева
 	inline SpanningTree Prim(
 		const S_PTR(Graph)& _graph	// граф
@@ -333,13 +324,18 @@ namespace ALGO
 		SpanningTree res;
 
 		// очередь инцидентных вершине ребер
-		std::priority_queue<Edge, std::vector<Edge>, EdgeGreater> p_q;
+		std::priority_queue<Edge, EdgeArr, EdgeGreater> p_q;
 
 		// вектор посещенных вершин
 		VisitedVert used(_graph->adjacency_matrix().size());
 
+		// вектор минимальных весов к вершинам,
+		// индекс в векторе - номер вершины
+		VertexArr weights(_graph->adjacency_matrix().size(), INF);
+
 		// начинаем с первой вершины
 		p_q.push({ 0,0,0 });
+		weights[0] = 0;
 
 		// пока очередь не пуста
 		while (!p_q.empty())
@@ -364,8 +360,9 @@ namespace ALGO
 				{
 					// если вершина, в которую направлено ребро,
 					// еще не была посещена - добавляем ребро
-					if (!used[it->m_to])
+					if (!used[it->m_to] && (weights[it->m_to] > it->m_weight))
 					{
+						weights[it->m_to] = it->m_weight;
 						p_q.push(*it);
 					}
 				}
@@ -377,14 +374,118 @@ namespace ALGO
 		return res;
 	}
 
-	// Алгоритм Борувки ... 
-	// https://neerc.ifmo.ru/wiki/index.php?title=Алгоритм_Борувки#.D0.90.D1.81.D0.B8.D0.BC.D0.BF.D1.82.D0.BE.D1.82.D0.B8.D0.BA.D0.B0
+	// Алгоритм Борувки O(E log V)
 	// поиск мин. остовного дерева
 	inline SpanningTree Boruvka(
 		const S_PTR(Graph)& _graph	// граф
 	)
 	{
-		return SpanningTree();
+		INFO("Boruvka");
+
+		// изначальное количество деревьев
+		// (по алгоритму, все вершины - отдельные деревья)
+		size_t num_of_trees = _graph->adjacency_matrix().size();
+
+		// выходная структура с остовным деревом
+		SpanningTree res;
+
+		// массив для хранения кротчайших ребер
+		// из подмножества.
+		EdgeArr cheapest(num_of_trees, { -1,-1,-1 });
+
+		// создане системы неперсекающихся множеств,
+		// для хранения компонент
+		DSU comp(num_of_trees);
+
+		//// каждому подмножеству назначаем родителем самого себя
+		//for (int i = 0; i < num_of_trees; i++)
+		//{
+		//	comp.MakeSet(i);
+		//}
+
+		// список ребер в графе
+		EdgeList elst = _graph->list_of_edges();
+		elst.sort([](const Edge& _ed, const Edge& _ed2)
+			{
+				return _ed.m_weight < _ed2.m_weight;
+			}
+		);
+
+		// объединям компоненты, пока их больше одной
+		while (num_of_trees > 1)
+		{
+			// проходим по всем ребрам
+			// и находим ребро с минимальным весом
+			// для каждой компоненты
+			for (auto it = elst.begin(); it != elst.end(); it++)
+			{
+				// выясняем к каким множествам относятся вершины,
+				// которые находятся на концах текущего ребра
+				int set1 = comp.FindSet(it->m_from);
+				int set2 = comp.FindSet(it->m_to);
+
+				// если обе вершины находятся в разных компонентах,
+				// то проверяем, если текущее ребро короче того,
+				// что находится в массиве кратчайших ребер cheapest
+				// то мы обновляем кратчайшее ребро для текущих множеств
+				if (set1 != set2)
+				{
+					// для первого множества
+					if (
+						cheapest[set1].m_weight == -1 ||
+						cheapest[set1].m_weight > it->m_weight
+						)
+					{
+						cheapest[set1] = *it;
+					}
+
+					// для второго мноества
+					if (
+						cheapest[set2].m_weight == -1 ||
+						cheapest[set2].m_weight > it->m_weight
+						)
+					{
+						cheapest[set2] = *it;
+					}
+				}
+
+				// учтем только что найденные кратчайшие ребра и 
+				// добавим их в минимальноей остовное дерево
+				for (Edge& el : cheapest)
+				{
+					// если кратчайшее ребро для текущего множества
+					// (компоненты связности) существует
+					if (el.m_weight != -1)
+					{
+						// выясняем к каким множествам относятся вершины,
+						// которые находятся на концах текущего ребра
+						set1 = comp.FindSet(el.m_from);
+						set2 = comp.FindSet(el.m_to);
+
+						// если обе вершины находятся в разных компонентах,
+						// объединяем компоненты, добавляем ребро в МОД
+						// увеличиваем размер МОД (минимального остовного дерева)
+						// уменьшаем количество компонент
+						if (set1 != set2)
+						{
+							res.m_weight += el.m_weight;
+							res.m_edge_list.push_back(el);
+
+							comp.UnionSet(set1, set2);
+							num_of_trees--;
+						}
+					}
+				}
+
+				// сбрасываем массив с кратчайшими ребрами
+				for (Edge& el : cheapest)
+				{
+					el.m_weight = -1;
+				}
+			}
+		}
+
+		return res;
 	}
 }
 

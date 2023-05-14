@@ -35,7 +35,7 @@ public:
 		:m_state_of_spec(_states),
 		m_graph(_graph),
 		m_correl_graph(NULL),
-		m_cur_graph(NULL)
+		m_cur_graph(m_graph)
 	{};
 
 	virtual ~BaseGraphPresetManager()

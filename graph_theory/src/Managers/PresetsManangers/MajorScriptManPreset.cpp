@@ -44,15 +44,10 @@ MajorScriptManPreset::MajorScriptManPreset(
 		{SPEC::DIGRAPH_PIVOT,	&PresetScriptManT3::PrintDigraphPivots},
 
 		// Task 4
-		{SPEC::CRUSCAL,					&PresetScriptManT4::PrintMSTCruscal},
+		{SPEC::KRUSKAL,					&PresetScriptManT4::PrintMSTKruskal},
 		{SPEC::PRIM,					&PresetScriptManT4::PrintMSTPrim},
 		{SPEC::BORUVKA,					&PresetScriptManT4::PrintMSTBoruvka},
-		{SPEC::CRUSCAL_PRIM_BORUVKA,	&PresetScriptManT4::PrintMSTCruscalPrimBoruvka},
-
-		{SPEC::DIGRAPH_CRUSCAL,					&PresetScriptManT4::PrintDigraphMSTCruscal},
-		{SPEC::DIGRAPH_PRIM,					&PresetScriptManT4::PrintDigraphMSTPrim},
-		{SPEC::DIGRAPH_BORUVKA,					&PresetScriptManT4::PrintDigraphMSTBoruvka},
-		{SPEC::DIGRAPH_CRUSCAL_PRIM_BORUVKA,	&PresetScriptManT4::PrintDigraphMSTCruscalPrimBoruvka},
+		{SPEC::KRUSKAL_PRIM_BORUVKA,	&PresetScriptManT4::PrintMSTKruskalPrimBoruvka},
 	};
 }
 

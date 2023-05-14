@@ -16,13 +16,13 @@ PresetScriptManT4::~PresetScriptManT4()
 // МЕТОДЫ ПЕЧАТИ ХАРАКТЕРИСТИК ГРАФА //
 //===================================//
 
-void PresetScriptManT4::PrintMSTCruscal() const
+void PresetScriptManT4::PrintMSTKruskal() const
 {
 	std::cout << "Minimum spanning tree:\n";
 	std::cout << "[";
-	PrintEdgeList(G_MAN_PRES->GetCruscalSpanTree()->m_edge_list, ", ", 1);
+	PrintEdgeList(G_MAN_PRES->GetKruskalSpanTree()->m_edge_list, ", ", 1);
 	std::cout << "]\nWeight of spanning tree: "
-		<< G_MAN_PRES->GetCruscalSpanTree()->m_weight
+		<< G_MAN_PRES->GetKruskalSpanTree()->m_weight
 		<< std::endl;
 }
 
@@ -38,24 +38,33 @@ void PresetScriptManT4::PrintMSTPrim() const
 
 void PresetScriptManT4::PrintMSTBoruvka() const
 {
+	std::cout << "Minimum spanning tree:\n";
+	std::cout << "[";
+	PrintEdgeList(G_MAN_PRES->GetBoruvkaSpanTree()->m_edge_list, ", ", 1);
+	std::cout << "]\nWeight of spanning tree: "
+		<< G_MAN_PRES->GetBoruvkaSpanTree()->m_weight
+		<< std::endl;
 }
 
-void PresetScriptManT4::PrintMSTCruscalPrimBoruvka() const
+void PresetScriptManT4::PrintMSTKruskalPrimBoruvka() const
 {
-}
+	std::cout.clear();
 
-void PresetScriptManT4::PrintDigraphMSTCruscal() const
-{
-}
+	std::cout << "[===== CRUSCAL =====]\n";
+	PrintMSTKruskal();
+	std::cout << "Execution time (mcs): " << G_MAN_PRES->GetKruskalTime().count() << "\n";
+	std::cout << "Execution time (ms): " <<
+		std::chrono::duration_cast<ms>(G_MAN_PRES->GetKruskalTime()).count() << "\n\n";
 
-void PresetScriptManT4::PrintDigraphMSTPrim() const
-{
-}
+	std::cout << "[====== PRIM ======]\n";
+	PrintMSTPrim();
+	std::cout << "Execution time (mcs): " << G_MAN_PRES->GetPrimTime().count() << "\n";
+	std::cout << "Execution time (ms): " <<
+		std::chrono::duration_cast<ms>(G_MAN_PRES->GetPrimTime()).count() << "\n\n";
 
-void PresetScriptManT4::PrintDigraphMSTBoruvka() const
-{
-}
-
-void PresetScriptManT4::PrintDigraphMSTCruscalPrimBoruvka() const
-{
+	std::cout << "[===== BORUVKA =====]\n";
+	PrintMSTBoruvka();
+	std::cout << "Execution time (mcs): " << G_MAN_PRES->GetBoruvkaTime().count() << "\n";
+	std::cout << "Execution time (ms): " <<
+		std::chrono::duration_cast<ms>(G_MAN_PRES->GetBoruvkaTime()).count() << "\n\n";
 }

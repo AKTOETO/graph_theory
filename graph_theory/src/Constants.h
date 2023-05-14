@@ -19,14 +19,14 @@ const std::string GRAPH_FILE_PATH = "assets/graphs/";
 // путь до папки с файлами вывода программы
 const std::string RESULT_FILE_PATH = "assets/results/";
 
-// для алгоритма ФЛОЙДА-УОРШЕЛЛА
+// бесконечность
 #define INF 9999999
 
 // ширина при выводе символа бесконечности 
 #define INF_PRINT_WIDTH 2
 
 // Количество характеристик
-#define NUMBER_OF_SPECIFIERS 30
+#define NUMBER_OF_SPECIFIERS 26
 
 //===========================//
 // С П Е Ц И Ф И К А Т О Р Ы //
@@ -60,7 +60,7 @@ enum class SPEC
 	DIGRAPH_WEAKLY_CONNECTED_COMPONENTS,
 	DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,
 	IS_DIGRAPH_WEAKLY_CONNECTED,
-	IS_DIGRAPH_STRONGLY_CONNECTED, 
+	IS_DIGRAPH_STRONGLY_CONNECTED,
 
 	//===================//
 	// TASK 3
@@ -74,17 +74,10 @@ enum class SPEC
 
 	//===================//
 	// TASK 4
-	// неориентированный граф
-	CRUSCAL,
+	KRUSKAL,
 	PRIM,
 	BORUVKA,
-	CRUSCAL_PRIM_BORUVKA,
-
-	// ориентированный граф
-	DIGRAPH_CRUSCAL,
-	DIGRAPH_PRIM,
-	DIGRAPH_BORUVKA,
-	DIGRAPH_CRUSCAL_PRIM_BORUVKA,
+	KRUSKAL_PRIM_BORUVKA,
 
 };
 
@@ -320,11 +313,15 @@ struct Edge
 // список ребер
 using EdgeList = std::list<Edge>;
 
+// массив ребер
+using EdgeArr = std::vector<Edge>;
+
 // оператор сравнения ребер по весу
 struct EdgeGreater
 {
 	bool operator()(const Edge& _ed1, const Edge& _ed2)
 	{
+		//std::cout << _ed1.m_weight << " " << _ed2.m_weight << std::endl;
 		return _ed1.m_weight > _ed2.m_weight;
 	}
 };
@@ -362,11 +359,17 @@ using Time = int;
 // массив времен
 using TimeArr = std::vector<Time>;
 
+// время из библиотеки chrono
+using ChronoDurationMcs = std::chrono::duration<long long, std::micro>;
+
+using ms = std::chrono::milliseconds;
+using mcs = std::chrono::microseconds;
+
 //==================//
 //	С П Р А В К А	//
 //==================//
 
-const std::string DEVELOPER_DATA = 
+const std::string DEVELOPER_DATA =
 "\
 Автор: Плоцкий Богдан\n\
 Группа: М3О-211Б-21\n\

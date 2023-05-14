@@ -41,15 +41,10 @@ MajorGraphManPreset::MajorGraphManPreset(
 		{SPEC::DIGRAPH_PIVOT,	&PresetGraphManT3::CalculateDigraphPivots},
 
 		// Task 4
-		{SPEC::CRUSCAL,					&PresetGraphManT4::CalculateCruscal},
+		{SPEC::KRUSKAL,					&PresetGraphManT4::CalculateKruskal},
 		{SPEC::PRIM,					&PresetGraphManT4::CalculatePrim},
 		{SPEC::BORUVKA,					&PresetGraphManT4::CalculateBoruvka},
-		{SPEC::CRUSCAL_PRIM_BORUVKA,	&PresetGraphManT4::CalculateCruscalPrimBoruvka},
-
-		{SPEC::DIGRAPH_CRUSCAL,					&PresetGraphManT4::CalculateDigraphCruscal},
-		{SPEC::DIGRAPH_PRIM,					&PresetGraphManT4::CalculateDigraphPrim},
-		{SPEC::DIGRAPH_BORUVKA,					&PresetGraphManT4::CalculateDigraphBoruvka},
-		{SPEC::DIGRAPH_CRUSCAL_PRIM_BORUVKA,	&PresetGraphManT4::CalculateDigraphCruscalPrimBoruvka},
+		{SPEC::KRUSKAL_PRIM_BORUVKA,	&PresetGraphManT4::CalculateKruskalPrimBoruvka},
 	};
 }
 

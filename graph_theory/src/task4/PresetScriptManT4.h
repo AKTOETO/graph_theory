@@ -16,7 +16,7 @@ public:
 	//===================================//
 
 	// печать: ост. дер., крускал
-	void PrintMSTCruscal() const;
+	void PrintMSTKruskal() const;
 
 	// печать: ост. дер., прим
 	void PrintMSTPrim() const;
@@ -25,20 +25,7 @@ public:
 	void PrintMSTBoruvka() const;
 
 	// печать: ост. дер., крускал, прим, борувка
-	void PrintMSTCruscalPrimBoruvka() const;
-
-
-	// печать: ост. дер., орграф, крускал
-	void PrintDigraphMSTCruscal() const;
-	
-	// печать: ост. дер., орграф, прим
-	void PrintDigraphMSTPrim() const;
-
-	// печать: ост. дер., орграф, борувка
-	void PrintDigraphMSTBoruvka() const;
-
-	// печать: ост. дер., орграф, крускал, прим, борувка
-	void PrintDigraphMSTCruscalPrimBoruvka() const;
+	void PrintMSTKruskalPrimBoruvka() const;
 
 };
 

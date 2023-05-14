@@ -8,13 +8,22 @@ class PresetGraphManT4 :
 {
 protected:
 	// остовное дерево для Крускала
-	U_PTR(SpanningTree) m_cruscal_spanning_tree;
+	U_PTR(SpanningTree) m_kruskal_spanning_tree;
 
 	// остовное дерево для Прима
 	U_PTR(SpanningTree) m_prim_spanning_tree;
 
 	// остовное дерево для Борувки
 	U_PTR(SpanningTree) m_boruvka_spanning_tree;
+
+	// время на выполнение алгоритма крускала
+	ChronoDurationMcs m_kruskal_time;
+
+	// время на выполнение алгоритма прима
+	ChronoDurationMcs m_prim_time;
+
+	// время на выполнение алгоритма борувки
+	ChronoDurationMcs m_boruvka_time;
 
 public:
 	// конструктор и деструктор
@@ -27,7 +36,7 @@ public:
 	
 	// неориентированный граф
 	// расчет: крускал
-	bool CalculateCruscal();
+	bool CalculateKruskal();
 
 	// расчет: прим
 	bool CalculatePrim();
@@ -36,33 +45,30 @@ public:
 	bool CalculateBoruvka();
 
 	// расчет: все три
-	bool CalculateCruscalPrimBoruvka();
-
-	// ориентированный граф
-	// расчет ограф: крускал
-	bool CalculateDigraphCruscal();
-
-	// расчет ограф: прим
-	bool CalculateDigraphPrim();
-
-	// расчет ограф: борувка
-	bool CalculateDigraphBoruvka();
-
-	// расчет ограф: все три
-	bool CalculateDigraphCruscalPrimBoruvka();
+	bool CalculateKruskalPrimBoruvka();
 
 	//==================================//
 	//            GET МЕТОДЫ            //
 	//==================================//
 
 	// получение: остовное дерево, крускал
-	const U_PTR(SpanningTree)& GetCruscalSpanTree()const;
+	const U_PTR(SpanningTree)& GetKruskalSpanTree() const;
 
 	// получение: остовное дерево, прим
-	const U_PTR(SpanningTree)& GetPrimSpanTree()const;
+	const U_PTR(SpanningTree)& GetPrimSpanTree() const;
 
 	// получение: остовное дерево, борувка
-	const U_PTR(SpanningTree)& GetBoruvkaSpanTree()const;
+	const U_PTR(SpanningTree)& GetBoruvkaSpanTree() const;
+
+	// получение: время работы крускала
+	const ChronoDurationMcs& GetKruskalTime() const;
+
+	// получение: время работы прима
+	const ChronoDurationMcs& GetPrimTime() const;
+
+	// получение: время работы борвуки
+	const ChronoDurationMcs& GetBoruvkaTime() const;
+
 
 };
 

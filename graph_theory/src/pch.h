@@ -2,19 +2,23 @@
 #define PCH_H
 #pragma message("Compiling precompiled headers\n")
 
+#include <unordered_map>
 #include <algorithm>
+#include <iterator>
 #include <iostream>
-#include <string>
-#include <time.h>
+#include <numeric>
 #include <iomanip>
 #include <fstream>
+#include <chrono>
+#include <string>
+#include <time.h>
 #include <memory>
 #include <vector>
-#include <unordered_map>
-#include <iterator>
-#include <numeric>
+#include <thread>
 #include <queue>
 #include <stack>
 #include <list>
+
+#include "DSU.h"
 
 #endif

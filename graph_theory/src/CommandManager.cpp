@@ -253,8 +253,7 @@ void CommandManager::SetCruscalSpec(std::string _data)
 	INFO("установка алгоритма Крусскала");
 
 	// добавление в настроки системы алгоритма крускала
-	m_sys_settings.m_script.push_back(SPEC::CRUSCAL);
-	m_sys_settings.m_script.push_back(SPEC::DIGRAPH_CRUSCAL);
+	m_sys_settings.m_script.push_back(SPEC::KRUSKAL);
 }
 
 void CommandManager::SetPrimSpec(std::string _data)
@@ -263,7 +262,6 @@ void CommandManager::SetPrimSpec(std::string _data)
 
 	// добавление в настроки системы алгоритма прима
 	m_sys_settings.m_script.push_back(SPEC::PRIM);
-	m_sys_settings.m_script.push_back(SPEC::DIGRAPH_PRIM);
 }
 
 void CommandManager::SetBoruvkaSpec(std::string _data)
@@ -272,7 +270,6 @@ void CommandManager::SetBoruvkaSpec(std::string _data)
 
 	// добавление в настроки системы алгоритма борувки
 	m_sys_settings.m_script.push_back(SPEC::BORUVKA);
-	m_sys_settings.m_script.push_back(SPEC::DIGRAPH_BORUVKA);
 }
 
 void CommandManager::SetCruscalPrimBoruvkaSpec(std::string _data)
@@ -280,7 +277,6 @@ void CommandManager::SetCruscalPrimBoruvkaSpec(std::string _data)
 	INFO("установка алгоритма Крускала Прима Борувки");
 
 	// добавление в настроки системы алгоритма крускала, прима, борувки
-	m_sys_settings.m_script.push_back(SPEC::CRUSCAL_PRIM_BORUVKA);
-	m_sys_settings.m_script.push_back(SPEC::DIGRAPH_CRUSCAL_PRIM_BORUVKA);
+	m_sys_settings.m_script.push_back(SPEC::KRUSKAL_PRIM_BORUVKA);
 }
 

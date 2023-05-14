@@ -152,9 +152,9 @@ inline void PrintEdgeList(
 	for (; it != _edge_l.end(); it++)
 	{
 		std::cout << "("
-			<< it->m_from + 1
+			<< std::min(it->m_from,it->m_to) + 1
 			<< _delim
-			<< it->m_to + 1;
+			<< std::max(it->m_from, it->m_to) + 1;
 
 		if (_is_need_weight)
 			std::cout << _delim
