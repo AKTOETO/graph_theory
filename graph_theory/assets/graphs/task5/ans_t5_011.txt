@@ -1,0 +1,1 @@
+There is no path between the vertices 1 and 25.

@@ -1,0 +1,3 @@
+Shortest path length between 2 and 9 vertices: 15
+Path:
+[(2, 16, 10), (16, 9, 5)]

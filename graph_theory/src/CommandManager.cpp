@@ -18,6 +18,10 @@ CommandManager::CommandManager(int argc, char* _keys[])
 		{"-p", &CommandManager::SetPrimSpec},
 		{"-b", &CommandManager::SetBoruvkaSpec},
 		{"-s", &CommandManager::SetCruscalPrimBoruvkaSpec},
+
+		// Task5
+		{"-d", &CommandManager::SetToVertex},
+		{"-n", &CommandManager::SetFromVertex}
 	};
 
 	// использование сценария программы по умолчанию
@@ -113,12 +117,18 @@ void CommandManager::CheckKeys()
 		// проверка на введение одновременно ключей e m l
 		if (!IsCorrectNumberOfEML()) ERROR("Неверное количество ключей -e -m -l");
 
-		
+
 		// Task 4
 #if defined(T4)
 		// проверка на наличие доп ключей: -k -p -b -s
 		// если нет ни одного ключа - выводим сообщение об отсутствии ключей
 		if (!IsCorrectNumberOfKPBS()) ERROR("Неверное количество ключей -k -p -b -s");
+
+		// Task 5
+#elif defined(T5)
+		// проверка на наличие доп ключей: -d -n
+		// должны быть оба ключа сразу
+		if (!IsCorrectNumberOfND()) ERROR("Неверное количество ключей -d -n. Должны быть оба!");
 #endif
 
 	}
@@ -189,6 +199,24 @@ bool CommandManager::IsCorrectNumberOfKPBS()
 		}) != end(m_param);
 }
 
+bool CommandManager::IsCorrectNumberOfND()
+{
+	// если есть оба ключа -d и -n
+	return (
+		std::find_if(
+			begin(m_param), end(m_param), [](const std::string& _str)
+			{
+				return _str == "-d";
+			}) != end(m_param)
+				) && (
+					std::find_if(
+						begin(m_param), end(m_param), [](const std::string& _str)
+						{
+							return _str == "-n";
+						}) != end(m_param)
+							);
+}
+
 void CommandManager::ConverCharArrayToStrVec(int argc, char* _keys[])
 {
 	// задание размера вектора
@@ -214,7 +242,7 @@ void CommandManager::ReadEdgesList(std::string _context)
 }
 
 void CommandManager::ReadAdjacencyMatrix(std::string _context)
-{	
+{
 	// вставляем в начало программы спецификатор считывания матрицы смежности
 	m_sys_settings.m_in_type = INPUT_FILE_TYPE::ADJACENCY_MATRIX;
 	// сохраняем путь до файла
@@ -278,5 +306,25 @@ void CommandManager::SetCruscalPrimBoruvkaSpec(std::string _data)
 
 	// добавление в настроки системы алгоритма крускала, прима, борувки
 	m_sys_settings.m_script.push_back(SPEC::KRUSKAL_PRIM_BORUVKA);
+}
+
+void CommandManager::SetFromVertex(std::string _data)
+{
+	// есть ли в строке _data неотрицательное число
+	if (!IsThereANotNegativeNumber(_data)) 
+		ERROR("Нет начальной вершины. После -n было введено: [" + _data + "]");
+
+	// иначе конвертируем строку в число и передаем в настройки системы эти числа
+	m_sys_settings.m_from = std::stoi(_data);
+}
+
+void CommandManager::SetToVertex(std::string _data)
+{
+	// есть ли в строке _data неотрицательное число
+	if (!IsThereANotNegativeNumber(_data))
+		ERROR("Нет конечной вершины. После -d было введено: [" + _data + "]");
+
+	// иначе конвертируем строку в число и передаем в настройки системы эти числа
+	m_sys_settings.m_to = std::stoi(_data);
 }
 

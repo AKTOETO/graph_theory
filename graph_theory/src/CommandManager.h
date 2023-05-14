@@ -57,6 +57,8 @@ public:
 	// Task4 проверка на наличие доп ключей: -k -p -b -s
 	bool IsCorrectNumberOfKPBS();
 
+	// Task4 проверка на наличие доп ключей: -n -d
+	bool IsCorrectNumberOfND();
 
 	////////////////////////////////////////////
 	// функции, выполняющие введенные команды
@@ -108,6 +110,14 @@ public:
 	// Обработка ключей
 	// -s - все 3 предыдущих алгоритма вместе
 	void SetCruscalPrimBoruvkaSpec(std::string _data);
+
+	// TASK 4
+	// Обработка ключей
+	// установка начальной точки
+	void SetFromVertex(std::string _data);
+
+	// установка конечной точки
+	void SetToVertex(std::string _data);
 
 };
 

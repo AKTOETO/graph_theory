@@ -6,8 +6,8 @@
 //=========================//
 // КАКОЕ ЗАДАНИЕ ЗАПУСКАТЬ //
 //=========================//
-// T1, T2, T3, T4, MULTITASK
-#define T4
+// T1, T2, T3, T4, T5, MULTITASK
+#define T5
 
 //===================//
 // К О Н С Т А Н Т Ы //
@@ -78,6 +78,12 @@ enum class SPEC
 	PRIM,
 	BORUVKA,
 	KRUSKAL_PRIM_BORUVKA,
+
+	//===================//
+	// TASK 5
+	THERE_IS_SHORTEDST_PATH,
+	THERE_IS_NOT_SHORTEDST_PATH,
+	PATH,
 
 };
 
@@ -186,7 +192,10 @@ static const Script TASK_SCRIPT = Script
 	// выбираются путем ввода ключей
 };
 #elif defined(T5)
-
+static const Script TASK_SCRIPT = Script
+{
+	
+};
 #elif defined(T6)
 
 #elif defined(T7)
@@ -226,31 +235,6 @@ static const Script TASK_SCRIPT = Script
 };
 
 #endif 
-
-//=================================//
-// СТРУКТУРА НАСТРОЕК ВСЕЙ СИСТЕМЫ //
-//=================================//
-struct SystemSetting
-{
-	// список спецификаторов, которые ОБЯЗАТЕЛЬНО выполняются
-	// (обязательные спецификаторы копируются из TASK_SCRIPT)
-	// + спецификаторы, которые добавляются ключами программы
-	// через CommandManager
-	Script m_script;
-
-	// путь до файла с данными
-	std::string m_filepath;
-
-	// тип файла ввода данных
-	INPUT_FILE_TYPE m_in_type;
-
-	// конструктор по умолчанию
-	SystemSetting() :
-		m_script(TASK_SCRIPT),
-		m_filepath(""),
-		m_in_type(INPUT_FILE_TYPE::ADJACENCY_MATRIX)
-	{}
-};
 
 
 //===================//
@@ -324,6 +308,36 @@ struct EdgeGreater
 		//std::cout << _ed1.m_weight << " " << _ed2.m_weight << std::endl;
 		return _ed1.m_weight > _ed2.m_weight;
 	}
+};
+
+//=================================//
+// СТРУКТУРА НАСТРОЕК ВСЕЙ СИСТЕМЫ //
+//=================================//
+struct SystemSetting
+{
+	// список спецификаторов, которые ОБЯЗАТЕЛЬНО выполняются
+	// (обязательные спецификаторы копируются из TASK_SCRIPT)
+	// + спецификаторы, которые добавляются ключами программы
+	// через CommandManager
+	Script m_script;
+
+	// путь до файла с данными
+	std::string m_filepath;
+
+	// тип файла ввода данных
+	INPUT_FILE_TYPE m_in_type;
+
+	// начальная и конечная точка геодезической цепи
+	Vertex m_from, m_to;
+
+		// конструктор по умолчанию
+	SystemSetting() :
+		m_script(TASK_SCRIPT),
+		m_filepath(""),
+		m_in_type(INPUT_FILE_TYPE::ADJACENCY_MATRIX),
+		m_from(0),
+		m_to(0)
+	{}
 };
 
 //==================//
