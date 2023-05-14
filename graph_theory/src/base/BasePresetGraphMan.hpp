@@ -12,6 +12,10 @@ protected:
 	// соотнесенный граф
 	S_PTR(Graph) m_correl_graph;
 
+	// текущий граф (в нем находится либо изначальный граф,
+	// либо соотнесенный)
+	S_PTR(Graph) m_cur_graph;
+
 	// просчитана ли характеристика
 	// 1 - просчитана
 	// 0 - не просчитана
@@ -30,7 +34,8 @@ public:
 		// инициализация полей
 		:m_state_of_spec(_states),
 		m_graph(_graph),
-		m_correl_graph(NULL)
+		m_correl_graph(NULL),
+		m_cur_graph(NULL)
 	{};
 
 	virtual ~BaseGraphPresetManager()

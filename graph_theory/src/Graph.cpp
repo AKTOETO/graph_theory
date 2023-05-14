@@ -353,10 +353,19 @@ EdgeList Graph::list_of_edges() const
 	return out;
 }
 
-// TODO
 EdgeList Graph::list_of_edges(Vertex _v) const
 {
-	return EdgeList();
+	EdgeList out;
+
+	for (int i = 0; i < m_adjacency_matrix.size(); i++)
+	{
+		if (is_edge(_v, i))
+		{
+			out.push_back({ _v,i,weight(_v,i) });
+		}
+	}
+
+	return out;
 }
 
 // ориентирован ли граф

@@ -132,7 +132,7 @@ namespace ALGO
 		// цикл по всем непосещенным вершинам графа
 		for (int i = 0; i < used_vert->size(); i++)
 		{
-			if(!(*used_vert)[i])
+			if (!(*used_vert)[i])
 			{
 				DFS(_graph, used_vert, i, 1, order);
 			}
@@ -181,7 +181,7 @@ namespace ALGO
 			{
 				(*_tout)[_start_vert] = std::min((*_tout)[_start_vert], (*_tin)[*to]);
 			}
-			
+
 			// прямое ребро дерева поиска
 			else
 			{
@@ -193,7 +193,7 @@ namespace ALGO
 
 				// добавляем ребро в список мостов
 				// если tout[to] > tin[start_vert]
-				if((*_tout)[*to] > (*_tin)[_start_vert])
+				if ((*_tout)[*to] > (*_tin)[_start_vert])
 				{
 					_bridges->push_back({ _start_vert, *to });
 				}
@@ -263,11 +263,129 @@ namespace ALGO
 			}
 		}
 		// если вершина-предок - корень
-		if(_parent == -1 && children > 1)
+		if (_parent == -1 && children > 1)
 			(*_pivot)[_start_vert] = true;
 
 	}
 
+	// Алгоритм Крускала O(MlogN+N^2) 
+	// поиск мин. остовного дерева
+	inline SpanningTree Cruscal(
+		const S_PTR(Graph)& _graph	// граф
+	)
+	{
+		INFO("Cruscal");
+
+		// выходное остовное дерево
+		SpanningTree res;
+
+		// сортировка ребер по весу
+		EdgeList edges = _graph->list_of_edges();
+		edges.sort([](const Edge& _ed, const Edge& _ed2)
+			{
+				return _ed.m_weight < _ed2.m_weight;
+			}
+		);
+
+		// вектор принадлежности вершины какой-то компоненте
+		VertexArr tree_id(_graph->adjacency_matrix().size());
+
+		// заполнение его по возрастанию
+		std::iota(tree_id.begin(), tree_id.end(), 0);
+
+		// перебор всех ребер
+		for (auto it = begin(edges); it != end(edges); it++)
+		{
+			// если выершины текущего ребра и разных компонент
+			if (tree_id[it->m_from] != tree_id[it->m_to])
+			{
+				// увеличение веса остовного дерева
+				res.m_weight += it->m_weight;
+
+				// добавление ребра в конечное дерево
+				res.m_edge_list.push_back(*it);
+
+				// объединение компонент
+				int old_id = tree_id[it->m_to];
+				int new_id = tree_id[it->m_from];
+				for (Vertex& v : tree_id)
+				{
+					if (v == old_id)
+					{
+						v = new_id;
+					}
+				}
+			}
+		}
+
+		return res;
+	}
+
+	// Алгоритм Прима O(E Log V))
+	// поиск мин. остовного дерева
+	inline SpanningTree Prim(
+		const S_PTR(Graph)& _graph	// граф
+	)
+	{
+		INFO("Prim");
+
+		// выходное остовное дерево
+		SpanningTree res;
+
+		// очередь инцидентных вершине ребер
+		std::priority_queue<Edge, std::vector<Edge>, EdgeGreater> p_q;
+
+		// вектор посещенных вершин
+		VisitedVert used(_graph->adjacency_matrix().size());
+
+		// начинаем с первой вершины
+		p_q.push({ 0,0,0 });
+
+		// пока очередь не пуста
+		while (!p_q.empty())
+		{
+			// вынимаем из очереди ребро с минимальным весом
+			Edge min_ed = p_q.top();
+			p_q.pop();
+
+			// если вершины еще нет в остовном дереве
+			if (!used[min_ed.m_to])
+			{
+				// помечаем вершину и увеличиваем вес дерева
+				used[min_ed.m_to] = true;
+				res.m_weight += min_ed.m_weight;
+
+				// добавляем ребро в дерево
+				res.m_edge_list.push_back(min_ed);
+
+				// добавляем в очередь инцидентные ребра вершине min_ed.m_to
+				EdgeList ed_lst = _graph->list_of_edges(min_ed.m_to);
+				for (auto it = begin(ed_lst); it != end(ed_lst); it++)
+				{
+					// если вершина, в которую направлено ребро,
+					// еще не была посещена - добавляем ребро
+					if (!used[it->m_to])
+					{
+						p_q.push(*it);
+					}
+				}
+			}
+		}
+		// удаление первого (нулевого) ребра 
+		res.m_edge_list.erase(res.m_edge_list.begin());
+
+		return res;
+	}
+
+	// Алгоритм Борувки ... 
+	// https://neerc.ifmo.ru/wiki/index.php?title=Алгоритм_Борувки#.D0.90.D1.81.D0.B8.D0.BC.D0.BF.D1.82.D0.BE.D1.82.D0.B8.D0.BA.D0.B0
+	// поиск мин. остовного дерева
+	inline SpanningTree Boruvka(
+		const S_PTR(Graph)& _graph	// граф
+	)
+	{
+		return SpanningTree();
+	}
 }
 
 

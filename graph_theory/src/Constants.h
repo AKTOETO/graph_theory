@@ -75,16 +75,16 @@ enum class SPEC
 	//===================//
 	// TASK 4
 	// неориентированный граф
-	CRUSKAL,
+	CRUSCAL,
 	PRIM,
 	BORUVKA,
-	CRUSKAL_PRIM_BORUVKA,
+	CRUSCAL_PRIM_BORUVKA,
 
 	// ориентированный граф
-	DIGRAPH_CRUSKAL,
+	DIGRAPH_CRUSCAL,
 	DIGRAPH_PRIM,
 	DIGRAPH_BORUVKA,
-	DIGRAPH_CRUSKAL_PRIM_BORUVKA,
+	DIGRAPH_CRUSCAL_PRIM_BORUVKA,
 
 };
 
@@ -319,6 +319,38 @@ struct Edge
 
 // список ребер
 using EdgeList = std::list<Edge>;
+
+// оператор сравнения ребер по весу
+struct EdgeGreater
+{
+	bool operator()(const Edge& _ed1, const Edge& _ed2)
+	{
+		return _ed1.m_weight > _ed2.m_weight;
+	}
+};
+
+//==================//
+//	ОСТОВНОЕ ДЕРЕВО	//
+//==================//
+
+struct SpanningTree
+{
+	// список ребер дерева
+	EdgeList m_edge_list;
+
+	// его вес
+	int m_weight;
+
+	SpanningTree()
+		:m_weight(0)
+	{}
+
+	SpanningTree(const SpanningTree& _span)
+	{
+		m_weight = _span.m_weight;
+		m_edge_list = _span.m_edge_list;
+	}
+};
 
 //===============//
 //   В Р Е М Я   //

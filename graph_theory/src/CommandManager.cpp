@@ -253,8 +253,8 @@ void CommandManager::SetCruscalSpec(std::string _data)
 	INFO("установка алгоритма Крусскала");
 
 	// добавление в настроки системы алгоритма крускала
-	m_sys_settings.m_script.push_back(SPEC::CRUSKAL);
-	m_sys_settings.m_script.push_back(SPEC::DIGRAPH_CRUSKAL);
+	m_sys_settings.m_script.push_back(SPEC::CRUSCAL);
+	m_sys_settings.m_script.push_back(SPEC::DIGRAPH_CRUSCAL);
 }
 
 void CommandManager::SetPrimSpec(std::string _data)
@@ -280,7 +280,7 @@ void CommandManager::SetCruscalPrimBoruvkaSpec(std::string _data)
 	INFO("установка алгоритма Крускала Прима Борувки");
 
 	// добавление в настроки системы алгоритма крускала, прима, борувки
-	m_sys_settings.m_script.push_back(SPEC::CRUSKAL_PRIM_BORUVKA);
-	m_sys_settings.m_script.push_back(SPEC::DIGRAPH_CRUSKAL_PRIM_BORUVKA);
+	m_sys_settings.m_script.push_back(SPEC::CRUSCAL_PRIM_BORUVKA);
+	m_sys_settings.m_script.push_back(SPEC::DIGRAPH_CRUSCAL_PRIM_BORUVKA);
 }
 

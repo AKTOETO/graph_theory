@@ -144,17 +144,23 @@ inline void PrintConnectedComponentsInConsole(
 // печать массива ребер
 inline void PrintEdgeList(
 	const EdgeList& _edge_l,	// список ребер
-	std::string _delim = ", "	// разделитель элементов при печати
+	std::string _delim = ", ",	// разделитель элементов при печати
+	bool _is_need_weight = 0	// нужно ли печатать вес ребра
 )
 {
 	auto it = _edge_l.begin();
 	for (; it != _edge_l.end(); it++)
 	{
 		std::cout << "("
-			<< std::min(it->m_from, it->m_to) + 1
+			<< it->m_from + 1
 			<< _delim
-			<< std::max(it->m_from, it->m_to) + 1
-			<< ")";
+			<< it->m_to + 1;
+
+		if (_is_need_weight)
+			std::cout << _delim
+			<< it->m_weight;
+
+		std::cout<< ")";
 		//печать разделителя
 		if (std::distance(it, _edge_l.end()) > 1)
 			std::cout << _delim;

@@ -7,7 +7,8 @@ MajorGraphManPreset::MajorGraphManPreset(
 
 	PresetGraphManT1(_graph, _states),
 	PresetGraphManT2(_graph, _states),
-	PresetGraphManT3(_graph, _states)
+	PresetGraphManT3(_graph, _states),
+	PresetGraphManT4(_graph, _states)
 {
 	m_specs =
 	{
@@ -39,6 +40,16 @@ MajorGraphManPreset::MajorGraphManPreset(
 		{SPEC::PIVOT,			&PresetGraphManT3::CalculatePivots},
 		{SPEC::DIGRAPH_PIVOT,	&PresetGraphManT3::CalculateDigraphPivots},
 
+		// Task 4
+		{SPEC::CRUSCAL,					&PresetGraphManT4::CalculateCruscal},
+		{SPEC::PRIM,					&PresetGraphManT4::CalculatePrim},
+		{SPEC::BORUVKA,					&PresetGraphManT4::CalculateBoruvka},
+		{SPEC::CRUSCAL_PRIM_BORUVKA,	&PresetGraphManT4::CalculateCruscalPrimBoruvka},
+
+		{SPEC::DIGRAPH_CRUSCAL,					&PresetGraphManT4::CalculateDigraphCruscal},
+		{SPEC::DIGRAPH_PRIM,					&PresetGraphManT4::CalculateDigraphPrim},
+		{SPEC::DIGRAPH_BORUVKA,					&PresetGraphManT4::CalculateDigraphBoruvka},
+		{SPEC::DIGRAPH_CRUSCAL_PRIM_BORUVKA,	&PresetGraphManT4::CalculateDigraphCruscalPrimBoruvka},
 	};
 }
 

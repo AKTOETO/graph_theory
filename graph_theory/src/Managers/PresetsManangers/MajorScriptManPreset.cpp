@@ -9,6 +9,7 @@ MajorScriptManPreset::MajorScriptManPreset(
 	PresetScriptManT1(_graph_man),
 	PresetScriptManT2(_graph_man),
 	PresetScriptManT3(_graph_man),
+	PresetScriptManT4(_graph_man),
 	m_sys_settings(_setts)
 {
 	m_specs =
@@ -43,7 +44,15 @@ MajorScriptManPreset::MajorScriptManPreset(
 		{SPEC::DIGRAPH_PIVOT,	&PresetScriptManT3::PrintDigraphPivots},
 
 		// Task 4
+		{SPEC::CRUSCAL,					&PresetScriptManT4::PrintMSTCruscal},
+		{SPEC::PRIM,					&PresetScriptManT4::PrintMSTPrim},
+		{SPEC::BORUVKA,					&PresetScriptManT4::PrintMSTBoruvka},
+		{SPEC::CRUSCAL_PRIM_BORUVKA,	&PresetScriptManT4::PrintMSTCruscalPrimBoruvka},
 
+		{SPEC::DIGRAPH_CRUSCAL,					&PresetScriptManT4::PrintDigraphMSTCruscal},
+		{SPEC::DIGRAPH_PRIM,					&PresetScriptManT4::PrintDigraphMSTPrim},
+		{SPEC::DIGRAPH_BORUVKA,					&PresetScriptManT4::PrintDigraphMSTBoruvka},
+		{SPEC::DIGRAPH_CRUSCAL_PRIM_BORUVKA,	&PresetScriptManT4::PrintDigraphMSTCruscalPrimBoruvka},
 	};
 }
 

@@ -1,14 +1,16 @@
 ﻿#ifndef MAJORGRAPHMANPRESET_H
-#define MAJORGRAPHMANPRESET_Hs
+#define MAJORGRAPHMANPRESET_H
 
 #include "../../task1/PresetGraphManT1.h"
 #include "../../task2/PresetGraphManT2.h"
 #include "../../task3/PresetGraphManT3.h"
+#include "../../task4/PresetGraphManT4.h"
 
 class MajorGraphManPreset : 
 	public PresetGraphManT1,
 	public PresetGraphManT2,
-	public PresetGraphManT3
+	public PresetGraphManT3,
+	public PresetGraphManT4
 
 {
 protected:
