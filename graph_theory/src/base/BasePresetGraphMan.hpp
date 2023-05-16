@@ -6,6 +6,9 @@ class BaseGraphPresetManager
 {
 protected:
 
+	// настройки системы
+	S_PTR(SystemSetting) m_sys_settings;
+
 	// Сам граф
 	S_PTR(Graph) m_graph;
 
@@ -30,9 +33,15 @@ protected:
 	};
    
 public:
-	BaseGraphPresetManager(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states)
+	BaseGraphPresetManager(
+		const S_PTR(SystemSetting)& _settings,
+		const S_PTR(Graph)& _graph,
+		const S_PTR(State) _states
+	)
 		// инициализация полей
-		:m_state_of_spec(_states),
+		:
+		m_sys_settings(_settings),
+		m_state_of_spec(_states),
 		m_graph(_graph),
 		m_correl_graph(NULL),
 		m_cur_graph(m_graph)

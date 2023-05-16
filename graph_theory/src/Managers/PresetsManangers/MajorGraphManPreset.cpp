@@ -2,13 +2,14 @@
 #include "MajorGraphManPreset.h"
 
 MajorGraphManPreset::MajorGraphManPreset(
-	const S_PTR(Graph)& _graph, const S_PTR(State) _states)
-	:BaseGraphPresetManager(_graph, _states),
+	const S_PTR(SystemSetting)& _settings, const S_PTR(Graph)& _graph, const S_PTR(State) _states)
+	:BaseGraphPresetManager(_settings, _graph, _states),
 
-	PresetGraphManT1(_graph, _states),
-	PresetGraphManT2(_graph, _states),
-	PresetGraphManT3(_graph, _states),
-	PresetGraphManT4(_graph, _states)
+	PresetGraphManT1(_settings, _graph, _states),
+	PresetGraphManT2(_settings, _graph, _states),
+	PresetGraphManT3(_settings, _graph, _states),
+	PresetGraphManT4(_settings, _graph, _states),
+	PresetGraphManT5(_settings, _graph, _states)
 {
 	m_specs =
 	{
@@ -34,7 +35,7 @@ MajorGraphManPreset::MajorGraphManPreset(
 		{SPEC::IS_DIGRAPH_STRONGLY_CONNECTED,			&PresetGraphManT2::CalculateIsDigraphStronglyConnected},
 		{SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,	&PresetGraphManT2::CalculateDStronglyConnectedComponents},
 
-		// Task3
+		// Task 3
 		{SPEC::BRIDGES,			&PresetGraphManT3::CalculateBridges},
 		{SPEC::DIGRAPH_BRIDGES,	&PresetGraphManT3::CalculateDigraphBridges},
 		{SPEC::PIVOT,			&PresetGraphManT3::CalculatePivots},
@@ -45,6 +46,12 @@ MajorGraphManPreset::MajorGraphManPreset(
 		{SPEC::PRIM,					&PresetGraphManT4::CalculatePrim},
 		{SPEC::BORUVKA,					&PresetGraphManT4::CalculateBoruvka},
 		{SPEC::KRUSKAL_PRIM_BORUVKA,	&PresetGraphManT4::CalculateKruskalPrimBoruvka},
+
+		// Task 5
+		{SPEC::THERE_IS_SHORTEST_PATH,			&PresetGraphManT5::CalculateThereIsShortestPath},
+		{SPEC::THERE_IS_NOT_SHORTEST_PATH,		&PresetGraphManT5::CalculateThereIsNotShortestPath},
+		{SPEC::DIJKSTRA_PATH,					&PresetGraphManT5::CalculateShortPathDijkstra},
+
 	};
 }
 

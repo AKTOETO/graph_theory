@@ -1,9 +1,13 @@
 ﻿#include "../pch.h"
 #include "PresetGraphManT4.h"
 
-PresetGraphManT4::PresetGraphManT4(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states)
+PresetGraphManT4::PresetGraphManT4(
+	const S_PTR(SystemSetting)& _settings,
+	const S_PTR(Graph)& _graph,
+	const S_PTR(State) _states
+)
 	:// инициализация всех полей
-	BaseGraphPresetManager(_graph, _states),
+	BaseGraphPresetManager(_settings, _graph, _states),
 	m_kruskal_spanning_tree(nullptr),
 	m_prim_spanning_tree(nullptr),
 	m_boruvka_spanning_tree(nullptr)

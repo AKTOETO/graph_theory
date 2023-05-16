@@ -5,11 +5,12 @@ MajorScriptManPreset::MajorScriptManPreset(
 	const S_PTR(GraphManager)& _graph_man,	// управляющий графом
 	const S_PTR(SystemSetting)& _setts		// сценарий работы 
 ) :
-	BaseScriptPreset(_graph_man),
+	BaseScriptPresetManager(_graph_man),
 	PresetScriptManT1(_graph_man),
 	PresetScriptManT2(_graph_man),
 	PresetScriptManT3(_graph_man),
 	PresetScriptManT4(_graph_man),
+	PresetScriptManT5(_graph_man),
 	m_sys_settings(_setts)
 {
 	m_specs =
@@ -48,6 +49,11 @@ MajorScriptManPreset::MajorScriptManPreset(
 		{SPEC::PRIM,					&PresetScriptManT4::PrintMSTPrim},
 		{SPEC::BORUVKA,					&PresetScriptManT4::PrintMSTBoruvka},
 		{SPEC::KRUSKAL_PRIM_BORUVKA,	&PresetScriptManT4::PrintMSTKruskalPrimBoruvka},
+
+		// Task 5
+		{SPEC::THERE_IS_SHORTEST_PATH,			&PresetScriptManT5::PrintThereIsShortestPath},
+		{SPEC::THERE_IS_NOT_SHORTEST_PATH,		&PresetScriptManT5::PrintThereIsNotShortestPath},
+		{SPEC::DIJKSTRA_PATH,					&PresetScriptManT5::PrintShortestPath},
 	};
 }
 

@@ -209,12 +209,12 @@ bool CommandManager::IsCorrectNumberOfND()
 				return _str == "-d";
 			}) != end(m_param)
 				) && (
-					std::find_if(
-						begin(m_param), end(m_param), [](const std::string& _str)
-						{
-							return _str == "-n";
-						}) != end(m_param)
-							);
+			std::find_if(
+				begin(m_param), end(m_param), [](const std::string& _str)
+				{
+					return _str == "-n";
+				}) != end(m_param)
+			);
 }
 
 void CommandManager::ConverCharArrayToStrVec(int argc, char* _keys[])
@@ -315,7 +315,7 @@ void CommandManager::SetFromVertex(std::string _data)
 		ERROR("Нет начальной вершины. После -n было введено: [" + _data + "]");
 
 	// иначе конвертируем строку в число и передаем в настройки системы эти числа
-	m_sys_settings.m_from = std::stoi(_data);
+	m_sys_settings.m_from = std::stoi(_data) - 1;
 }
 
 void CommandManager::SetToVertex(std::string _data)
@@ -325,6 +325,6 @@ void CommandManager::SetToVertex(std::string _data)
 		ERROR("Нет конечной вершины. После -d было введено: [" + _data + "]");
 
 	// иначе конвертируем строку в число и передаем в настройки системы эти числа
-	m_sys_settings.m_to = std::stoi(_data);
+	m_sys_settings.m_to = std::stoi(_data) - 1;
 }
 

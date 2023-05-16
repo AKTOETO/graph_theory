@@ -1,9 +1,13 @@
 ﻿#include "../pch.h"
 #include "PresetGraphManT1.h"
 
-PresetGraphManT1::PresetGraphManT1(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states)
+PresetGraphManT1::PresetGraphManT1(
+	const S_PTR(SystemSetting)& _settings,
+	const S_PTR(Graph)& _graph,
+	const S_PTR(State) _states
+)
 // инициализация всех полей
-	:BaseGraphPresetManager(_graph, _states),
+	:BaseGraphPresetManager(_settings, _graph, _states),
 	m_shortest_distance_matr(nullptr),
 	m_eccentricity(nullptr),
 	m_central_vertices(nullptr),
@@ -14,18 +18,6 @@ PresetGraphManT1::PresetGraphManT1(const S_PTR(Graph)& _graph, const S_PTR(std::
 	m_degrees_out(nullptr),
 	m_degrees_in_out(nullptr)
 {
-	/*m_specs =
-	{
-		{SPEC::SHORTEST_DIST_MATR,	&PresetGraphManT1::CalculateShortestDistMatr},
-		{SPEC::ECCENTR,				&PresetGraphManT1::CalculateEccentricity},
-		{SPEC::CENTRAL_VERT,		&PresetGraphManT1::CalculateCentralVertices},
-		{SPEC::PERIPHERAL_VERT,		&PresetGraphManT1::CalculatePeripheralVertices},
-		{SPEC::RADIUS,				&PresetGraphManT1::CalculateRadius},
-		{SPEC::DIAMETER,			&PresetGraphManT1::CalculateDiameter},
-		{SPEC::DEGREES_IN,			&PresetGraphManT1::CalculateVertexDegreesIn},
-		{SPEC::DEGREES_OUT,			&PresetGraphManT1::CalculateVertexDegreesOut},
-		{SPEC::DEGREES_IN_OUT,		&PresetGraphManT1::CalculateVertexDegreesInOut},
-	};*/
 };
 PresetGraphManT1::~PresetGraphManT1()
 {

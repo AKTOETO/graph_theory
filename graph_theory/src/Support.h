@@ -145,16 +145,23 @@ inline void PrintConnectedComponentsInConsole(
 inline void PrintEdgeList(
 	const EdgeList& _edge_l,	// список ребер
 	std::string _delim = ", ",	// разделитель элементов при печати
-	bool _is_need_weight = 0	// нужно ли печатать вес ребра
+	bool _is_need_weight = 0,	// нужно ли печатать вес ребра
+	bool _is_need_greater = 0	// нужно ли отображать вершины по возростанию
 )
 {
 	auto it = _edge_l.begin();
 	for (; it != _edge_l.end(); it++)
 	{
+		if(_is_need_greater)
 		std::cout << "("
 			<< std::min(it->m_from,it->m_to) + 1
 			<< _delim
 			<< std::max(it->m_from, it->m_to) + 1;
+		else
+			std::cout << "("
+			<< it->m_from + 1
+			<< _delim
+			<< it->m_to + 1;
 
 		if (_is_need_weight)
 			std::cout << _delim

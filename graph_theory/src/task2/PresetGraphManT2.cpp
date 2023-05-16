@@ -1,9 +1,13 @@
 ﻿#include "../pch.h"
 #include "PresetGraphManT2.h"
 
-PresetGraphManT2::PresetGraphManT2(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states)
+PresetGraphManT2::PresetGraphManT2(
+	const S_PTR(SystemSetting)& _settings,
+	const S_PTR(Graph)& _graph,
+	const S_PTR(State) _states
+)
 // инициализация всех полей
-	:BaseGraphPresetManager(_graph, _states),
+	:BaseGraphPresetManager(_settings, _graph, _states),
 	m_numb_of_conn_compon(1),
 	m_numb_of_strng_con_comp(1),
 	m_is_connected(0),

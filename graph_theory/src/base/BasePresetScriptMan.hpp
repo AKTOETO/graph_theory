@@ -1,19 +1,19 @@
 ﻿#pragma once
 #include "../Managers/GraphManager.h"
 
-class BaseScriptPreset
+class BaseScriptPresetManager
 {
 protected:
 	// Управляющий графом
 	S_PTR(GraphManager) m_graph_manager;
 
 public:
-	BaseScriptPreset(const S_PTR(GraphManager)& _graph_man)
+	BaseScriptPresetManager(const S_PTR(GraphManager)& _graph_man)
 		:m_graph_manager(_graph_man)
 	{};
 
 
-	virtual ~BaseScriptPreset()
+	virtual ~BaseScriptPresetManager()
 	{
 		m_graph_manager.reset();
 	};

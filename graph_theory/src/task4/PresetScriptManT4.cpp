@@ -4,7 +4,7 @@
 PresetScriptManT4::PresetScriptManT4(
 	const S_PTR(GraphManager)& _graph_man
 )
-	: BaseScriptPreset(_graph_man)
+	: BaseScriptPresetManager(_graph_man)
 {}
 
 PresetScriptManT4::~PresetScriptManT4()

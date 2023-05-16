@@ -7,12 +7,14 @@
 #include "../../task2/PresetScriptManT2.h"
 #include "../../task3/PresetScriptManT3.h"
 #include "../../task4/PresetScriptManT4.h"
+#include "../../task5/PresetScriptManT5.h"
 
 class MajorScriptManPreset:
 	public PresetScriptManT1,
 	public PresetScriptManT2,
 	public PresetScriptManT3,
-	public PresetScriptManT4
+	public PresetScriptManT4,
+	public PresetScriptManT5
 {
 protected:
 	// настройки системы

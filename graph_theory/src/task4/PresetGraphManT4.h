@@ -27,7 +27,11 @@ protected:
 
 public:
 	// конструктор и деструктор
-	PresetGraphManT4(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states);
+	PresetGraphManT4(
+		const S_PTR(SystemSetting)& _settings,
+		const S_PTR(Graph)& _graph,
+		const S_PTR(State) _states
+	);
 	~PresetGraphManT4() override;
 
 	//==================================//
@@ -71,6 +75,5 @@ public:
 
 
 };
-
 
 #endif // !PRESETGRAPHMANT4_h

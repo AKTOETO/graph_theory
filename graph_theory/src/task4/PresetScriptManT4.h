@@ -4,7 +4,7 @@
 #include "../base/BasePresetScriptMan.hpp"
 
 class PresetScriptManT4 :
-	virtual public BaseScriptPreset
+	virtual public BaseScriptPresetManager
 {
 public:
 

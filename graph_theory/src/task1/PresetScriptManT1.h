@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../base/BasePresetScriptMan.hpp"
 
-class PresetScriptManT1 : virtual public BaseScriptPreset
+class PresetScriptManT1 : virtual public BaseScriptPresetManager
 {
 public:
 

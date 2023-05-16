@@ -11,11 +11,15 @@ protected:
 	S_PTR(Graph) m_graph;
 	S_PTR(State) m_states;
 
+	// настройки системы
+	S_PTR(SystemSetting) m_sys_settings;
+
 public:
-	GraphManager(std::string _filepath, INPUT_FILE_TYPE _in_f_type);
+	GraphManager(const S_PTR(SystemSetting)& _settings);
 	~GraphManager();
 
 	const U_PTR(MajorGraphManPreset)& GetMajorPreset() const;
+	const S_PTR(SystemSetting)& GetSystemSettings() const;
 };
 
 #endif //GRAPHMANAGER_H

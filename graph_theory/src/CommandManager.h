@@ -111,7 +111,7 @@ public:
 	// -s - все 3 предыдущих алгоритма вместе
 	void SetCruscalPrimBoruvkaSpec(std::string _data);
 
-	// TASK 4
+	// TASK 5
 	// Обработка ключей
 	// установка начальной точки
 	void SetFromVertex(std::string _data);

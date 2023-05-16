@@ -38,7 +38,11 @@ protected:
 public:
 
 	// конструктор с путем до файла и типом файла
-	PresetGraphManT1(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states);
+	PresetGraphManT1(
+		const S_PTR(SystemSetting)& _settings,
+		const S_PTR(Graph)& _graph,
+		const S_PTR(State) _states
+	);
 	~PresetGraphManT1() override;
 
 	//==================================//

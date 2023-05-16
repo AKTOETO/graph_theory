@@ -5,12 +5,14 @@
 #include "../../task2/PresetGraphManT2.h"
 #include "../../task3/PresetGraphManT3.h"
 #include "../../task4/PresetGraphManT4.h"
+#include "../../task5/PresetGraphManT5.h"
 
 class MajorGraphManPreset : 
 	public PresetGraphManT1,
 	public PresetGraphManT2,
 	public PresetGraphManT3,
-	public PresetGraphManT4
+	public PresetGraphManT4,
+	public PresetGraphManT5
 
 {
 protected:
@@ -19,9 +21,15 @@ protected:
 	// с указателями на функции вычисления этих характеристик
 	std::unordered_map<SPEC, bool(MajorGraphManPreset::*)()> m_specs;
 
+	// настройки системы
+	//S_PTR(SystemSetting) m_sys_settings;
+
 public:
 	MajorGraphManPreset(
-		const S_PTR(Graph)& _graph, const S_PTR(State) _states);
+		const S_PTR(SystemSetting)& _settings,
+		const S_PTR(Graph)& _graph,
+		const S_PTR(State) _states
+	);
 	virtual ~MajorGraphManPreset();
 
 	/// <summary>

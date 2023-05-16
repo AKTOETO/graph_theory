@@ -29,6 +29,42 @@ namespace ALGO
 		return Graph(corr_matr);
 	}
 
+	// конвертация вектора полученного из алгоритма Дейкстры
+	// в список ребер
+	inline EdgeList ConvDijksrtasVectToEdgeList(
+		const S_PTR(Graph)& _graph,			// обычный граф
+		const U_PTR(VertexArr)& _parent,	// вектор родителей из Дейкстры
+		const Vertex& _start,				// начальная вершина цепи
+		const Vertex& _end					// конечная вершина цепи
+	)
+	{
+		// выходной список ребер
+		EdgeList out;
+
+		// проходимся по всем вершинам в массиве _parent
+		for (Vertex curr_vert = _end; curr_vert != _start;)
+		{
+
+			out.push_back(
+				{
+					(*_parent)[curr_vert],		// откуда
+					curr_vert,					// куда
+												// вес
+					_graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
+				}
+			);
+
+			// переход к следующей вершине
+			curr_vert = (*_parent)[curr_vert];
+			if (curr_vert == -1) ERROR("Отрицательный предок");
+		}
+
+		// разворачиваем список ребер
+		out.reverse();
+
+		return out;
+	}
+
 	// BFS поиск в ширину
 	inline void BFS(
 		const S_PTR(Graph)& _graph,				// граф
@@ -89,9 +125,6 @@ namespace ALGO
 
 		while (!stk.empty())
 		{
-			// VertexList lst = _graph->adjacency_list(stk.top());
-			// stk.pop();
-
 			int vert = stk.top();
 			stk.pop();
 			VertexList lst = _graph->adjacency_list(vert);
@@ -397,12 +430,6 @@ namespace ALGO
 		// для хранения компонент
 		DSU comp(num_of_trees);
 
-		//// каждому подмножеству назначаем родителем самого себя
-		//for (int i = 0; i < num_of_trees; i++)
-		//{
-		//	comp.MakeSet(i);
-		//}
-
 		// список ребер в графе
 		EdgeList elst = _graph->list_of_edges();
 		elst.sort([](const Edge& _ed, const Edge& _ed2)
@@ -486,6 +513,66 @@ namespace ALGO
 		}
 
 		return res;
+	}
+
+	// Алгоритма Дейкстры O(E logV)
+	// поиск кратчайшего пути 
+	inline int Dijkstra(
+		const S_PTR(Graph)& _graph,	// граф
+		const int& _start,			// начальная вершина
+		const int& _end,			// конечная вершина
+		U_PTR(VertexArr)& _dist,	// расстояния до вершин от начальной
+		U_PTR(VertexArr)& _parent	// вектор восстановления пути
+	)
+	{
+		// очередь обрабатываемых вершин
+		std::priority_queue<iPair, std::vector<iPair>, std::greater<iPair>> pq;
+
+		// создаем массив расстояний до всех вершин 
+		// и заполняем его бесконечностями
+		_dist = std::make_unique<VertexArr>(_graph->adjacency_matrix().size(), INF);
+
+		// создаем массив пути и заполняем его -1
+		_parent = std::make_unique<VertexArr>(_graph->adjacency_matrix().size(), -1);
+
+		// добавляем начальную вершину _start в очередь
+		// и присваиваем расстояние до нее равное 0
+		pq.push(std::make_pair(0, _start));
+		(*_dist)[_start] = 0;
+
+		// пока есть обрабатываемые вершины в очереди
+		while (!pq.empty())
+		{
+			// получение индекса вершины с минимальным расстоянием
+			int u = pq.top().second;
+			pq.pop();
+
+			// получение списка инцидентных ребер вершине u
+			EdgeList edl = _graph->list_of_edges(u);
+
+			// проходимся по всем смежным вершинам для вершины u,
+			// чтобы добавить их в очередь обрабатываемых вершин
+			// и пересчитать расстояние до них
+			for (auto edge = begin(edl); edge != end(edl); edge++)
+			{
+				// если дистанция он вершины _start до edge->to
+				// больше, чем дистанция от _start до u + edge->weight
+				if ((*_dist)[edge->m_to] > ((*_dist)[u] + edge->m_weight))
+				{
+					// обновляем дистанцию
+					(*_dist)[edge->m_to] = ((*_dist)[u] + edge->m_weight);
+
+					// добавляем вершину в вектор восстановления пути
+					(*_parent)[edge->m_to] = u;
+
+					// добавляем вершину edge->to в очередь
+					pq.push(std::make_pair((*_dist)[edge->m_to], edge->m_to));
+				}
+			}
+		}
+
+		// возврат расстояния от _start до _end
+		return (*_dist)[_end];
 	}
 }
 

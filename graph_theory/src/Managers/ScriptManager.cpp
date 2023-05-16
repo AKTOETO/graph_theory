@@ -3,13 +3,11 @@
 
 ScriptManager::ScriptManager(
 	const SystemSetting& _settings
-) :
-	m_sys_settings(std::make_shared<SystemSetting>(_settings))
+) :	m_sys_settings(std::make_shared<SystemSetting>(_settings))
 {
 	// создание графа
 	m_graph_manager = std::make_shared<GraphManager>(
-		m_sys_settings->m_filepath,	// путь к файлу с графом
-		m_sys_settings->m_in_type	// тип файла
+		m_sys_settings
 	);
 
 	// создание управляющего программы

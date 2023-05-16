@@ -1,9 +1,13 @@
 ﻿#include "../pch.h"
 #include "PresetGraphManT3.h"
 
-PresetGraphManT3::PresetGraphManT3(const S_PTR(Graph)& _graph, const S_PTR(std::vector<bool>) _states)
+PresetGraphManT3::PresetGraphManT3(
+	const S_PTR(SystemSetting)& _settings,
+	const S_PTR(Graph)& _graph,
+	const S_PTR(State) _states
+)
 	:// инициализация всех полей
-	BaseGraphPresetManager(_graph, _states),
+	BaseGraphPresetManager(_settings, _graph, _states),
 	m_marked_vertices(nullptr),
 	m_tin(nullptr),
 	m_tout(nullptr),

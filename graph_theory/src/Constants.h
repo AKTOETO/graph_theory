@@ -26,7 +26,7 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 #define INF_PRINT_WIDTH 2
 
 // Количество характеристик
-#define NUMBER_OF_SPECIFIERS 26
+#define NUMBER_OF_SPECIFIERS 29
 
 //===========================//
 // С П Е Ц И Ф И К А Т О Р Ы //
@@ -81,9 +81,9 @@ enum class SPEC
 
 	//===================//
 	// TASK 5
-	THERE_IS_SHORTEDST_PATH,
-	THERE_IS_NOT_SHORTEDST_PATH,
-	PATH,
+	THERE_IS_SHORTEST_PATH,
+	THERE_IS_NOT_SHORTEST_PATH,
+	DIJKSTRA_PATH,
 
 };
 
@@ -194,7 +194,9 @@ static const Script TASK_SCRIPT = Script
 #elif defined(T5)
 static const Script TASK_SCRIPT = Script
 {
-	
+	SPEC::THERE_IS_SHORTEST_PATH,
+	SPEC::THERE_IS_NOT_SHORTEST_PATH,
+	SPEC::DIJKSTRA_PATH
 };
 #elif defined(T6)
 
@@ -285,6 +287,9 @@ using PivotArr = std::vector<bool>;
 
 // вес ребра
 using Weight = int;
+
+// пара, хранящая путь до вершины и саму вершину
+using iPair = std::pair<Weight, Vertex>;
 
 // ребро
 struct Edge
