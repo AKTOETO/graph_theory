@@ -574,6 +574,79 @@ namespace ALGO
 		// возврат расстояния от _start до _end
 		return (*_dist)[_end];
 	}
+
+	// Алгоритма Дейкстры для отрицательных ребер
+	// поиск кратчайшего пути 
+	inline int NegativeDijkstra(
+		const S_PTR(Graph)& _graph,	// граф
+		const int& _start,			// начальная вершина
+		const int& _end,			// конечная вершина
+		U_PTR(VertexArr)& _dist,	// расстояния до вершин от начальной
+		U_PTR(VertexArr)& _parent	// вектор восстановления пути
+	)
+	{
+		// очередь обрабатываемых вершин
+		std::priority_queue<iPair, std::vector<iPair>, std::greater<iPair>> pq;
+
+		// множество пройденных вершин
+		State closed(_graph->adjacency_matrix().size(), 0);
+
+		// создаем массив расстояний до всех вершин 
+		// и заполняем его бесконечностями
+		_dist = std::make_unique<VertexArr>(_graph->adjacency_matrix().size(), INF);
+
+		// создаем массив пути и заполняем его -1
+		_parent = std::make_unique<VertexArr>(_graph->adjacency_matrix().size(), -1);
+
+		// добавляем начальную вершину _start в очередь
+		// и присваиваем расстояние до нее равное 0
+		pq.push(std::make_pair(0, _start));
+		(*_dist)[_start] = 0;
+
+		// пока есть обрабатываемые вершины в очереди
+		while (!pq.empty())
+		{
+			// получение индекса вершины с минимальным расстоянием
+			int u = pq.top().second;
+			pq.pop();
+
+			// если вершина уже пройдена
+			if (closed[u])continue;
+
+			// помечаем вершину, как пройденную
+			closed[u] = 1;
+
+			// получение списка инцидентных ребер вершине u
+			EdgeList edl = _graph->list_of_edges(u);
+
+			// проходимся по всем смежным вершинам для вершины u,
+			// чтобы добавить их в очередь обрабатываемых вершин
+			// и пересчитать расстояние до них
+			for (auto edge = begin(edl); edge != end(edl); edge++)
+			{
+				// если вершина, куда направлено ребро, уже пройдена
+				// пропускаем вершину
+				if (closed[edge->m_to]) continue;
+
+				// если дистанция он вершины _start до edge->to
+				// больше, чем дистанция от _start до u + edge->weight
+				if ((*_dist)[edge->m_to] > ((*_dist)[u] + edge->m_weight))
+				{
+					// обновляем дистанцию
+					(*_dist)[edge->m_to] = ((*_dist)[u] + edge->m_weight);
+
+					// добавляем вершину в вектор восстановления пути
+					(*_parent)[edge->m_to] = u;
+
+					// добавляем вершину edge->to в очередь
+					pq.push(std::make_pair((*_dist)[edge->m_to], edge->m_to));
+				}
+			}
+		}
+
+		// возврат расстояния от _start до _end
+		return (*_dist)[_end];
+	}
 }
 
 

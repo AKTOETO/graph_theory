@@ -140,7 +140,7 @@ void Graph::ReadAdjacencyListFromFile(std::ifstream& _ifstream)
 			token = GetToken(str, ' ');
 
 			// если есть что-то помимо цифр
-			if (token.find_first_not_of("0123456789") != std::string::npos)
+			if (token.find_first_not_of("-0123456789") != std::string::npos)
 			{
 				ERROR("в исходном файле на "
 					+ std::to_string(m_adjacency_matrix.size() + 1)
@@ -183,7 +183,7 @@ void Graph::ReadAdjacencyMatrixFromFile(std::ifstream& _ifstream)
 				token = GetToken(str, ' ');
 
 				// если есть что-то помимо цифр
-				if (token.find_first_not_of("0123456789") != std::string::npos)
+				if (token.find_first_not_of("-0123456789") != std::string::npos)
 				{
 					ERROR("в исходном файле на "
 						+ std::to_string(m_adjacency_matrix.size() + 1)
