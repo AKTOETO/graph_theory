@@ -4,7 +4,7 @@
 PresetGraphManT1::PresetGraphManT1(
 	const S_PTR(SystemSetting)& _settings,
 	const S_PTR(Graph)& _graph,
-	const S_PTR(State) _states
+	const S_PTR(StateVector) _states
 )
 // инициализация всех полей
 	:BaseGraphPresetManager(_settings, _graph, _states),
@@ -169,7 +169,7 @@ bool PresetGraphManT1::CalculateShortestDistMatr()
 bool PresetGraphManT1::CalculateEccentricity()
 {
 	// если не расчитана матрица кратч. расст., расчитываем ее
-	IF_ST_NOT_CALC(SPEC::SHORTEST_DIST_MATR) CalculateShortestDistMatr();
+	IF_ST_NOT_CALC(SPEC::T1_SHORTEST_DIST_MATR) CalculateShortestDistMatr();
 
 	// если в матрице критчайших расстояний нет бесконечностей, 
 	// расчитываем эксцентриситеты
@@ -196,11 +196,11 @@ bool PresetGraphManT1::CalculateEccentricity()
 /// <returns>диаметр графа</returns>
 bool PresetGraphManT1::CalculateDiameter()
 {
-	IF_ST_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
+	IF_ST_NOT_CALC(SPEC::T1_ECCENTR) CalculateEccentricity();
 
 	// если эксцентриситеты были расчитаны и граф неориентированный,
 	// считаем диаметр
-	IF_ST_CALC(SPEC::ECCENTR)
+	IF_ST_CALC(SPEC::T1_ECCENTR)
 		if (!m_graph->is_directed())
 		{
 			INFO("расчет диаметра");
@@ -221,11 +221,11 @@ bool PresetGraphManT1::CalculateDiameter()
 /// <returns>радиус гарфа</returns>
 bool PresetGraphManT1::CalculateRadius()
 {
-	IF_ST_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
+	IF_ST_NOT_CALC(SPEC::T1_ECCENTR) CalculateEccentricity();
 
 	// если эксцентриситеты были расчитаны и граф неориентированный,
 	// считаем радиус
-	IF_ST_CALC(SPEC::ECCENTR)
+	IF_ST_CALC(SPEC::T1_ECCENTR)
 		if (!m_graph->is_directed())
 		{
 			INFO("расчет радиуса");
@@ -244,13 +244,13 @@ bool PresetGraphManT1::CalculateRadius()
 /// <returns>центральные вершины</returns>
 bool PresetGraphManT1::CalculateCentralVertices()
 {
-	IF_ST_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
-	IF_ST_NOT_CALC(SPEC::RADIUS) CalculateRadius();
+	IF_ST_NOT_CALC(SPEC::T1_ECCENTR) CalculateEccentricity();
+	IF_ST_NOT_CALC(SPEC::T1_RADIUS) CalculateRadius();
 
 	// если посчитан эксцентриситет и радиус и граф неориентированный,
 	// тогда считаем центральные вершины
-	IF_ST_CALC(SPEC::ECCENTR)
-		IF_ST_CALC(SPEC::RADIUS)
+	IF_ST_CALC(SPEC::T1_ECCENTR)
+		IF_ST_CALC(SPEC::T1_RADIUS)
 		if (!m_graph->is_directed())
 		{
 			INFO("расчет центральных вершин");
@@ -276,12 +276,12 @@ bool PresetGraphManT1::CalculateCentralVertices()
 /// <returns>периферийные вершины</returns>
 bool PresetGraphManT1::CalculatePeripheralVertices()
 {
-	IF_ST_NOT_CALC(SPEC::ECCENTR) CalculateEccentricity();
-	IF_ST_NOT_CALC(SPEC::DIAMETER) CalculateRadius();
+	IF_ST_NOT_CALC(SPEC::T1_ECCENTR) CalculateEccentricity();
+	IF_ST_NOT_CALC(SPEC::T1_DIAMETER) CalculateRadius();
 	// если посчитан эксцентриситет и диаметр и граф неориентированный,
 	// тогда считаем периферийные вершины
-	IF_ST_CALC(SPEC::ECCENTR)
-		IF_ST_CALC(SPEC::DIAMETER)
+	IF_ST_CALC(SPEC::T1_ECCENTR)
+		IF_ST_CALC(SPEC::T1_DIAMETER)
 		if (!m_graph->is_directed())
 		{
 			INFO("расчет периферийных вершин");

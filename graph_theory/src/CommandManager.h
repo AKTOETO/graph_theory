@@ -57,8 +57,14 @@ public:
 	// Task4 проверка на наличие доп ключей: -k -p -b -s
 	bool IsCorrectNumberOfKPBS();
 
-	// Task4 проверка на наличие доп ключей: -n -d
+	// Task5 проверка на наличие доп ключей: -n -d
 	bool IsCorrectNumberOfND();
+
+	// Task6 проверка на наличие доп ключей: -n
+	bool IsCorrectNumberOfN();
+
+	// Task6 проверка на наличие доп ключей: -di -be -t
+	bool IsCorrectNumberOfDIBET();
 
 	////////////////////////////////////////////
 	// функции, выполняющие введенные команды
@@ -118,6 +124,19 @@ public:
 
 	// установка конечной точки
 	void SetToVertex(std::string _data);
+
+	// TASK 6
+	// Обработка ключей
+	// -di - алгоритм Дейкстры
+	void SetDijkstraSpec(std::string _data);
+
+	// Обработка ключей
+	// -be - алгоритм Беллмана-Форда-Мура
+	void SetBellmanFordMurSpec(std::string _data);
+
+	// Обработка ключей
+	// -t - алгоритм Левита
+	void SetLevitSpec(std::string _data);
 
 };
 

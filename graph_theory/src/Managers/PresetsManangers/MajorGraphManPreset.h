@@ -6,13 +6,15 @@
 #include "../../task3/PresetGraphManT3.h"
 #include "../../task4/PresetGraphManT4.h"
 #include "../../task5/PresetGraphManT5.h"
+#include "../../task6/PresetGraphManT6.h"
 
 class MajorGraphManPreset : 
 	public PresetGraphManT1,
 	public PresetGraphManT2,
 	public PresetGraphManT3,
 	public PresetGraphManT4,
-	public PresetGraphManT5
+	public PresetGraphManT5,
+	public PresetGraphManT6
 
 {
 protected:
@@ -28,7 +30,7 @@ public:
 	MajorGraphManPreset(
 		const S_PTR(SystemSetting)& _settings,
 		const S_PTR(Graph)& _graph,
-		const S_PTR(State) _states
+		const S_PTR(StateVector) _states
 	);
 	virtual ~MajorGraphManPreset();
 
@@ -43,7 +45,7 @@ public:
 	/// получение состояния всех характеристик
 	/// </summary>
 	/// <returns>указатель на вектор</returns>
-	const S_PTR(State)& GetStatesOfSpecs() const;
+	const S_PTR(StateVector)& GetStatesOfSpecs() const;
 };
 #endif // !MAJORGRAPHMANPRESET_H
 

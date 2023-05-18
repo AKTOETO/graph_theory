@@ -11,49 +11,59 @@ MajorScriptManPreset::MajorScriptManPreset(
 	PresetScriptManT3(_graph_man),
 	PresetScriptManT4(_graph_man),
 	PresetScriptManT5(_graph_man),
+	PresetScriptManT6(_graph_man),
 	m_sys_settings(_setts)
 {
 	m_specs =
 	{
 		// Task 1
-		{SPEC::SHORTEST_DIST_MATR,	&PresetScriptManT1::PrintShortestDistMatrix},
-		{SPEC::ECCENTR,				&PresetScriptManT1::PrintEccentricity},
-		{SPEC::CENTRAL_VERT,		&PresetScriptManT1::PrintCentralVertices},
-		{SPEC::PERIPHERAL_VERT,		&PresetScriptManT1::PrintPeripheralVertices},
-		{SPEC::RADIUS,				&PresetScriptManT1::PrintRadius},
-		{SPEC::DIAMETER,			&PresetScriptManT1::PrintDiameter},
-		{SPEC::DEGREES_IN,			&PresetScriptManT1::PrintVertexDegreesIn},
-		{SPEC::DEGREES_OUT,			&PresetScriptManT1::PrintVertexDegreesOut},
-		{SPEC::DEGREES_IN_OUT,		&PresetScriptManT1::PrintVertexDegreesInOut},
+		{SPEC::T1_SHORTEST_DIST_MATR,	&PresetScriptManT1::PrintShortestDistMatrix},
+		{SPEC::T1_ECCENTR,				&PresetScriptManT1::PrintEccentricity},
+		{SPEC::T1_CENTRAL_VERT,			&PresetScriptManT1::PrintCentralVertices},
+		{SPEC::T1_PERIPHERAL_VERT,		&PresetScriptManT1::PrintPeripheralVertices},
+		{SPEC::T1_RADIUS,				&PresetScriptManT1::PrintRadius},
+		{SPEC::T1_DIAMETER,				&PresetScriptManT1::PrintDiameter},
+		{SPEC::T1_DEGREES_IN,			&PresetScriptManT1::PrintVertexDegreesIn},
+		{SPEC::T1_DEGREES_OUT,			&PresetScriptManT1::PrintVertexDegreesOut},
+		{SPEC::T1_DEGREES_IN_OUT,		&PresetScriptManT1::PrintVertexDegreesInOut},
 
 		// Task 2
-		{SPEC::IS_CONNECTED,							&PresetScriptManT2::PrintIsConnected},
-		{SPEC::IS_NOT_CONNECTED,						&PresetScriptManT2::PrintIsNotConnected},
-		{SPEC::CONNECTED_COMPONENTS,					&PresetScriptManT2::PrintConnectedComponents},
+		{SPEC::T2_IS_CONNECTED,							&PresetScriptManT2::PrintIsConnected},
+		{SPEC::T2_IS_NOT_CONNECTED,						&PresetScriptManT2::PrintIsNotConnected},
+		{SPEC::T2_CONNECTED_COMPONENTS,					&PresetScriptManT2::PrintConnectedComponents},
 
-		{SPEC::IS_DIGRAPH_CONNECTED,					&PresetScriptManT2::PrintIsDigraphConnected},
-		{SPEC::IS_DIGRAPH_NOT_CONNECTED,				&PresetScriptManT2::PrintIsDigraphNotConnected},
-		{SPEC::DIGRAPH_WEAKLY_CONNECTED_COMPONENTS,		&PresetScriptManT2::PrintDigraphWeaklyConnectedComponents},
-		{SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,	&PresetScriptManT2::PrintDigraphStronglyConnectedComponents},
-		{SPEC::IS_DIGRAPH_WEAKLY_CONNECTED,				&PresetScriptManT2::PrintIsDigraphWeaklyConnected},
-		{SPEC::IS_DIGRAPH_STRONGLY_CONNECTED,			&PresetScriptManT2::PrintIsDigraphStronglyConnected},
+		{SPEC::T2_IS_DIGRAPH_CONNECTED,						&PresetScriptManT2::PrintIsDigraphConnected},
+		{SPEC::T2_IS_DIGRAPH_NOT_CONNECTED,					&PresetScriptManT2::PrintIsDigraphNotConnected},
+		{SPEC::T2_DIGRAPH_WEAKLY_CONNECTED_COMPONENTS,		&PresetScriptManT2::PrintDigraphWeaklyConnectedComponents},
+		{SPEC::T2_DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,	&PresetScriptManT2::PrintDigraphStronglyConnectedComponents},
+		{SPEC::T2_IS_DIGRAPH_WEAKLY_CONNECTED,				&PresetScriptManT2::PrintIsDigraphWeaklyConnected},
+		{SPEC::T2_IS_DIGRAPH_STRONGLY_CONNECTED,			&PresetScriptManT2::PrintIsDigraphStronglyConnected},
 
 		// Task 3
-		{SPEC::BRIDGES,			&PresetScriptManT3::PrintBridges},
-		{SPEC::DIGRAPH_BRIDGES,	&PresetScriptManT3::PrintDigraphBridges},
-		{SPEC::PIVOT,			&PresetScriptManT3::PrintPivots},
-		{SPEC::DIGRAPH_PIVOT,	&PresetScriptManT3::PrintDigraphPivots},
+		{SPEC::T3_BRIDGES,			&PresetScriptManT3::PrintBridges},
+		{SPEC::T3_DIGRAPH_BRIDGES,	&PresetScriptManT3::PrintDigraphBridges},
+		{SPEC::T3_PIVOT,			&PresetScriptManT3::PrintPivots},
+		{SPEC::T3_DIGRAPH_PIVOT,	&PresetScriptManT3::PrintDigraphPivots},
 
 		// Task 4
-		{SPEC::KRUSKAL,					&PresetScriptManT4::PrintMSTKruskal},
-		{SPEC::PRIM,					&PresetScriptManT4::PrintMSTPrim},
-		{SPEC::BORUVKA,					&PresetScriptManT4::PrintMSTBoruvka},
-		{SPEC::KRUSKAL_PRIM_BORUVKA,	&PresetScriptManT4::PrintMSTKruskalPrimBoruvka},
+		{SPEC::T4_KRUSKAL,					&PresetScriptManT4::PrintMSTKruskal},
+		{SPEC::T4_PRIM,						&PresetScriptManT4::PrintMSTPrim},
+		{SPEC::T4_BORUVKA,					&PresetScriptManT4::PrintMSTBoruvka},
+		{SPEC::T4_KRUSKAL_PRIM_BORUVKA,		&PresetScriptManT4::PrintMSTKruskalPrimBoruvka},
 
 		// Task 5
-		{SPEC::THERE_IS_SHORTEST_PATH,			&PresetScriptManT5::PrintThereIsShortestPath},
-		{SPEC::THERE_IS_NOT_SHORTEST_PATH,		&PresetScriptManT5::PrintThereIsNotShortestPath},
-		{SPEC::DIJKSTRA_PATH,					&PresetScriptManT5::PrintShortestPath},
+		{SPEC::T5_THERE_IS_SHORTEST_PATH,			&PresetScriptManT5::PrintThereIsShortestPath},
+		{SPEC::T5_THERE_IS_NOT_SHORTEST_PATH,		&PresetScriptManT5::PrintThereIsNotShortestPath},
+		{SPEC::T5_DIJKSTRA_PATH,					&PresetScriptManT5::PrintShortestPath},
+
+		// Task 6
+		{SPEC::T6_USE_DIJKSTRA,				&PresetScriptManT6::PrintDijkstra},
+		{SPEC::T6_USE_BELLMAN_FORD_MUR,		&PresetScriptManT6::PrintBellmanFordMur},
+		{SPEC::T6_USE_LEVIT,				&PresetScriptManT6::PrintLevit},
+		{SPEC::T6_NO_NEGATIVE_EDGES,		&PresetScriptManT6::PrintNoNegativeEdges},
+		{SPEC::T6_NEGATIVE_EDGES,			&PresetScriptManT6::PrintNegativeEdges},
+		{SPEC::T6_NEGATIVE_CYCLE,			&PresetScriptManT6::PrintNegativeCycle},
+		
 	};
 }
 

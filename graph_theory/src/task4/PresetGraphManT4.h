@@ -30,7 +30,7 @@ public:
 	PresetGraphManT4(
 		const S_PTR(SystemSetting)& _settings,
 		const S_PTR(Graph)& _graph,
-		const S_PTR(State) _states
+		const S_PTR(StateVector) _states
 	);
 	~PresetGraphManT4() override;
 

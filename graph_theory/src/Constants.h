@@ -6,8 +6,8 @@
 //=========================//
 // КАКОЕ ЗАДАНИЕ ЗАПУСКАТЬ //
 //=========================//
-// T1, T2, T3, T4, T5, MULTITASK
-#define T5
+// T1, T2, T3, T4, T5, T6, MULTITASK
+#define T6
 
 //===================//
 // К О Н С Т А Н Т Ы //
@@ -26,7 +26,7 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 #define INF_PRINT_WIDTH 2
 
 // Количество характеристик
-#define NUMBER_OF_SPECIFIERS 29
+#define NUMBER_OF_SPECIFIERS 35
 
 //===========================//
 // С П Е Ц И Ф И К А Т О Р Ы //
@@ -37,53 +37,65 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 enum class SPEC
 {	//===================//
 	// TASK 1
-	SHORTEST_DIST_MATR,
-	ECCENTR,
-	CENTRAL_VERT,
-	PERIPHERAL_VERT,
-	RADIUS,
-	DIAMETER,
-	DEGREES_IN,
-	DEGREES_OUT,
-	DEGREES_IN_OUT,
+	T1_SHORTEST_DIST_MATR,
+	T1_ECCENTR,
+	T1_CENTRAL_VERT,
+	T1_PERIPHERAL_VERT,
+	T1_RADIUS,
+	T1_DIAMETER,
+	T1_DEGREES_IN,
+	T1_DEGREES_OUT,
+	T1_DEGREES_IN_OUT,
 
 	//===================//
 	// TASK 2
 	// неориентированный граф
-	IS_CONNECTED,
-	IS_NOT_CONNECTED,
-	CONNECTED_COMPONENTS,
+	T2_IS_CONNECTED,
+	T2_IS_NOT_CONNECTED,
+	T2_CONNECTED_COMPONENTS,
 
 	// ориентированный граф
-	IS_DIGRAPH_CONNECTED,
-	IS_DIGRAPH_NOT_CONNECTED,
-	DIGRAPH_WEAKLY_CONNECTED_COMPONENTS,
-	DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,
-	IS_DIGRAPH_WEAKLY_CONNECTED,
-	IS_DIGRAPH_STRONGLY_CONNECTED,
+	T2_IS_DIGRAPH_CONNECTED,
+	T2_IS_DIGRAPH_NOT_CONNECTED,
+	T2_DIGRAPH_WEAKLY_CONNECTED_COMPONENTS,
+	T2_DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,
+	T2_IS_DIGRAPH_WEAKLY_CONNECTED,
+	T2_IS_DIGRAPH_STRONGLY_CONNECTED,
 
 	//===================//
 	// TASK 3
 	// неориентированный граф
-	BRIDGES,
-	PIVOT,
+	T3_BRIDGES,
+	T3_PIVOT,
 
 	// ориентированный граф
-	DIGRAPH_BRIDGES,
-	DIGRAPH_PIVOT,
+	T3_DIGRAPH_BRIDGES,
+	T3_DIGRAPH_PIVOT,
 
 	//===================//
 	// TASK 4
-	KRUSKAL,
-	PRIM,
-	BORUVKA,
-	KRUSKAL_PRIM_BORUVKA,
+	T4_KRUSKAL,
+	T4_PRIM,
+	T4_BORUVKA,
+	T4_KRUSKAL_PRIM_BORUVKA,
 
 	//===================//
 	// TASK 5
-	THERE_IS_SHORTEST_PATH,
-	THERE_IS_NOT_SHORTEST_PATH,
-	DIJKSTRA_PATH,
+	T5_THERE_IS_SHORTEST_PATH,
+	T5_THERE_IS_NOT_SHORTEST_PATH,
+	T5_DIJKSTRA_PATH,
+
+	//===================//
+	// TASK 6
+	T6_USE_DIJKSTRA,
+	T6_USE_BELLMAN_FORD_MUR,
+	T6_USE_LEVIT,
+
+	T6_NO_NEGATIVE_EDGES,
+	T6_NEGATIVE_EDGES,
+
+	T6_NEGATIVE_CYCLE,
+
 
 };
 
@@ -91,7 +103,7 @@ enum class SPEC
 using Script = std::list<SPEC>;
 
 // тип данных массива состояний
-using State = std::vector<bool>;
+using StateVector = std::vector<bool>;
 
 //===============================//
 // ТИПЫ ВХОДНЫХ ФАЙЛОВ С ГРАФАМИ //
@@ -199,6 +211,13 @@ static const Script TASK_SCRIPT = Script
 	SPEC::DIJKSTRA_PATH
 };
 #elif defined(T6)
+static const Script TASK_SCRIPT = Script
+{
+	SPEC::T6_NO_NEGATIVE_EDGES,
+	SPEC::T6_NEGATIVE_EDGES,
+	SPEC::T6_NEGATIVE_CYCLE,
+};
+
 
 #elif defined(T7)
 
@@ -287,6 +306,9 @@ using PivotArr = std::vector<bool>;
 
 // вес ребра
 using Weight = int;
+
+// массив весов
+using WeightVector = std::vector<Weight>;
 
 // пара, хранящая путь до вершины и саму вершину
 using iPair = std::pair<Weight, Vertex>;

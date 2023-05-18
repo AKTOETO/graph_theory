@@ -21,7 +21,12 @@ CommandManager::CommandManager(int argc, char* _keys[])
 
 		// Task5
 		{"-d", &CommandManager::SetToVertex},
-		{"-n", &CommandManager::SetFromVertex}
+		{"-n", &CommandManager::SetFromVertex},
+
+		// Task6
+		{"-di", &CommandManager::SetDijkstraSpec},
+		{"-be", &CommandManager::SetBellmanFordMurSpec},
+		{"-t", &CommandManager::SetLevitSpec},
 	};
 
 	// использование сценария программы по умолчанию
@@ -118,17 +123,24 @@ void CommandManager::CheckKeys()
 		if (!IsCorrectNumberOfEML()) ERROR("Неверное количество ключей -e -m -l");
 
 
-		// Task 4
 #if defined(T4)
+		// Task 4
 		// проверка на наличие доп ключей: -k -p -b -s
 		// если нет ни одного ключа - выводим сообщение об отсутствии ключей
-		if (!IsCorrectNumberOfKPBS()) ERROR("Неверное количество ключей -k -p -b -s");
+		if (!IsCorrectNumberOfKPBS()) ERROR("Неверное количество ключей: -k -p -b -s");
 
-		// Task 5
 #elif defined(T5)
+		// Task 5
 		// проверка на наличие доп ключей: -d -n
 		// должны быть оба ключа сразу
-		if (!IsCorrectNumberOfND()) ERROR("Неверное количество ключей -d -n. Должны быть оба!");
+		if (!IsCorrectNumberOfND()) ERROR("Неверное количество ключей: -d -n. Должны быть оба!");
+#elif defined(T6)
+		// Task 6
+		// проверка на наличиче ключа -n
+		if (!IsCorrectNumberOfN()) ERROR("Неверное количество ключей: -n.");
+		// проверка на наличиче ключа -d -b -t
+		if (!IsCorrectNumberOfDIBET()) ERROR("Неверное количество ключей: -d -b -t. Должен быть какой-то один из них!");
+
 #endif
 
 	}
@@ -217,6 +229,47 @@ bool CommandManager::IsCorrectNumberOfND()
 			);
 }
 
+bool CommandManager::IsCorrectNumberOfN()
+{
+	return std::find_if(
+		begin(m_param), end(m_param), [](const std::string& _str)
+		{
+			return _str == "-n";
+		}) != end(m_param);
+}
+
+bool CommandManager::IsCorrectNumberOfDIBET()
+{
+	// map для подсчета количества ключей eml
+	std::unordered_map<std::string, int> _eml =
+	{
+		{"-di", 0},
+		{"-be", 0},
+		{"-t", 0},
+	};
+
+	// подсчет количества dnt в m_param
+	std::for_each(m_param.begin(), m_param.end(), [&_eml](std::string& el)
+		{
+			if (_eml.find(el) != _eml.end())
+				_eml.at(el)++;
+		}
+	);
+
+	// если количество eml таково:
+	// di be t
+	// 1  0  0
+	// 0  1  0
+	// 0  0  1
+	// то все корректно
+	if (
+		_eml.at("-di") == 1 && _eml.at("-be") == 0 && _eml.at("-t") == 0 ||
+		_eml.at("-di") == 0 && _eml.at("-be") == 1 && _eml.at("-t") == 0 ||
+		_eml.at("-di") == 0 && _eml.at("-be") == 0 && _eml.at("-t") == 1
+		) return true;
+	return false;
+}
+
 void CommandManager::ConverCharArrayToStrVec(int argc, char* _keys[])
 {
 	// задание размера вектора
@@ -281,7 +334,7 @@ void CommandManager::SetCruscalSpec(std::string _data)
 	INFO("установка алгоритма Крусскала");
 
 	// добавление в настроки системы алгоритма крускала
-	m_sys_settings.m_script.push_back(SPEC::KRUSKAL);
+	m_sys_settings.m_script.push_back(SPEC::T4_KRUSKAL);
 }
 
 void CommandManager::SetPrimSpec(std::string _data)
@@ -289,7 +342,7 @@ void CommandManager::SetPrimSpec(std::string _data)
 	INFO("установка алгоритма Прима");
 
 	// добавление в настроки системы алгоритма прима
-	m_sys_settings.m_script.push_back(SPEC::PRIM);
+	m_sys_settings.m_script.push_back(SPEC::T4_PRIM);
 }
 
 void CommandManager::SetBoruvkaSpec(std::string _data)
@@ -297,7 +350,7 @@ void CommandManager::SetBoruvkaSpec(std::string _data)
 	INFO("установка алгоритма Борувки");
 
 	// добавление в настроки системы алгоритма борувки
-	m_sys_settings.m_script.push_back(SPEC::BORUVKA);
+	m_sys_settings.m_script.push_back(SPEC::T4_BORUVKA);
 }
 
 void CommandManager::SetCruscalPrimBoruvkaSpec(std::string _data)
@@ -305,7 +358,7 @@ void CommandManager::SetCruscalPrimBoruvkaSpec(std::string _data)
 	INFO("установка алгоритма Крускала Прима Борувки");
 
 	// добавление в настроки системы алгоритма крускала, прима, борувки
-	m_sys_settings.m_script.push_back(SPEC::KRUSKAL_PRIM_BORUVKA);
+	m_sys_settings.m_script.push_back(SPEC::T4_KRUSKAL_PRIM_BORUVKA);
 }
 
 void CommandManager::SetFromVertex(std::string _data)
@@ -326,5 +379,26 @@ void CommandManager::SetToVertex(std::string _data)
 
 	// иначе конвертируем строку в число и передаем в настройки системы эти числа
 	m_sys_settings.m_to = std::stoi(_data) - 1;
+}
+
+void CommandManager::SetDijkstraSpec(std::string _data)
+{
+	INFO("Установка алгоритма Дейкстры");
+	// добавление в настроки системы алгоритма дейкстры
+	m_sys_settings.m_script.push_back(SPEC::T6_USE_DIJKSTRA);
+}
+
+void CommandManager::SetBellmanFordMurSpec(std::string _data)
+{
+	INFO("Установка алгоритма Дейкстры");
+	// добавление в настроки системы алгоритма Беллмана-Форда-Мура
+	m_sys_settings.m_script.push_back(SPEC::T6_USE_BELLMAN_FORD_MUR);
+}
+
+void CommandManager::SetLevitSpec(std::string _data)
+{
+	INFO("Установка алгоритма Дейкстры");
+	// добавление в настроки системы алгоритма Левита
+	m_sys_settings.m_script.push_back(SPEC::T6_USE_LEVIT);
 }
 

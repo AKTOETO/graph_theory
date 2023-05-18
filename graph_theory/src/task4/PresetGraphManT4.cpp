@@ -4,7 +4,7 @@
 PresetGraphManT4::PresetGraphManT4(
 	const S_PTR(SystemSetting)& _settings,
 	const S_PTR(Graph)& _graph,
-	const S_PTR(State) _states
+	const S_PTR(StateVector) _states
 )
 	:// инициализация всех полей
 	BaseGraphPresetManager(_settings, _graph, _states),
@@ -83,11 +83,11 @@ bool PresetGraphManT4::CalculateBoruvka()
 bool PresetGraphManT4::CalculateKruskalPrimBoruvka()
 {
 	// все алгоритмы должны быть расчитаны
-	IF_ST_SHOULD_BE_CALC(SPEC::KRUSKAL, CalculateKruskal());
-	IF_ST_SHOULD_BE_CALC(SPEC::BORUVKA, CalculateBoruvka());
-	IF_ST_SHOULD_BE_CALC(SPEC::PRIM, CalculatePrim());
+	IF_ST_SHOULD_BE_CALC(SPEC::T4_KRUSKAL, CalculateKruskal());
+	IF_ST_SHOULD_BE_CALC(SPEC::T4_BORUVKA, CalculateBoruvka());
+	IF_ST_SHOULD_BE_CALC(SPEC::T4_PRIM, CalculatePrim());
 
-	IF_ST_CALC(SPEC::KRUSKAL) IF_ST_CALC(SPEC::BORUVKA) IF_ST_CALC(SPEC::PRIM)
+	IF_ST_CALC(SPEC::T4_KRUSKAL) IF_ST_CALC(SPEC::T4_BORUVKA) IF_ST_CALC(SPEC::T4_PRIM)
 		return true;
 
 	return false;

@@ -4,7 +4,7 @@
 PresetGraphManT2::PresetGraphManT2(
 	const S_PTR(SystemSetting)& _settings,
 	const S_PTR(Graph)& _graph,
-	const S_PTR(State) _states
+	const S_PTR(StateVector) _states
 )
 // инициализация всех полей
 	:BaseGraphPresetManager(_settings, _graph, _states),
@@ -28,15 +28,15 @@ bool PresetGraphManT2::CalculateIsConnected()
 {
 	// если раньше не считали связность графа
 	// то считаем ее
-	IF_ST_NOT_CALC(SPEC::IS_CONNECTED)
+	IF_ST_NOT_CALC(SPEC::T2_IS_CONNECTED)
 	{
 		// если не считали компненты связности, считаем их
-		IF_ST_SHOULD_BE_CALC(SPEC::CONNECTED_COMPONENTS, CalculateConnectedComponents());
-		//IF_ST_NOT_CALC(SPEC::CONNECTED_COMPONENTS)
-		//	SetStateOfSpec(SPEC::CONNECTED_COMPONENTS, CalculateConnectedComponents());
+		IF_ST_SHOULD_BE_CALC(SPEC::T2_CONNECTED_COMPONENTS, CalculateConnectedComponents());
+		//IF_ST_NOT_CALC(SPEC::T2_CONNECTED_COMPONENTS)
+		//	SetStateOfSpec(SPEC::T2_CONNECTED_COMPONENTS, CalculateConnectedComponents());
 
 		// если посчитать компоненты связности удалось, вычисляем связность
-		IF_ST_CALC(SPEC::CONNECTED_COMPONENTS)
+		IF_ST_CALC(SPEC::T2_CONNECTED_COMPONENTS)
 		{
 			// если всего одна компонента связности, то граф связный
 			if (m_numb_of_conn_compon == 1)
@@ -56,10 +56,10 @@ bool PresetGraphManT2::CalculateIsNotConnected()
 {
 	// если не была выполнена функция вычисления связности
 	// пытаемся выполнить ее
-	IF_ST_SHOULD_BE_CALC(SPEC::IS_CONNECTED, CalculateIsConnected());
+	IF_ST_SHOULD_BE_CALC(SPEC::T2_IS_CONNECTED, CalculateIsConnected());
 
 	// если она Не выполнилась
-	IF_ST_NOT_CALC(SPEC::IS_CONNECTED)
+	IF_ST_NOT_CALC(SPEC::T2_IS_CONNECTED)
 	{
 		// если несколько компонент связности, то граф не связный
 		if (m_numb_of_conn_compon != 1)
@@ -76,7 +76,7 @@ bool PresetGraphManT2::CalculateIsNotConnected()
 
 bool PresetGraphManT2::CalculateConnectedComponents()
 {
-	IF_ST_NOT_CALC(SPEC::CONNECTED_COMPONENTS)
+	IF_ST_NOT_CALC(SPEC::T2_CONNECTED_COMPONENTS)
 	{
 		// если граф неориентированный
 		if (!m_graph->is_directed())
@@ -113,10 +113,10 @@ bool PresetGraphManT2::CalculateConnectedComponents()
 bool PresetGraphManT2::CalculateIsDigraphConnected()
 {
 	// если не посчитаны компоненты слабой связности, надо посчитать
-	IF_ST_SHOULD_BE_CALC(SPEC::DIGRAPH_WEAKLY_CONNECTED_COMPONENTS, CalculateDWeaklyConnectedComponents());
+	IF_ST_SHOULD_BE_CALC(SPEC::T2_DIGRAPH_WEAKLY_CONNECTED_COMPONENTS, CalculateDWeaklyConnectedComponents());
 
 	// если посчитаны компоненты слабой связности
-	IF_ST_CALC(SPEC::DIGRAPH_WEAKLY_CONNECTED_COMPONENTS)
+	IF_ST_CALC(SPEC::T2_DIGRAPH_WEAKLY_CONNECTED_COMPONENTS)
 	{
 		// если количество компонент слабой связности равно одной,
 		// то диграф связен
@@ -135,10 +135,10 @@ bool PresetGraphManT2::CalculateIsDigraphConnected()
 bool PresetGraphManT2::CalculateIsDigraphNotConnected()
 {
 	// если не посчитаны компоненты слабой связности, надо посчитать
-	IF_ST_SHOULD_BE_CALC(SPEC::DIGRAPH_WEAKLY_CONNECTED_COMPONENTS, CalculateDWeaklyConnectedComponents());
+	IF_ST_SHOULD_BE_CALC(SPEC::T2_DIGRAPH_WEAKLY_CONNECTED_COMPONENTS, CalculateDWeaklyConnectedComponents());
 
 	// если посчитаны компоненты слабой связности
-	IF_ST_CALC(SPEC::DIGRAPH_WEAKLY_CONNECTED_COMPONENTS)
+	IF_ST_CALC(SPEC::T2_DIGRAPH_WEAKLY_CONNECTED_COMPONENTS)
 	{
 		// если количество компонент слабой связности больше одной,
 		// то диграф не связен
@@ -157,10 +157,10 @@ bool PresetGraphManT2::CalculateIsDigraphNotConnected()
 bool PresetGraphManT2::CalculateIsDigraphWeaklyConnected()
 {
 	// посчитать компоненты сильной связности, если они еще не посчитаны
-	IF_ST_SHOULD_BE_CALC(SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS, CalculateDStronglyConnectedComponents());
+	IF_ST_SHOULD_BE_CALC(SPEC::T2_DIGRAPH_STRONGLY_CONNECTED_COMPONENTS, CalculateDStronglyConnectedComponents());
 
 	// если удалось посчитать компоненты сильной связности
-	IF_ST_CALC(SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS)
+	IF_ST_CALC(SPEC::T2_DIGRAPH_STRONGLY_CONNECTED_COMPONENTS)
 	{
 		// если компонент сильной связности больше одной,
 		// значит диграф слабо связен
@@ -179,10 +179,10 @@ bool PresetGraphManT2::CalculateIsDigraphWeaklyConnected()
 bool PresetGraphManT2::CalculateIsDigraphStronglyConnected()
 {
 	// посчитать компоненты сильной связности, если они еще не посчитаны
-	IF_ST_SHOULD_BE_CALC(SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS, CalculateDStronglyConnectedComponents());
+	IF_ST_SHOULD_BE_CALC(SPEC::T2_DIGRAPH_STRONGLY_CONNECTED_COMPONENTS, CalculateDStronglyConnectedComponents());
 
 	// если удалось посчитать компоненты сильной связности
-	IF_ST_CALC(SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS)
+	IF_ST_CALC(SPEC::T2_DIGRAPH_STRONGLY_CONNECTED_COMPONENTS)
 	{
 		// если компонент сильной связности больше одной,
 		// значит диграф слабо связен
@@ -202,7 +202,7 @@ bool PresetGraphManT2::CalculateDStronglyConnectedComponents()
 {
 	// если еще не считали компоненты сильной связности орграфа,
 	// то считаем их
-	IF_ST_NOT_CALC(SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS)
+	IF_ST_NOT_CALC(SPEC::T2_DIGRAPH_STRONGLY_CONNECTED_COMPONENTS)
 	{
 		// если граф ориентированный
 		if (m_graph->is_directed())
@@ -256,7 +256,7 @@ bool PresetGraphManT2::CalculateDWeaklyConnectedComponents()
 {
 	// если еще не считали компоненты слабой связности орграфа,
 	// то считаем их
-	IF_ST_NOT_CALC(SPEC::DIGRAPH_WEAKLY_CONNECTED_COMPONENTS)
+	IF_ST_NOT_CALC(SPEC::T2_DIGRAPH_WEAKLY_CONNECTED_COMPONENTS)
 	{
 		INFO("расчет: компоненты слабой связности");
 

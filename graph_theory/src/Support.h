@@ -37,6 +37,29 @@ inline int CountDigitInMatrix(const VertexMatrix& _vec)
 	return num;
 }
 
+// печать символа бесконечности
+inline void PrintInfinity(
+	int _setwidth = 0
+)
+{
+	// смена локали на стандартную для С
+	std::locale::global(std::locale::classic());
+
+	// смена кодовой панели консоли на 65001
+	system("chcp 65001 > nul");
+
+	// вывод символа бесконечности
+	std::cout << std::fixed
+		<< std::setw(_setwidth + INF_PRINT_WIDTH)
+		<< std::setfill(' ') << u8"∞";
+
+	// смена локали на русскую
+	std::locale::global(std::locale("ru"));
+
+	// смена кодовой панели консоли на 866
+	system("chcp 866 > nul");
+}
+
 // печать вектора через определенный элемент
 template<typename T>
 inline void PrintVector(
@@ -57,22 +80,7 @@ inline void PrintVector(
 		// вывод символа бесконечности
 		if (_vec[i] >= INF)
 		{
-			// смена локали на стандартную для С
-			std::locale::global(std::locale::classic());
-
-			// смена кодовой панели консоли на 65001
-			system("chcp 65001 > nul");
-
-			// вывод символа бесконечности
-			std::cout << std::fixed
-				<< std::setw(_setwidth + INF_PRINT_WIDTH)
-				<< std::setfill(' ') << u8"∞";
-
-			// смена локали на русскую
-			std::locale::global(std::locale("ru"));
-
-			// смена кодовой панели консоли на 866
-			system("chcp 866 > nul");
+			PrintInfinity(_setwidth);
 		}
 		// иначе просто выводим текущий символ
 		else
@@ -200,6 +208,27 @@ inline void PrintPivotsInConsole(
 
 	// печать преобразованного массива
 	PrintVector(p_arr, _delim, _setwidth);
+}
+
+// печать путей от конкретной вершины до всех остальных с всеами
+inline void PrintShortestPathFromVToAllOtherV(
+	const VertexArr& _dists,
+	const Vertex& _start_v
+)
+{
+	// проходимся по мвссиву расстояний и выводим кратчайгеи пути
+	for (int i = 0; i < _dists.size(); i++)
+	{
+		if(i != _start_v)
+		{
+			std::cout << _start_v + 1 << " - " << i + 1 << ": ";
+			if (_dists[i] == INF)
+				PrintInfinity();
+			else
+				std::cout << _dists[i];
+			std::cout << "\n";
+		}
+	}
 }
 
 // проверка на наличие определенного элемента в матрице

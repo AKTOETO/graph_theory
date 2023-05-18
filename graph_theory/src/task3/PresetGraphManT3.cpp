@@ -4,7 +4,7 @@
 PresetGraphManT3::PresetGraphManT3(
 	const S_PTR(SystemSetting)& _settings,
 	const S_PTR(Graph)& _graph,
-	const S_PTR(State) _states
+	const S_PTR(StateVector) _states
 )
 	:// инициализация всех полей
 	BaseGraphPresetManager(_settings, _graph, _states),
@@ -35,7 +35,7 @@ bool PresetGraphManT3::CalculateBridges()
 
 		// если мы считали шарниры, тогда надо обнулить 
 		// масив времени входа, выхода, маркированных вершин
-		IF_ST_CALC(SPEC::PIVOT)
+		IF_ST_CALC(SPEC::T3_PIVOT)
 		{
 			// обнуление значний
 			for (int i = 0; i < m_graph->adjacency_matrix().size(); i++)
@@ -87,7 +87,7 @@ bool PresetGraphManT3::CalculatePivots()
 
 		// если мы считали мосты, тогда надо обнулить 
 		// масив времени входа, выхода, маркированных вершин
-		IF_ST_CALC(SPEC::BRIDGES)
+		IF_ST_CALC(SPEC::T3_BRIDGES)
 		{
 			// обнуление значний
 			for (int i = 0; i < m_graph->adjacency_matrix().size(); i++)
@@ -138,7 +138,7 @@ bool PresetGraphManT3::CalculateDigraphBridges()
 
 		// если мы считали шарниры в орграфе, тогда надо обнулить 
 		// масив времени входа, выхода, маркированных вершин
-		IF_ST_CALC(SPEC::DIGRAPH_PIVOT)
+		IF_ST_CALC(SPEC::T3_DIGRAPH_PIVOT)
 		{
 			// обнуление значний
 			for (int i = 0; i < m_graph->adjacency_matrix().size(); i++)
@@ -191,7 +191,7 @@ bool PresetGraphManT3::CalculateDigraphPivots()
 
 		// если мы считали мосты, тогда надо обнулить 
 		// масив времени входа, выхода, маркированных вершин
-		IF_ST_CALC(SPEC::DIGRAPH_BRIDGES)
+		IF_ST_CALC(SPEC::T3_DIGRAPH_BRIDGES)
 		{
 			// обнуление значний
 			for (int i = 0; i < m_graph->adjacency_matrix().size(); i++)

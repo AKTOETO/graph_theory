@@ -15,7 +15,7 @@ PresetScriptManT1::~PresetScriptManT1()
 void PresetScriptManT1::PrintShortestDistMatrix() const
 {
 	// если была расчитана матрица кратчайших расстояний
-	IF_CALC(SPEC::SHORTEST_DIST_MATR)
+	IF_CALC(SPEC::T1_SHORTEST_DIST_MATR)
 	{
 		INFO("печать матрицы кратчайших расстояний");
 
@@ -34,7 +34,7 @@ void PresetScriptManT1::PrintShortestDistMatrix() const
 void PresetScriptManT1::PrintEccentricity() const
 {
 	// если были расчитаны эксцентриситеты
-	IF_CALC(SPEC::ECCENTR)
+	IF_CALC(SPEC::T1_ECCENTR)
 	{
 		INFO("Печать массива эксцентриситетов");
 		std::cout << "Eccentricity: [";
@@ -45,7 +45,7 @@ void PresetScriptManT1::PrintEccentricity() const
 
 void PresetScriptManT1::PrintCentralVertices() const
 {
-	IF_CALC(SPEC::CENTRAL_VERT)
+	IF_CALC(SPEC::T1_CENTRAL_VERT)
 	{
 		INFO("печать центральных вершин");
 		std::cout << "Z = [";
@@ -56,7 +56,7 @@ void PresetScriptManT1::PrintCentralVertices() const
 
 void PresetScriptManT1::PrintPeripheralVertices() const
 {
-	IF_CALC(SPEC::PERIPHERAL_VERT)
+	IF_CALC(SPEC::T1_PERIPHERAL_VERT)
 	{
 		INFO("печать периферийных вершин");
 		std::cout << "P = [";
@@ -67,7 +67,7 @@ void PresetScriptManT1::PrintPeripheralVertices() const
 
 void PresetScriptManT1::PrintRadius() const
 {
-	IF_CALC(SPEC::RADIUS)
+	IF_CALC(SPEC::T1_RADIUS)
 	{
 		INFO("печать радиуса");
 		std::cout << "R = " << *G_MAN_PRES->GetRadius() << std::endl;
@@ -76,7 +76,7 @@ void PresetScriptManT1::PrintRadius() const
 
 void PresetScriptManT1::PrintDiameter() const
 {
-	IF_CALC(SPEC::DIAMETER)
+	IF_CALC(SPEC::T1_DIAMETER)
 	{
 		INFO("печать диаметра");
 		std::cout << "D = " << *G_MAN_PRES->GetDiameter() << std::endl;
@@ -86,7 +86,7 @@ void PresetScriptManT1::PrintDiameter() const
 void PresetScriptManT1::PrintVertexDegreesIn() const
 {
 	// если были расчитаны степени входа
-	IF_CALC(SPEC::DEGREES_IN)
+	IF_CALC(SPEC::T1_DEGREES_IN)
 	{
 		INFO("печать степени входа");
 		std::cout << "deg+ = [";
@@ -98,7 +98,7 @@ void PresetScriptManT1::PrintVertexDegreesIn() const
 void PresetScriptManT1::PrintVertexDegreesOut() const
 {
 	// если были расчитаны степени выхода
-	IF_CALC(SPEC::DEGREES_OUT)
+	IF_CALC(SPEC::T1_DEGREES_OUT)
 	{
 		INFO("печать степени выхода");
 		std::cout << "deg- = [";
@@ -110,7 +110,7 @@ void PresetScriptManT1::PrintVertexDegreesOut() const
 void PresetScriptManT1::PrintVertexDegreesInOut() const
 {
 	// если были расчитаны степени входа и выхода
-	IF_CALC(SPEC::DEGREES_IN_OUT)
+	IF_CALC(SPEC::T1_DEGREES_IN_OUT)
 	{
 		INFO("печать степени входа и выхода");
 		std::cout << "deg = [";

@@ -4,7 +4,7 @@
 PresetGraphManT5::PresetGraphManT5(
 	const S_PTR(SystemSetting)& _settings,
 	const S_PTR(Graph)& _graph,
-	const S_PTR(State) _states
+	const S_PTR(StateVector) _states
 ) :// инициализация всех полей
 	BaseGraphPresetManager(_settings, _graph, _states),
 	m_dist(INF)
@@ -52,9 +52,9 @@ bool PresetGraphManT5::CalculateThereIsShortestPath()
 	// если мы попытались расчитать кратчайшее расстояние, 
 	// то есть смысл определять есть ли оно или нет
 
-	IF_ST_SHOULD_BE_CALC(SPEC::DIJKSTRA_PATH, CalculateShortPathDijkstra());
+	IF_ST_SHOULD_BE_CALC(SPEC::T5_DIJKSTRA_PATH, CalculateShortPathDijkstra());
 
-	IF_ST_CALC(SPEC::DIJKSTRA_PATH)
+	IF_ST_CALC(SPEC::T5_DIJKSTRA_PATH)
 	{
 		INFO("Расчет: нет ли пути");
 
@@ -68,9 +68,9 @@ bool PresetGraphManT5::CalculateThereIsNotShortestPath()
 	// если мы попытались расчитать кратчайшее расстояние, 
 	// то есть смысл определять есть ли оно или нет
 
-	IF_ST_SHOULD_BE_CALC(SPEC::DIJKSTRA_PATH, CalculateShortPathDijkstra());
+	IF_ST_SHOULD_BE_CALC(SPEC::T5_DIJKSTRA_PATH, CalculateShortPathDijkstra());
 
-	IF_ST_CALC(SPEC::DIJKSTRA_PATH)
+	IF_ST_CALC(SPEC::T5_DIJKSTRA_PATH)
 	{
 		INFO("Расчет: есть ли путь");
 

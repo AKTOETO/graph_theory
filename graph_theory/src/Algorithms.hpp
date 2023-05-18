@@ -204,8 +204,7 @@ namespace ALGO
 		VertexList lst = _graph->adjacency_list(_start_vert);
 
 		// проходимся по всем смежным вершинам
-		auto to = lst.begin();
-		for (; to != lst.end(); to++)
+		for (auto to = lst.begin(); to != lst.end(); to++)
 		{
 			// проход по ребру в обратную сторону
 			if (*to == _parent)
@@ -582,21 +581,29 @@ namespace ALGO
 		const int& _start,			// начальная вершина
 		const int& _end,			// конечная вершина
 		U_PTR(VertexArr)& _dist,	// расстояния до вершин от начальной
-		U_PTR(VertexArr)& _parent	// вектор восстановления пути
+		U_PTR(VertexArr)& _parent,	// вектор восстановления пути
+		bool& _is_neg_cycle			// есть ли отрицательный цикл
 	)
 	{
 		// очередь обрабатываемых вершин
 		std::priority_queue<iPair, std::vector<iPair>, std::greater<iPair>> pq;
 
+		// количество вершин в графе
+		size_t vsize = _graph->adjacency_matrix().size();
+
 		// множество пройденных вершин
-		State closed(_graph->adjacency_matrix().size(), 0);
+		StateVector passed(vsize, 0);
+
+		// массив, хранящий количество раз обработки вершин
+		// нужен для нахождения отрицательного цикла
+		VertexArr number_of_passes(vsize, 0);
 
 		// создаем массив расстояний до всех вершин 
 		// и заполняем его бесконечностями
-		_dist = std::make_unique<VertexArr>(_graph->adjacency_matrix().size(), INF);
+		_dist = std::make_unique<VertexArr>(vsize, INF);
 
 		// создаем массив пути и заполняем его -1
-		_parent = std::make_unique<VertexArr>(_graph->adjacency_matrix().size(), -1);
+		_parent = std::make_unique<VertexArr>(vsize, -1);
 
 		// добавляем начальную вершину _start в очередь
 		// и присваиваем расстояние до нее равное 0
@@ -608,16 +615,39 @@ namespace ALGO
 		{
 			// получение индекса вершины с минимальным расстоянием
 			int u = pq.top().second;
+			int dst = pq.top().first;
 			pq.pop();
 
-			// если вершина уже пройдена
-			if (closed[u])continue;
+			// увеличиваем количество раз обработки текущей вершины
+			number_of_passes[u]++;
+
+			// найден отрицательный цикл
+			//if (number_of_passes[u] >= _graph->adjacency_matrix().size()) return 0;
 
 			// помечаем вершину, как пройденную
-			closed[u] = 1;
+			passed[u] = 1;
+
+			// если существует верщина с количеством раз обработки
+			// равным или большим количеству вершин в графе, то 
+			// был найден отрицательный цикл
+			if (number_of_passes[u] >= vsize)
+			{
+				_is_neg_cycle = 1;
+				return -1;
+			}
+
+			// пропускаем повтор
+			if ((*_dist)[u] != dst)
+			{
+				continue;
+			}
 
 			// получение списка инцидентных ребер вершине u
 			EdgeList edl = _graph->list_of_edges(u);
+
+			// счетчик изменении
+			// (найдено более короткое расстояние)
+			int changes_counter = 0;
 
 			// проходимся по всем смежным вершинам для вершины u,
 			// чтобы добавить их в очередь обрабатываемых вершин
@@ -626,7 +656,7 @@ namespace ALGO
 			{
 				// если вершина, куда направлено ребро, уже пройдена
 				// пропускаем вершину
-				if (closed[edge->m_to]) continue;
+				//if (passed[edge->m_to]) continue;
 
 				// если дистанция он вершины _start до edge->to
 				// больше, чем дистанция от _start до u + edge->weight
@@ -640,8 +670,31 @@ namespace ALGO
 
 					// добавляем вершину edge->to в очередь
 					pq.push(std::make_pair((*_dist)[edge->m_to], edge->m_to));
+
+					changes_counter++;
+				}
+				// если новое расстояние больше, то делаем неокрашенными обе вершины
+				else if (passed[edge->m_to])
+				{
+					passed[edge->m_from] = 0;
+					passed[edge->m_to] = 0;
 				}
 			}
+
+			// окрашены ли все вершины
+			bool all_colored = 1;
+			for (int i = 0; i < vsize; i++)
+			{
+				if (!passed[i])
+				{
+					all_colored = 0;
+					break;
+				}
+			}
+
+			// если все вершины были пройдены и нет никакних изменений
+			if (!changes_counter && all_colored)
+				break;
 		}
 
 		// возврат расстояния от _start до _end

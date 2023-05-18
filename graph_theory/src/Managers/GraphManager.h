@@ -9,7 +9,7 @@ protected:
 	U_PTR(MajorGraphManPreset) m_major_preset;
 
 	S_PTR(Graph) m_graph;
-	S_PTR(State) m_states;
+	S_PTR(StateVector) m_states;
 
 	// настройки системы
 	S_PTR(SystemSetting) m_sys_settings;
