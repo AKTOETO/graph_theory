@@ -24,11 +24,11 @@ bool PresetGraphManT6::CalculateDijkstraShortPath()
 	// не было найдено отрицательного цикла
 	if (!m_is_there_negative_cycle)
 	{
+		m_dist.reset();
 		U_PTR(VertexArr) parent;
 		ALGO::NegativeDijkstra(
 			m_graph, m_sys_settings->m_from, 0, m_dist, parent, m_is_there_negative_cycle
 		);
-		INFO("chto: " + std::to_string(m_is_there_negative_cycle));
 		// если есть отрицательный цикл, то отмечаем кратчайший путь не найденным
 		if (m_is_there_negative_cycle)
 			return false;
@@ -39,19 +39,44 @@ bool PresetGraphManT6::CalculateDijkstraShortPath()
 
 bool PresetGraphManT6::CalculateBellmanFordMurShortPath()
 {
-
+	// Запуск алгоритма Дейкстры с модификацией Форда
+	// и проверка на наличие отрицательного цикла
+	// Запуск производится только если еще
+	// не было найдено отрицательного цикла
+	if (!m_is_there_negative_cycle)
+	{
+		m_dist.reset();
+		U_PTR(VertexArr) parent;
+		ALGO::BellmanFord(
+			m_graph, m_sys_settings->m_from, 0, m_dist, m_is_there_negative_cycle
+		);
+		// если есть отрицательный цикл, то отмечаем кратчайший путь не найденным
+		if (m_is_there_negative_cycle)
+			return false;
+		return true;
+	}
 	return false;
 }
 
 bool PresetGraphManT6::CalculateLevitShortPath()
 {
+	// для определения существования отрицателных циклов
+	IF_ST_SHOULD_BE_CALC(SPEC::T6_USE_DIJKSTRA, CalculateDijkstraShortPath());
+
+	// если нет отрицательных циклов
+	if (!m_is_there_negative_cycle)
+	{
+		m_dist.reset();
+		ALGO::Levit(m_graph, m_sys_settings->m_from, 0, m_dist);
+		return true;
+	}
 	return false;
 }
 
 bool PresetGraphManT6::CalculateIsThereNegativeEdges()
 {
 	// для вычисления существования ребер с отрицательными весами
-	// надо убедиться, что нет торицательного цикла
+	// надо убедиться, что нет отрицательного цикла
 	IF_ST_SHOULD_BE_CALC(SPEC::T6_USE_DIJKSTRA, CalculateDijkstraShortPath());
 
 	// если отрицательного цикла нет, смотрим, есть ли отрицательные ребра

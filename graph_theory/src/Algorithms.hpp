@@ -49,8 +49,8 @@ namespace ALGO
 				{
 					(*_parent)[curr_vert],		// откуда
 					curr_vert,					// куда
-												// вес
-					_graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
+					// вес
+_graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 				}
 			);
 
@@ -574,8 +574,8 @@ namespace ALGO
 		return (*_dist)[_end];
 	}
 
-	// Алгоритма Дейкстры для отрицательных ребер
-	// поиск кратчайшего пути 
+	// Алгоритм Дейкстры для отрицательных ребер
+	// поиск кратчайшего пути O(E * logV)
 	inline int NegativeDijkstra(
 		const S_PTR(Graph)& _graph,	// граф
 		const int& _start,			// начальная вершина
@@ -621,9 +621,6 @@ namespace ALGO
 			// увеличиваем количество раз обработки текущей вершины
 			number_of_passes[u]++;
 
-			// найден отрицательный цикл
-			//if (number_of_passes[u] >= _graph->adjacency_matrix().size()) return 0;
-
 			// помечаем вершину, как пройденную
 			passed[u] = 1;
 
@@ -654,10 +651,6 @@ namespace ALGO
 			// и пересчитать расстояние до них
 			for (auto edge = begin(edl); edge != end(edl); edge++)
 			{
-				// если вершина, куда направлено ребро, уже пройдена
-				// пропускаем вершину
-				//if (passed[edge->m_to]) continue;
-
 				// если дистанция он вершины _start до edge->to
 				// больше, чем дистанция от _start до u + edge->weight
 				if ((*_dist)[edge->m_to] > ((*_dist)[u] + edge->m_weight))
@@ -698,6 +691,156 @@ namespace ALGO
 		}
 
 		// возврат расстояния от _start до _end
+		return (*_dist)[_end];
+	}
+
+	// Алгоритм Беллмана Форда
+	// поиск кратчайшего пути O(V * E)
+	inline int BellmanFord(
+		const S_PTR(Graph)& _graph,	// граф
+		const int& _start,			// начальная вершина
+		const int& _end,			// конечная вершина
+		U_PTR(VertexArr)& _dist,	// расстояния до вершин от начальной
+		bool& _is_neg_cycle			// есть ли отрицательный цикл
+	)
+	{
+		// количество вершин в графе
+		size_t vsize = _graph->adjacency_matrix().size();
+
+		// создаем массив расстояний до всех вершин 
+		// и заполняем его бесконечностями 
+		// кроме начальной вершины
+		_dist = std::make_unique<VertexArr>(vsize, INF);
+		(*_dist)[_start] = 0;
+
+		// получение списка ребер графа
+		EdgeList edl = _graph->list_of_edges();
+
+		// создание кратчайших путей от начальной вершины
+		// до всех остальных
+		// цикл vsize - 1 раз
+		for (int i = 0; i < vsize - 1; i++)
+		{
+			// цикл по всем ребрам
+			for (auto edge = begin(edl); edge != end(edl); edge++)
+			{
+				// если расстояние до вершины, из которй исходит ребро,
+				// существует и расстояние до этой вершины через ребро короче
+				if ((*_dist)[edge->m_from] != INF &&
+					(*_dist)[edge->m_from] + edge->m_weight < (*_dist)[edge->m_to])
+				{
+					(*_dist)[edge->m_to] = (*_dist)[edge->m_from] + edge->m_weight;
+				}
+			}
+		}
+
+		// поиск отрицательных циклов
+		// цикл по всем ребрам
+		for (auto edge = begin(edl); edge != end(edl); edge++)
+		{
+			// если расстояние до вершины, из которй исходит ребро,
+			// существует и расстояние до этой вершины через ребро короче
+			if ((*_dist)[edge->m_from] != INF &&
+				(*_dist)[edge->m_from] + edge->m_weight < (*_dist)[edge->m_to])
+			{
+				// граф содержит отрицательный цикл
+				_is_neg_cycle = 1;
+				return -1;
+			}
+		}
+
+		return (*_dist)[_end];
+	}
+
+	// Алгоритм Левита
+	// поиск кратчайшего пути O(n*n*m)
+	inline int Levit(
+		const S_PTR(Graph)& _graph,	// граф
+		const int& _start,			// начальная вершина
+		const int& _end,			// конечная вершина
+		U_PTR(VertexArr)& _dist	// расстояния до вершин от начальной
+	)
+	{
+		// количество вершин в графе
+		size_t vsize = _graph->adjacency_matrix().size();
+
+		// создаем массив расстояний до всех вершин 
+		// и заполняем его бесконечностями 
+		// кроме начальной вершины
+		_dist = std::make_unique<VertexArr>(vsize, INF);
+		(*_dist)[_start] = 0;
+
+		std::set<Vertex> M0;	// вершины, расстояние до которых уже вычислено
+		std::set<Vertex> M1;	// множество элементов в очереди
+		std::queue<Vertex> M11;	// основнаяя очередь на обработку
+		std::queue<Vertex> M12;	// срочная очередь
+		std::set<Vertex> M2;	// вершины, расстояние до которых еще не вычислено
+
+		// добавляем начальную вершину в очередь на обработку
+		M11.push(_start);
+		M1.insert(_start);
+
+		// заполянем множество необработанных вершин
+		for (int i = 0; i < vsize; i++)
+			if (i != _start) M2.insert(i);
+
+		// пока очереди М11 и М12 не пусты
+		while (!M1.empty())
+		{
+			// вершина из М12 или из М11
+			Vertex u;
+
+			// если M12 не пусто
+			if (!M12.empty())
+				u = M12.front(), M12.pop();
+			// иначе берем вршину из M11
+			else
+				u = M11.front(), M11.pop();
+
+			// удаление элемента u из общего множества 
+			M1.erase(u);
+
+			// цикл по ребрам инцидентным вершине u
+			EdgeList edl = _graph->list_of_edges(u);
+			for (auto edge = begin(edl); edge != end(edl); edge++)
+			{
+				// конец ребра
+				Vertex v = edge->m_to;
+
+				// v принадлежит M2
+				if (M2.find(v) != M2.end())
+				{
+					// переносим v в М11
+					M11.push(v), M1.insert(v);
+					M2.erase(v);
+
+					// релаксация ребра
+					(*_dist)[v] = std::min(
+						(*_dist)[v],
+						(*_dist)[u] + edge->m_weight
+					);
+				}
+				// v принадлежит множеству М1
+				else if (M1.find(v) != M1.end())
+				{
+					(*_dist)[v] = std::min(
+						(*_dist)[v],
+						(*_dist)[u] + edge->m_weight
+					);
+				}
+				// v принадлежит M0 и dist[v]>dist[u]+weight[uv]
+				else if (
+					M0.find(v) != M0.end() &&
+					(*_dist)[v] > (*_dist)[u] + edge->m_weight
+					)
+				{
+					M12.push(v), M1.insert(v);
+					M0.erase(v);
+					(*_dist)[v] = (*_dist)[u] + edge->m_weight;
+				}
+			}
+			M0.insert(u);
+		}
 		return (*_dist)[_end];
 	}
 }

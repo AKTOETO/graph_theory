@@ -20,7 +20,7 @@ void PresetScriptManT6::PrintDijkstra() const
 
 void PresetScriptManT6::PrintBellmanFordMur() const
 {
-	std::cout << "[===== BELLMANFORDMUR =====]\n";
+	std::cout << "[===== BELLMAN-FORD =====]\n";
 	std::cout << "Shortest paths lengths:\n";
 	PrintShortestPathFromVToAllOtherV(
 		G_MAN_PRES->GetDistancies(), m_graph_manager->GetSystemSettings()->m_from
