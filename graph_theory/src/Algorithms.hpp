@@ -843,6 +843,68 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		}
 		return (*_dist)[_end];
 	}
+
+	// Алгоритм Джонсона
+	// поиск кратчайшего пути O(n*n*m)
+	inline bool Jhonson(
+		const S_PTR(Graph)& _graph,
+		//U_PTR(PointerMatrix)& _dist	// расстояния от всех вершин до остальных
+		U_PTR(VertexMatrix)& _dist	// расстояния от всех вершин до остальных
+	)
+	{
+		EdgeList lst = _graph->list_of_edges();
+		size_t sizem = _graph->adjacency_matrix().size();
+		_dist = std::make_unique<VertexMatrix>(sizem, VertexArr(sizem, 0));
+
+		// создание нового списка ребер
+		U_PTR(EdgeList) lst2 = std::make_unique<EdgeList>(lst);
+
+		// добавление новых ребер
+		for (int i = 0; i < sizem; i++)
+			lst2->push_back({ Vertex(sizem), i, NULLW });
+
+		// создание нового графа
+		S_PTR(Graph) gr = std::make_shared<Graph>(*lst2);
+
+		// вектор весов
+		U_PTR(VertexArr) h;
+
+		// Поиск расстояний от новой вершины до остальных
+		// есть ли отрицателдьный цикл
+		bool neg_cycle = 0;
+
+		// поиск расстояний от новой вершины до остальных
+		BellmanFord(gr, static_cast<int>(sizem), 0, h, neg_cycle);
+
+		// если есть отрицательный цикл, выходим
+		if (neg_cycle) return 1;
+
+		// удаление новых ребер
+		lst2->remove_if([&](Edge& ed) {return ed.m_from == sizem; });
+
+		// пересчет весов
+		for (auto& el : *lst2)
+			el.m_weight = el.m_weight + (*h)[el.m_from] - (*h)[el.m_to];
+
+		gr.reset(new Graph(*lst2));
+
+		// Дейкстра для каждой вершины
+		for (int i = 0; i < sizem; i++)
+		{
+			U_PTR(VertexArr) prev;
+			U_PTR(VertexArr) column;
+			Dijkstra(gr, i, 0, column, prev);
+			(*_dist)[i] = *column;
+
+			// учитываем метки
+			for (int j = 0; j < sizem; j++)
+			{
+				if((*_dist)[i][j] != INF)
+					(*_dist)[i][j] = (*_dist)[i][j] + (*h)[j] - (*h)[i];
+			}
+		}
+		return 0;
+	}
 }
 
 

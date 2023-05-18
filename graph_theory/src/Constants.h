@@ -6,8 +6,8 @@
 //=========================//
 // КАКОЕ ЗАДАНИЕ ЗАПУСКАТЬ //
 //=========================//
-// T1, T2, T3, T4, T5, T6, MULTITASK
-#define T6
+// T1, T2, T3, T4, T5, T6, T7, MULTITASK
+#define T7
 
 //===================//
 // К О Н С Т А Н Т Ы //
@@ -22,11 +22,14 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 // бесконечность
 #define INF 9999999
 
+// ноль для нулевых ребер
+#define NULLW -INF
+
 // ширина при выводе символа бесконечности 
 #define INF_PRINT_WIDTH 2
 
 // Количество характеристик
-#define NUMBER_OF_SPECIFIERS 35
+#define NUMBER_OF_SPECIFIERS 39
 
 //===========================//
 // С П Е Ц И Ф И К А Т О Р Ы //
@@ -35,8 +38,9 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 // возможные характеристики, которые есть у графа
 // и которые можно просчитать
 enum class SPEC
-{	//===================//
-	// TASK 1
+{	//==================//
+	//      TASK 1      //
+	//==================//
 	T1_SHORTEST_DIST_MATR,
 	T1_ECCENTR,
 	T1_CENTRAL_VERT,
@@ -47,8 +51,9 @@ enum class SPEC
 	T1_DEGREES_OUT,
 	T1_DEGREES_IN_OUT,
 
-	//===================//
-	// TASK 2
+	//==================//
+	//      TASK 2      //
+	//==================//
 	// неориентированный граф
 	T2_IS_CONNECTED,
 	T2_IS_NOT_CONNECTED,
@@ -62,8 +67,9 @@ enum class SPEC
 	T2_IS_DIGRAPH_WEAKLY_CONNECTED,
 	T2_IS_DIGRAPH_STRONGLY_CONNECTED,
 
-	//===================//
-	// TASK 3
+	//==================//
+	//      TASK 3      //
+	//==================//
 	// неориентированный граф
 	T3_BRIDGES,
 	T3_PIVOT,
@@ -72,21 +78,24 @@ enum class SPEC
 	T3_DIGRAPH_BRIDGES,
 	T3_DIGRAPH_PIVOT,
 
-	//===================//
-	// TASK 4
+	//==================//
+	//      TASK 4      //
+	//==================//
 	T4_KRUSKAL,
 	T4_PRIM,
 	T4_BORUVKA,
 	T4_KRUSKAL_PRIM_BORUVKA,
 
-	//===================//
-	// TASK 5
+	//==================//
+	//      TASK 5      //
+	//==================//
 	T5_THERE_IS_SHORTEST_PATH,
 	T5_THERE_IS_NOT_SHORTEST_PATH,
 	T5_DIJKSTRA_PATH,
 
-	//===================//
-	// TASK 6
+	//==================//
+	//      TASK 6      //
+	//==================//
 	T6_USE_DIJKSTRA,
 	T6_USE_BELLMAN_FORD_MUR,
 	T6_USE_LEVIT,
@@ -96,6 +105,15 @@ enum class SPEC
 
 	T6_NEGATIVE_CYCLE,
 
+	//==================//
+	//      TASK 7      //
+	//==================//
+	T7_USE_JHONSON,
+
+	T7_NO_NEGATIVE_EDGES,
+	T7_NEGATIVE_EDGES,
+	 
+	T7_NEGATIVE_CYCLE,
 
 };
 
@@ -220,7 +238,13 @@ static const Script TASK_SCRIPT = Script
 
 
 #elif defined(T7)
-
+static const Script TASK_SCRIPT = Script
+{
+	SPEC::T7_NO_NEGATIVE_EDGES,
+	SPEC::T7_NEGATIVE_EDGES,
+	SPEC::T7_NEGATIVE_CYCLE,
+	SPEC::T7_USE_JHONSON,
+};
 #elif defined(T8)
 
 #elif defined(T9)
@@ -289,6 +313,10 @@ using ConnectCompList = std::list<VertexArr>;
 
 // список посещенных вершин
 using VisitedVert = std::vector<bool>;
+
+// указатель на вектор указательей на VertexArr
+// (матрица)
+using PointerMatrix = std::vector<U_PTR(VertexArr)>;
 
 //=============//
 // Ш А Р Н И Р //

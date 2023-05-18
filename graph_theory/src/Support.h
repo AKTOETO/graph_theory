@@ -160,9 +160,9 @@ inline void PrintEdgeList(
 	auto it = _edge_l.begin();
 	for (; it != _edge_l.end(); it++)
 	{
-		if(_is_need_greater)
-		std::cout << "("
-			<< std::min(it->m_from,it->m_to) + 1
+		if (_is_need_greater)
+			std::cout << "("
+			<< std::min(it->m_from, it->m_to) + 1
 			<< _delim
 			<< std::max(it->m_from, it->m_to) + 1;
 		else
@@ -175,7 +175,7 @@ inline void PrintEdgeList(
 			std::cout << _delim
 			<< it->m_weight;
 
-		std::cout<< ")";
+		std::cout << ")";
 		//печать разделителя
 		if (std::distance(it, _edge_l.end()) > 1)
 			std::cout << _delim;
@@ -210,26 +210,55 @@ inline void PrintPivotsInConsole(
 	PrintVector(p_arr, _delim, _setwidth);
 }
 
-// печать путей от конкретной вершины до всех остальных с всеами
+// печать путей от конкретной вершины до всех остальных с весами
 inline void PrintShortestPathFromVToAllOtherV(
 	const VertexArr& _dists,
-	const Vertex& _start_v
+	const Vertex& _start_v,
+	const bool& _need_inf = 1
 )
 {
-	// проходимся по мвссиву расстояний и выводим кратчайгеи пути
+	// проходимся по мвссиву расстояний и выводим кратчайшие пути
 	for (int i = 0; i < _dists.size(); i++)
 	{
-		if(i != _start_v)
+		if (i != _start_v)
 		{
-			std::cout << _start_v + 1 << " - " << i + 1 << ": ";
-			if (_dists[i] == INF)
+			// бесконечная длина
+			if (_dists[i] == INF && _need_inf)
+			{
+				std::cout << _start_v + 1 << " - " << i + 1 << ": ";
 				PrintInfinity();
-			else
-				std::cout << _dists[i];
-			std::cout << "\n";
+				std::cout << "\n";
+			}
+			else if (_dists[i] != INF)
+			{
+				std::cout << _start_v + 1 << " - " << i + 1 << ": "
+					<< _dists[i] << "\n";
+			}
+
+			//
+			//std::cout << _start_v + 1 << " - " << i + 1 << ": ";
+			//if (_dists[i] == INF)
+			//	PrintInfinity();
+			//else
+			//	std::cout << _dists[i];
+			//std::cout << "\n";
 		}
 	}
 }
+
+// печать путей от всех вершин ко всем
+inline void PrintAllShortestPath(
+	const VertexMatrix& _dists,
+	const bool& _need_inf = 1
+)
+{
+	// выбираем вершину и выводим ребра для нее
+	for (int i = 0; i < _dists.size(); i++)
+	{
+		PrintShortestPathFromVToAllOtherV(_dists[i], i, _need_inf);
+	}
+}
+
 
 // проверка на наличие определенного элемента в матрице
 template<typename ScriptMan>
@@ -340,7 +369,10 @@ inline bool IsItANumber(std::string _str)
 	std::string::const_iterator it = _str.begin();
 
 	// идем до символа, который окажется не цифрой
-	while (it != _str.end() && std::isdigit(*it)) it++;
+	while (
+		it != _str.end() && (std::isdigit(*it) ||
+		((it - _str.begin() == 0) && (*it == '-')))
+		) it++;
 
 	// если строка не пустая и мы дошли до конца
 	// значит это число

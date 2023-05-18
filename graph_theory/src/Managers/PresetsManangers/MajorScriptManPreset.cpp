@@ -12,6 +12,7 @@ MajorScriptManPreset::MajorScriptManPreset(
 	PresetScriptManT4(_graph_man),
 	PresetScriptManT5(_graph_man),
 	PresetScriptManT6(_graph_man),
+	PresetScriptManT7(_graph_man),
 	m_sys_settings(_setts)
 {
 	m_specs =
@@ -63,6 +64,12 @@ MajorScriptManPreset::MajorScriptManPreset(
 		{SPEC::T6_NO_NEGATIVE_EDGES,		&PresetScriptManT6::PrintNoNegativeEdges},
 		{SPEC::T6_NEGATIVE_EDGES,			&PresetScriptManT6::PrintNegativeEdges},
 		{SPEC::T6_NEGATIVE_CYCLE,			&PresetScriptManT6::PrintNegativeCycle},
+
+		// Task 7
+		{SPEC::T7_USE_JHONSON,				&PresetScriptManT7::PrintJhonson},
+		{SPEC::T7_NO_NEGATIVE_EDGES,		&PresetScriptManT7::PrintNoNegativeEdges},
+		{SPEC::T7_NEGATIVE_EDGES,			&PresetScriptManT7::PrintNegativeEdges},
+		{SPEC::T7_NEGATIVE_CYCLE,			&PresetScriptManT7::PrintNegativeCycle},
 		
 	};
 }

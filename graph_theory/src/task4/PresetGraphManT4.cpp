@@ -12,10 +12,12 @@ PresetGraphManT4::PresetGraphManT4(
 	m_prim_spanning_tree(nullptr),
 	m_boruvka_spanning_tree(nullptr)
 {
+#if defined(T4)
 	// если исходный граф ориентированный
 	// делаем из него соотнесенный
 	if (m_graph->is_directed())
 		m_cur_graph = std::make_shared<Graph>(ALGO::CorrelatedGraph(m_graph));
+#endif
 }
 
 PresetGraphManT4::~PresetGraphManT4()

@@ -10,7 +10,8 @@ MajorGraphManPreset::MajorGraphManPreset(
 	PresetGraphManT3(_settings, _graph, _states),
 	PresetGraphManT4(_settings, _graph, _states),
 	PresetGraphManT5(_settings, _graph, _states),
-	PresetGraphManT6(_settings, _graph, _states)
+	PresetGraphManT6(_settings, _graph, _states),
+	PresetGraphManT7(_settings, _graph, _states)
 {
 	m_specs =
 	{
@@ -49,9 +50,9 @@ MajorGraphManPreset::MajorGraphManPreset(
 		{SPEC::T4_KRUSKAL_PRIM_BORUVKA,		&PresetGraphManT4::CalculateKruskalPrimBoruvka},
 
 		// Task 5
-		{SPEC::T5_THERE_IS_SHORTEST_PATH,			&PresetGraphManT5::CalculateThereIsShortestPath},
-		{SPEC::T5_THERE_IS_NOT_SHORTEST_PATH,		&PresetGraphManT5::CalculateThereIsNotShortestPath},
-		{SPEC::T5_DIJKSTRA_PATH,					&PresetGraphManT5::CalculateShortPathDijkstra},
+		{SPEC::T5_THERE_IS_SHORTEST_PATH,		&PresetGraphManT5::CalculateThereIsShortestPath},
+		{SPEC::T5_THERE_IS_NOT_SHORTEST_PATH,	&PresetGraphManT5::CalculateThereIsNotShortestPath},
+		{SPEC::T5_DIJKSTRA_PATH,				&PresetGraphManT5::CalculateShortPathDijkstra},
 
 		// Task 6
 		{SPEC::T6_USE_DIJKSTRA,				&PresetGraphManT6::CalculateDijkstraShortPath},
@@ -61,6 +62,11 @@ MajorGraphManPreset::MajorGraphManPreset(
 		{SPEC::T6_NEGATIVE_EDGES,			&PresetGraphManT6::CalculateIsThereNegativeEdges},
 		{SPEC::T6_NEGATIVE_CYCLE,			&PresetGraphManT6::CalculaetNegativeCycle},
 
+		// Task 7
+		{SPEC::T7_USE_JHONSON,				&PresetGraphManT7::CalculateJhonsonShortPath},
+		{SPEC::T7_NO_NEGATIVE_EDGES,		&PresetGraphManT7::CalculateIsThereNoNegativeEdges},
+		{SPEC::T7_NEGATIVE_EDGES,			&PresetGraphManT7::CalculateIsThereNegativeEdges},
+		{SPEC::T7_NEGATIVE_CYCLE,			&PresetGraphManT7::CalculaetNegativeCycle},
 	};
 }
 

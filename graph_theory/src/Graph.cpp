@@ -23,10 +23,10 @@ Graph::Graph(const EdgeList& _e_list)
 {
 	INFO("конструктор от списка ребер");
 	// количество вершин в графе
-	int n = 0;
+	size_t n = 0;
 	std::for_each(_e_list.begin(), _e_list.end(), [&](const Edge& _ed)
 		{
-			n = std::max({ _ed.m_from, _ed.m_to, n });
+			n = std::max({ _ed.m_from, _ed.m_to, int(n) });
 		}
 	);
 
@@ -36,7 +36,7 @@ Graph::Graph(const EdgeList& _e_list)
 	// запись матрицы смежности
 	for (auto it = _e_list.begin(); it != _e_list.end(); it++)
 	{
-		m_adjacency_matrix[it->m_from][it->m_to] = it->m_weight;
+		m_adjacency_matrix[it->m_from][it->m_to] = (it->m_weight == 0 ? NULLW : it->m_weight);
 	}
 	INFO("конец конструктора от списка ребер");
 }
@@ -345,7 +345,7 @@ EdgeList Graph::list_of_edges() const
 		{
 			if (is_edge(i, j))
 			{
-				out.push_back({ i,j,weight(i,j) });
+				out.push_back({ i,j,(weight(i,j) == NULLW ? 0 : weight(i,j)) });
 			}
 		}
 	}
@@ -361,7 +361,7 @@ EdgeList Graph::list_of_edges(Vertex _v) const
 	{
 		if (is_edge(_v, i))
 		{
-			out.push_back({ _v,i,weight(_v,i) });
+			out.push_back({ _v,i,(weight(_v,i) == NULLW ? 0 : weight(_v,i)) });
 		}
 	}
 

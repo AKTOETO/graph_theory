@@ -369,6 +369,8 @@ void CommandManager::SetFromVertex(std::string _data)
 
 	// иначе конвертируем строку в число и передаем в настройки системы эти числа
 	m_sys_settings.m_from = std::stoi(_data) - 1;
+
+	INFO("Начальная вершина: " + std::to_string(m_sys_settings.m_from));
 }
 
 void CommandManager::SetToVertex(std::string _data)
@@ -379,6 +381,8 @@ void CommandManager::SetToVertex(std::string _data)
 
 	// иначе конвертируем строку в число и передаем в настройки системы эти числа
 	m_sys_settings.m_to = std::stoi(_data) - 1;
+
+	INFO("Конечная вершина: " + std::to_string(m_sys_settings.m_to));
 }
 
 void CommandManager::SetDijkstraSpec(std::string _data)
@@ -390,14 +394,14 @@ void CommandManager::SetDijkstraSpec(std::string _data)
 
 void CommandManager::SetBellmanFordMurSpec(std::string _data)
 {
-	INFO("Установка алгоритма Дейкстры");
+	INFO("Установка алгоритма Беллмана Форда");
 	// добавление в настроки системы алгоритма Беллмана-Форда-Мура
 	m_sys_settings.m_script.push_back(SPEC::T6_USE_BELLMAN_FORD_MUR);
 }
 
 void CommandManager::SetLevitSpec(std::string _data)
 {
-	INFO("Установка алгоритма Дейкстры");
+	INFO("Установка алгоритма Левита");
 	// добавление в настроки системы алгоритма Левита
 	m_sys_settings.m_script.push_back(SPEC::T6_USE_LEVIT);
 }

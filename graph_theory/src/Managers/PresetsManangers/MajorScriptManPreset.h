@@ -9,6 +9,7 @@
 #include "../../task4/PresetScriptManT4.h"
 #include "../../task5/PresetScriptManT5.h"
 #include "../../task6/PresetScriptManT6.h"
+#include "../../task7/PresetScriptManT7.h"
 
 class MajorScriptManPreset:
 	public PresetScriptManT1,
@@ -16,7 +17,8 @@ class MajorScriptManPreset:
 	public PresetScriptManT3,
 	public PresetScriptManT4,
 	public PresetScriptManT5,
-	public PresetScriptManT6
+	public PresetScriptManT6,
+	public PresetScriptManT7
 {
 protected:
 	// настройки системы
