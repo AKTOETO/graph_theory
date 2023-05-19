@@ -139,7 +139,7 @@ void CommandManager::CheckKeys()
 		// проверка на наличиче ключа -n
 		if (!IsCorrectNumberOfN()) ERROR("Неверное количество ключей: -n.");
 		// проверка на наличиче ключа -d -b -t
-		if (!IsCorrectNumberOfDIBET()) ERROR("Неверное количество ключей: -d -b -t. Должен быть какой-то один из них!");
+		if (!IsCorrectNumberOfDIBET()) ERROR("Неверное количество ключей: -di -be -t. Должен быть какой-то один из них!");
 
 #endif
 

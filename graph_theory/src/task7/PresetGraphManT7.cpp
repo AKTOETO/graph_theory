@@ -16,27 +16,6 @@ PresetGraphManT7::~PresetGraphManT7()
 {
 }
 
-//bool PresetGraphManT7::CalculateBellmanFordMurShortPath()
-//{
-//	// Запуск алгоритма Дейкстры с модификацией Форда
-//	// и проверка на наличие отрицательного цикла
-//	// Запуск производится только если еще
-//	// не было найдено отрицательного цикла
-//	if (!m_is_there_negative_cycle)
-//	{
-//		m_dist.reset();
-//		U_PTR(VertexArr) parent;
-//		ALGO::BellmanFord(
-//			m_graph, m_sys_settings->m_from, 0, m_dist, m_is_there_negative_cycle
-//		);
-//		// если есть отрицательный цикл, то отмечаем кратчайший путь не найденным
-//		if (m_is_there_negative_cycle)
-//			return false;
-//		return true;
-//	}
-//	return false;
-//}
-
 bool PresetGraphManT7::CalculateJhonsonShortPath()
 {
 	if (!m_is_there_negative_cycle)
