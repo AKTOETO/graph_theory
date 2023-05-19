@@ -22,6 +22,7 @@ private:
 
 	// настройки системы
 	SystemSetting m_sys_settings;
+	bool m_is_h;
 
 public:
 	CommandManager() = delete;

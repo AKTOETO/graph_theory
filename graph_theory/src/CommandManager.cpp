@@ -2,7 +2,8 @@
 #include "CommandManager.h"
 
 CommandManager::CommandManager(int argc, char* _keys[])
-	:m_script_mananger(nullptr)
+	:m_script_mananger(nullptr),
+	m_is_h(0)
 {
 	// задание возможных ключей и функций их обработки
 	m_commands =
@@ -49,6 +50,7 @@ CommandManager::~CommandManager()
 
 void CommandManager::Run()
 {
+
 	// пока введенные ключи с параметрами еще есть
 	while (m_param.size() != 0)
 	{
@@ -66,17 +68,19 @@ void CommandManager::Run()
 		m_param.erase(m_param.begin(), it_end);
 	}
 
+	if(!m_is_h)
+	{
 	// выделение памяти под script manager и передача ему объекта  
 	// SystemSettings для дальнейшей обработки его содержимого объектом 
 	// MajorScriptManPreset
+		m_script_mananger =
+			std::make_unique<ScriptManager>(
+				m_sys_settings
+			);
 
-	m_script_mananger =
-		std::make_unique<ScriptManager>(
-			m_sys_settings
-		);
-
-	// запуск главного метода обработчика сценариев
-	m_script_mananger->Run();
+		// запуск главного метода обработчика сценариев
+		m_script_mananger->Run();
+	}
 }
 
 void CommandManager::PrintParams() const
@@ -99,6 +103,7 @@ void CommandManager::CheckKeys()
 	{
 		m_param.resize(1);
 		m_param[0] = "-h";
+		m_is_h = 1;
 	}
 	else
 	{
