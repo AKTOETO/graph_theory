@@ -338,6 +338,9 @@ using Weight = int;
 // массив весов
 using WeightVector = std::vector<Weight>;
 
+// матрица весов
+using WeightMatrix = std::vector<WeightVector>;
+
 // пара, хранящая путь до вершины и саму вершину
 using iPair = std::pair<Weight, Vertex>;
 
@@ -433,6 +436,17 @@ using ChronoDurationMcs = std::chrono::duration<long long, std::micro>;
 
 using ms = std::chrono::milliseconds;
 using mcs = std::chrono::microseconds;
+
+
+//==============//
+//	К А Р Т А	//
+//==============//
+
+// ячейка с весом
+using WeightCell = std::pair<Weight, Cell>;
+
+// список соседей
+using NeighborsList = std::list<WeightCell>;
 
 //==================//
 //	С П Р А В К А	//

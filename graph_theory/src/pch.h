@@ -21,5 +21,6 @@
 #include <set>
 
 #include "DSU.h"
+#include "Cell.h"
 
 #endif

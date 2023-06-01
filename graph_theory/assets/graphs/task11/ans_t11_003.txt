@@ -1,0 +1,9 @@
+Graph is bipartite
+Matching:
+18 - 3
+1 - 14
+19 - 4
+2 - 20
+15 - 7
+17 - 13
+8 - 16

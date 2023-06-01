@@ -1,0 +1,6 @@
+Graph is bipartite
+Matching:
+9 - 2
+8 - 10
+4 - 6
+1 - 7

@@ -19,12 +19,12 @@ DSU::~DSU()
 	delete[] m_subsets;
 }
 
-// добавдение элемента x,
+// добавдение элемента m_x,
 // помещая его в новое множество
-void DSU::MakeSet(int x)
+void DSU::MakeSet(int m_x)
 {
-	m_subsets[x].m_parent = x;
-	m_subsets[x].m_rank = 0;
+	m_subsets[m_x].m_parent = m_x;
+	m_subsets[m_x].m_rank = 0;
 }
 
 // поиск множества,в котором содержится 
@@ -39,26 +39,26 @@ int DSU::FindSet(int i)
 }
 
 // объединение множеств по рангу
-void DSU::UnionSet(int x, int y)
+void DSU::UnionSet(int m_x, int m_y)
 {
-	x = FindSet(x);
-	y = FindSet(y);
+	m_x = FindSet(m_x);
+	m_y = FindSet(m_y);
 
-	// если x и y - это разнве множества
-	if (x != y)
+	// если m_x и m_y - это разнве множества
+	if (m_x != m_y)
 	{
 		// прикрепляем дерево с меньши рангом
 		// к дереву с большим рангом
-		if (m_subsets[x].m_rank < m_subsets[y].m_rank)
+		if (m_subsets[m_x].m_rank < m_subsets[m_y].m_rank)
 		{
-			std::swap(x, y);
+			std::swap(m_x, m_y);
 		}
-		m_subsets[y].m_parent = x;
+		m_subsets[m_y].m_parent = m_x;
 
 		// если ранги одинаковые, увеличиваем ранг на 1
-		if (m_subsets[x].m_rank == m_subsets[y].m_rank)
+		if (m_subsets[m_x].m_rank == m_subsets[m_y].m_rank)
 		{
-			m_subsets[x].m_rank++;
+			m_subsets[m_x].m_rank++;
 		}
 	}
 }

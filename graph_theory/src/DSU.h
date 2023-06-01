@@ -27,16 +27,16 @@ public:
 	// деструктор
 	~DSU();
 
-	// добавдение элемента x,
+	// добавдение элемента m_x,
 	// помещая его в новое множество
-	void MakeSet(int x);
+	void MakeSet(int m_x);
 
 	// поиск множества,в котором содержится 
 	// переданный в функцию элемент
 	int FindSet(int i);
 
 	// объединение множеств по рангу
-	void UnionSet(int x, int y);
+	void UnionSet(int m_x, int m_y);
 };
 
 #endif //!DSU_H
