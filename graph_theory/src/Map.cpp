@@ -41,12 +41,12 @@ Map::~Map()
 {
 }
 
-const int& Map::GetSize() const
+const size_t& Map::GetSize() const
 {
 	return m_map.size();
 }
 
-const int& Map::GetCellHeight(const Cell& _cell) const
+const Weight& Map::GetCellHeight(const Cell& _cell) const
 {
 	// проверка на верные координаты
 	if (
@@ -66,7 +66,27 @@ NeighborsList Map::neighbors(const Cell& _cell)
 {
 	NeighborsList nlst;
 
-	// верхний сосед
+	// массив смещений
+	std::list<std::pair<int, int>> difs =
+	{
+		{0, 1},  // верхняя
+		{1, 0},  // правая
+		{0, -1}, // нижняя
+		{-1, 0}  // левая
+	};
 
-	return NeighborsList();
+	for (auto& el : difs)
+	{
+		int x = _cell.GetX() + el.first;
+		int y = _cell.GetY() + el.second;
+
+		// если x y находятся в границах карты
+		if (x >= 0 && x < m_map.size() && y >= 0 && y < m_map.size())
+			// добавляем клетку в список соседей
+			nlst.push_back(
+				std::make_pair(m_map[x][y], Cell(x, y))
+			);
+	}
+
+	return nlst;
 }

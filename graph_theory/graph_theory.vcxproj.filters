@@ -328,6 +328,30 @@
     <Text Include="assets\graphs\task3\matrix_t3_008.txt" />
     <Text Include="assets\graphs\task3\matrix_t3_009.txt" />
     <Text Include="assets\graphs\task3\matrix_t3_010.txt" />
+    <Text Include="assets\graphs\task10\ans_t10_001.txt" />
+    <Text Include="assets\graphs\task10\ans_t10_002.txt" />
+    <Text Include="assets\graphs\task10\ans_t10_003.txt" />
+    <Text Include="assets\graphs\task10\ans_t10_004.txt" />
+    <Text Include="assets\graphs\task10\ans_t10_005.txt" />
+    <Text Include="assets\graphs\task10\ans_t10_006.txt" />
+    <Text Include="assets\graphs\task10\ans_t10_007.txt" />
+    <Text Include="assets\graphs\task10\ans_t10_008.txt" />
+    <Text Include="assets\graphs\task10\list_of_edges_t10_001.txt" />
+    <Text Include="assets\graphs\task10\list_of_edges_t10_002.txt" />
+    <Text Include="assets\graphs\task10\list_of_edges_t10_003.txt" />
+    <Text Include="assets\graphs\task10\list_of_edges_t10_004.txt" />
+    <Text Include="assets\graphs\task10\list_of_edges_t10_005.txt" />
+    <Text Include="assets\graphs\task10\list_of_edges_t10_006.txt" />
+    <Text Include="assets\graphs\task10\list_of_edges_t10_007.txt" />
+    <Text Include="assets\graphs\task10\list_of_edges_t10_008.txt" />
+    <Text Include="assets\graphs\task10\matrix_t10_001.txt" />
+    <Text Include="assets\graphs\task10\matrix_t10_002.txt" />
+    <Text Include="assets\graphs\task10\matrix_t10_003.txt" />
+    <Text Include="assets\graphs\task10\matrix_t10_004.txt" />
+    <Text Include="assets\graphs\task10\matrix_t10_005.txt" />
+    <Text Include="assets\graphs\task10\matrix_t10_006.txt" />
+    <Text Include="assets\graphs\task10\matrix_t10_007.txt" />
+    <Text Include="assets\graphs\task10\matrix_t10_008.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

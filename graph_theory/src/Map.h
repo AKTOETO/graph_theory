@@ -14,10 +14,10 @@ public:
 	~Map();	
 	
 	// размер матрицы
-	const int& GetSize() const;
+	const size_t& GetSize() const;
 
 	// высота в ячейке
-	const int& GetCellHeight(const Cell& _cell) const;
+	const Weight& GetCellHeight(const Cell& _cell) const;
 
 	// получение списка соседей для клетки
 	NeighborsList neighbors(const Cell& _cell);
