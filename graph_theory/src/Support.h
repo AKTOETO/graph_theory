@@ -234,14 +234,6 @@ inline void PrintShortestPathFromVToAllOtherV(
 				std::cout << _start_v + 1 << " - " << i + 1 << ": "
 					<< _dists[i] << "\n";
 			}
-
-			//
-			//std::cout << _start_v + 1 << " - " << i + 1 << ": ";
-			//if (_dists[i] == INF)
-			//	PrintInfinity();
-			//else
-			//	std::cout << _dists[i];
-			//std::cout << "\n";
 		}
 	}
 }
@@ -342,7 +334,7 @@ inline std::string GetStringFromVector(
 	std::vector<std::string>::const_iterator _begin,
 	std::vector<std::string>::const_iterator  _end,
 	const std::string _wrapper = "",
-	const std::string _delim = ""
+	const std::string _delim = " "
 )
 {
 	std::string out;
@@ -355,7 +347,17 @@ inline std::string GetStringFromVector(
 
 	return out;
 }
-
+// получение строки из вектора
+inline std::string GetStringFromVector(
+	const Params& _par,
+	const std::string _wrapper = "",
+	const std::string _delim = " "
+)
+{
+	return GetStringFromVector(
+		_par.begin(), _par.end(), _wrapper, _delim
+	);
+}
 // Булевая функция по умолчанию
 inline bool DefaultTrueFunc(std::string)
 {
@@ -400,6 +402,15 @@ inline bool IsThereANotNegativeNumber(std::string _str)
 	if (IsThereANumber(_str) && atoi(_str.c_str()) >= 0)
 		return true;
 	return false;
+}
+
+// проверка на не отрицательное число в векторе строк
+inline bool IsThereANotNegativeNumberInVector(Params _vec)
+{
+	for (auto& el : _vec)
+		if (!IsThereANotNegativeNumber(el))
+			return false;
+	return true;
 }
 
 // ввод и проверка значений

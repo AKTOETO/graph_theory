@@ -27,7 +27,12 @@ CommandManager::CommandManager(int argc, char* _keys[])
 		// Task6
 		{"-di", &CommandManager::SetDijkstraSpec},
 		{"-be", &CommandManager::SetBellmanFordMurSpec},
-		{"-t", &CommandManager::SetLevitSpec},
+		{"-t",  &CommandManager::SetLevitSpec},
+
+		// Task8
+		{"-m", &CommandManager::SetMapFilepath},
+		{"-nn", &CommandManager::SetSourceCell},
+		{"-dd", &CommandManager::SetDestinationCell},
 	};
 
 	// использование сценария программы по умолчанию
@@ -62,17 +67,17 @@ void CommandManager::Run()
 		);
 
 		// вызов функции
-		(this->*m_commands[m_param[0]])(GetStringFromVector(m_param.begin() + 1, it_end));
+		(this->*m_commands[m_param[0]])(Params(m_param.begin() + 1, it_end));
 
-		// удаление первого ключа с его параметрами		
+		// удаление первого ключа с его параметрами
 		m_param.erase(m_param.begin(), it_end);
 	}
 
-	if(!m_is_h)
+	if (!m_is_h)
 	{
-	// выделение памяти под script manager и передача ему объекта  
-	// SystemSettings для дальнейшей обработки его содержимого объектом 
-	// MajorScriptManPreset
+		// выделение памяти под script manager и передача ему объекта  
+		// SystemSettings для дальнейшей обработки его содержимого объектом 
+		// MajorScriptManPreset
 		m_script_mananger =
 			std::make_unique<ScriptManager>(
 				m_sys_settings
@@ -124,11 +129,11 @@ void CommandManager::CheckKeys()
 			m_param.insert(m_param.begin(), it_beg, it_end);
 		}
 
+#if !defined(T8)
 		// проверка на введение одновременно ключей e m l
 		if (!IsCorrectNumberOfEML()) ERROR("Неверное количество ключей -e -m -l");
 
-
-#if defined(T4)
+#elif defined(T4)
 		// Task 4
 		// проверка на наличие доп ключей: -k -p -b -s
 		// если нет ни одного ключа - выводим сообщение об отсутствии ключей
@@ -145,6 +150,11 @@ void CommandManager::CheckKeys()
 		if (!IsCorrectNumberOfN()) ERROR("Неверное количество ключей: -n.");
 		// проверка на наличиче ключа -d -b -t
 		if (!IsCorrectNumberOfDIBET()) ERROR("Неверное количество ключей: -di -be -t. Должен быть какой-то один из них!");
+
+#elif defined(T8)
+		// Task 8
+		// проверка на наличие ключей -m -nn -dd
+		if (!IsCorrectNumberOfMNNDD()) ERROR("Неверное количество ключей: -m -nn -dd. Должны быть все!");
 
 #endif
 
@@ -225,12 +235,12 @@ bool CommandManager::IsCorrectNumberOfND()
 			{
 				return _str == "-d";
 			}) != end(m_param)
-				) && (
-			std::find_if(
-				begin(m_param), end(m_param), [](const std::string& _str)
-				{
-					return _str == "-n";
-				}) != end(m_param)
+			) && (
+		std::find_if(
+			begin(m_param), end(m_param), [](const std::string& _str)
+			{
+				return _str == "-n";
+			}) != end(m_param)
 			);
 }
 
@@ -275,6 +285,30 @@ bool CommandManager::IsCorrectNumberOfDIBET()
 	return false;
 }
 
+bool CommandManager::IsCorrectNumberOfMNNDD()
+{
+	// если есть 3 ключа -m и -dd и -nn
+	return (
+		std::find_if(
+			begin(m_param), end(m_param), [](const std::string& _str)
+			{
+				return _str == "-m";
+			}) != end(m_param)
+			) && (
+		std::find_if(
+			begin(m_param), end(m_param), [](const std::string& _str)
+			{
+				return _str == "-dd";
+			}) != end(m_param)
+			) && (
+		std::find_if(
+			begin(m_param), end(m_param), [](const std::string& _str)
+			{
+				return _str == "-nn";
+			}) != end(m_param)
+			);
+}
+
 void CommandManager::ConverCharArrayToStrVec(int argc, char* _keys[])
 {
 	// задание размера вектора
@@ -291,42 +325,42 @@ void CommandManager::ConverCharArrayToStrVec(int argc, char* _keys[])
 // функции, выполняющие введенные команды
 ////////////////////////////////////////////
 
-void CommandManager::ReadEdgesList(std::string _context)
+void CommandManager::ReadEdgesList(Params _context)
 {
 	// вставляем в начало программы спецификатор считывания списка ребер
 	m_sys_settings.m_in_type = INPUT_FILE_TYPE::EDGES_LIST;
 	// сохраняем путь до файла
-	m_sys_settings.m_filepath = _context;
+	m_sys_settings.m_filepath = _context[0];
 }
 
-void CommandManager::ReadAdjacencyMatrix(std::string _context)
+void CommandManager::ReadAdjacencyMatrix(Params _context)
 {
 	// вставляем в начало программы спецификатор считывания матрицы смежности
 	m_sys_settings.m_in_type = INPUT_FILE_TYPE::ADJACENCY_MATRIX;
 	// сохраняем путь до файла
-	m_sys_settings.m_filepath = _context;
+	m_sys_settings.m_filepath = _context[0];
 }
 
-void CommandManager::ReadAdjacencyList(std::string _context)
+void CommandManager::ReadAdjacencyList(Params _context)
 {
 	// вставляем в начало программы спецификатор считывания списка смежности
 	m_sys_settings.m_in_type = INPUT_FILE_TYPE::ADJACENCY_LIST;
 	// сохраняем путь до файла
-	m_sys_settings.m_filepath = _context;
+	m_sys_settings.m_filepath = _context[0];
 }
 
-void CommandManager::SetOutputFilepath(std::string _filepath)
+void CommandManager::SetOutputFilepath(Params _filepath)
 {
 	// открытие файла
-	m_fout.open(RESULT_FILE_PATH + _filepath);
+	m_fout.open(RESULT_FILE_PATH + _filepath[0]);
 
-	INFO("Вывод в файл: " + RESULT_FILE_PATH + _filepath);
+	INFO("Вывод в файл: " + RESULT_FILE_PATH + _filepath[0]);
 
 	// перенаправление буфера вывода
 	std::cout.rdbuf(m_fout.rdbuf());
 }
 
-void CommandManager::GetDeveloperData(std::string _data)
+void CommandManager::GetDeveloperData(Params _data)
 {
 	std::cout << DEVELOPER_DATA;
 }
@@ -334,7 +368,7 @@ void CommandManager::GetDeveloperData(std::string _data)
 // TASK 4
 // Обработка ключей
 
-void CommandManager::SetCruscalSpec(std::string _data)
+void CommandManager::SetCruscalSpec(Params _data)
 {
 	INFO("установка алгоритма Крусскала");
 
@@ -342,7 +376,7 @@ void CommandManager::SetCruscalSpec(std::string _data)
 	m_sys_settings.m_script.push_back(SPEC::T4_KRUSKAL);
 }
 
-void CommandManager::SetPrimSpec(std::string _data)
+void CommandManager::SetPrimSpec(Params _data)
 {
 	INFO("установка алгоритма Прима");
 
@@ -350,7 +384,7 @@ void CommandManager::SetPrimSpec(std::string _data)
 	m_sys_settings.m_script.push_back(SPEC::T4_PRIM);
 }
 
-void CommandManager::SetBoruvkaSpec(std::string _data)
+void CommandManager::SetBoruvkaSpec(Params _data)
 {
 	INFO("установка алгоритма Борувки");
 
@@ -358,7 +392,7 @@ void CommandManager::SetBoruvkaSpec(std::string _data)
 	m_sys_settings.m_script.push_back(SPEC::T4_BORUVKA);
 }
 
-void CommandManager::SetCruscalPrimBoruvkaSpec(std::string _data)
+void CommandManager::SetCruscalPrimBoruvkaSpec(Params _data)
 {
 	INFO("установка алгоритма Крускала Прима Борувки");
 
@@ -366,48 +400,102 @@ void CommandManager::SetCruscalPrimBoruvkaSpec(std::string _data)
 	m_sys_settings.m_script.push_back(SPEC::T4_KRUSKAL_PRIM_BORUVKA);
 }
 
-void CommandManager::SetFromVertex(std::string _data)
+void CommandManager::SetFromVertex(Params _data)
 {
 	// есть ли в строке _data неотрицательное число
-	if (!IsThereANotNegativeNumber(_data)) 
-		ERROR("Нет начальной вершины. После -n было введено: [" + _data + "]");
+	if (!IsThereANotNegativeNumberInVector(_data))
+		ERROR(
+			"Нет начальной вершины. После -n было введено: [" + 
+			GetStringFromVector(_data.begin(), _data.end()) +
+			"]");
 
 	// иначе конвертируем строку в число и передаем в настройки системы эти числа
-	m_sys_settings.m_from = std::stoi(_data) - 1;
+	m_sys_settings.m_from = std::stoi(_data[0]) - 1;
 
 	INFO("Начальная вершина: " + std::to_string(m_sys_settings.m_from));
 }
 
-void CommandManager::SetToVertex(std::string _data)
+void CommandManager::SetToVertex(Params _data)
 {
 	// есть ли в строке _data неотрицательное число
-	if (!IsThereANotNegativeNumber(_data))
-		ERROR("Нет конечной вершины. После -d было введено: [" + _data + "]");
+	if (!IsThereANotNegativeNumberInVector(_data))
+		ERROR(
+			"Нет конечной вершины. После -d было введено: [" +
+			GetStringFromVector(_data.begin(), _data.end()) +
+			"]");
 
 	// иначе конвертируем строку в число и передаем в настройки системы эти числа
-	m_sys_settings.m_to = std::stoi(_data) - 1;
+	m_sys_settings.m_to = std::stoi(_data[0]) - 1;
 
 	INFO("Конечная вершина: " + std::to_string(m_sys_settings.m_to));
 }
 
-void CommandManager::SetDijkstraSpec(std::string _data)
+void CommandManager::SetDijkstraSpec(Params _data)
 {
 	INFO("Установка алгоритма Дейкстры");
 	// добавление в настроки системы алгоритма дейкстры
 	m_sys_settings.m_script.push_back(SPEC::T6_USE_DIJKSTRA);
 }
 
-void CommandManager::SetBellmanFordMurSpec(std::string _data)
+void CommandManager::SetBellmanFordMurSpec(Params _data)
 {
 	INFO("Установка алгоритма Беллмана Форда");
 	// добавление в настроки системы алгоритма Беллмана-Форда-Мура
 	m_sys_settings.m_script.push_back(SPEC::T6_USE_BELLMAN_FORD_MUR);
 }
 
-void CommandManager::SetLevitSpec(std::string _data)
+void CommandManager::SetLevitSpec(Params _data)
 {
 	INFO("Установка алгоритма Левита");
 	// добавление в настроки системы алгоритма Левита
 	m_sys_settings.m_script.push_back(SPEC::T6_USE_LEVIT);
+}
+
+void CommandManager::SetMapFilepath(Params _data)
+{
+	m_sys_settings.m_filepath = _data[0];
+	INFO("Введенная часть пути файла с картой: " + GetStringFromVector(_data));
+}
+
+void CommandManager::SetSourceCell(Params _data)
+{
+	// есть ли в строке _data неотрицательное число
+	if (!IsThereANotNegativeNumberInVector(_data))
+		ERROR("Нет начальной вершины. После -nn было введено: [" +
+			GetStringFromVector(_data) +
+			"]");
+
+	// установка начальных координат клетки
+	m_sys_settings.m_begin.SetX(stoi(_data[0]));
+	m_sys_settings.m_begin.SetY(stoi(_data[1]));
+
+	INFO(
+		"Начальные координаты клетки: [" +
+		std::to_string(m_sys_settings.m_begin.GetX()) +
+		"] [" +
+		std::to_string(m_sys_settings.m_begin.GetY()) +
+		"]"
+	);
+}
+
+void CommandManager::SetDestinationCell(Params _data)
+{
+	// есть ли в строке _data неотрицательное число
+	if (!IsThereANotNegativeNumberInVector(_data))
+		ERROR("Нет конечной вершины. После -dd было введено: [" +
+			GetStringFromVector(_data) +
+			"]");
+
+	// установка начальных координат клетки
+	m_sys_settings.m_end.SetX(stoi(_data[0]));
+	m_sys_settings.m_end.SetY(stoi(_data[1]));
+
+	INFO(
+		"Конечные координаты клетки: [" +
+		std::to_string(m_sys_settings.m_end.GetX()) +
+		"] [" +
+		std::to_string(m_sys_settings.m_end.GetY()) +
+		"]"
+	);
 }
 

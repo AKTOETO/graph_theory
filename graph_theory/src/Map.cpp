@@ -7,6 +7,9 @@ Map::Map(std::string _filepath)
 	// _filepath = task8/map_001.txt
 	// открытие файла карты
 	std::ifstream _ifstream(GRAPH_FILE_PATH + _filepath, std::ifstream::binary);
+	// Если файл не был открыт
+	if (!_ifstream)
+		ERROR("файл " + GRAPH_FILE_PATH + _filepath + " не был открыт!");
 
 	// количество строк
 	int numb_of_rows = 0;

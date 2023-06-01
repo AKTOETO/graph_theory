@@ -9,13 +9,13 @@ class CommandManager
 private:
 	// список возможных команд с указателями на функции,
 	// выполняющие эти команды
-	std::unordered_map<std::string, void(CommandManager::*)(std::string)> m_commands;
+	std::unordered_map<std::string, void(CommandManager::*)(Params)> m_commands;
 
 	// Управляющий сценарием выполнения программы
 	U_PTR(ScriptManager) m_script_mananger;
 
 	// Введенные параметры при запуске
-	std::vector<std::string> m_param;
+	Params m_param;
 
 	// поток вывода данных
 	std::ofstream m_fout;
@@ -67,6 +67,9 @@ public:
 	// Task6 проверка на наличие доп ключей: -di -be -t
 	bool IsCorrectNumberOfDIBET();
 
+	// Task8 проверка наличия ключей -m -nn -dd
+	bool IsCorrectNumberOfMNNDD();
+
 	////////////////////////////////////////////
 	// функции, выполняющие введенные команды
 	////////////////////////////////////////////
@@ -75,69 +78,80 @@ public:
 	/// Считывание списка ребер из файла
 	/// </summary>
 	/// <param name="_data"> - путь к файлу со списком ребер</param>
-	void ReadEdgesList(std::string _data);
+	void ReadEdgesList(Params _data);
 
 	/// <summary>
 	/// Считывание матрицы смежности
 	/// </summary>
 	/// <param name="_data"> - путь к файлу с матрицой смежности</param>
-	void ReadAdjacencyMatrix(std::string _data);
+	void ReadAdjacencyMatrix(Params _data);
 
 	/// <summary>
 	/// Считывание списка смежности
 	/// </summary>
 	/// <param name="_data"> - путь к файлу со списком смежности</param>
-	void ReadAdjacencyList(std::string _data);
+	void ReadAdjacencyList(Params _data);
 
 	/// <summary>
 	/// Задание файлового пути вывода информации
 	/// </summary>
 	/// <param name="_data"></param>
-	void SetOutputFilepath(std::string _data);
+	void SetOutputFilepath(Params _data);
 
 	/// <summary>
 	/// Печать информации об авторе работы, группе, списке клбючей с кратким описанием
 	/// </summary>
 	/// <param name="_data"></param>
-	void GetDeveloperData(std::string _data);
+	void GetDeveloperData(Params _data);
 
 	// TASK 4
 	// Обработка ключей
 	// -k - алгоритм Крускала
-	void SetCruscalSpec(std::string _data);
+	void SetCruscalSpec(Params _data);
 
 	// Обработка ключей
 	// -p - алгоритм Прима
-	void SetPrimSpec(std::string _data);
+	void SetPrimSpec(Params _data);
 
 	// Обработка ключей
 	// -b - алгоритм Борувки
-	void SetBoruvkaSpec(std::string _data);
+	void SetBoruvkaSpec(Params _data);
 
 	// Обработка ключей
 	// -s - все 3 предыдущих алгоритма вместе
-	void SetCruscalPrimBoruvkaSpec(std::string _data);
+	void SetCruscalPrimBoruvkaSpec(Params _data);
 
 	// TASK 5
 	// Обработка ключей
 	// установка начальной точки
-	void SetFromVertex(std::string _data);
+	void SetFromVertex(Params _data);
 
 	// установка конечной точки
-	void SetToVertex(std::string _data);
+	void SetToVertex(Params _data);
 
 	// TASK 6
 	// Обработка ключей
 	// -di - алгоритм Дейкстры
-	void SetDijkstraSpec(std::string _data);
+	void SetDijkstraSpec(Params _data);
 
 	// Обработка ключей
 	// -be - алгоритм Беллмана-Форда-Мура
-	void SetBellmanFordMurSpec(std::string _data);
+	void SetBellmanFordMurSpec(Params _data);
 
 	// Обработка ключей
 	// -t - алгоритм Левита
-	void SetLevitSpec(std::string _data);
+	void SetLevitSpec(Params _data);
+
+	// TASK 8
+	// Обработка ключей
+	// -m путь к файлу карты
+	void SetMapFilepath(Params _data);
+
+	// -nn начальная верщина x y
+	void SetSourceCell(Params _data);
+
+	// -dd конечная вершина x y
+	void SetDestinationCell(Params _data);
 
 };
 

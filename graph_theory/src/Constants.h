@@ -6,12 +6,15 @@
 //=========================//
 // КАКОЕ ЗАДАНИЕ ЗАПУСКАТЬ //
 //=========================//
-// T1, T2, T3, T4, T5, T6, T7, MULTITASK
-#define T7
+// T1, T2, T3, T4, T5, T6, T7, T8, MULTITASK
+#define T8
 
 //===================//
 // К О Н С Т А Н Т Ы //
 //===================//
+
+// массив параметров
+using Params = std::vector<std::string>;
 
 // путь до папки с файлами для графа
 const std::string GRAPH_FILE_PATH = "assets/graphs/";
@@ -29,7 +32,7 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 #define INF_PRINT_WIDTH 2
 
 // Количество характеристик
-#define NUMBER_OF_SPECIFIERS 39
+#define NUMBER_OF_SPECIFIERS 41
 
 //===========================//
 // С П Е Ц И Ф И К А Т О Р Ы //
@@ -115,6 +118,11 @@ enum class SPEC
 	 
 	T7_NEGATIVE_CYCLE,
 
+	//==================//
+	//      TASK 8      //
+	//==================//
+	T8_PATH,
+	T8_PATH_LENGTH,
 };
 
 // тип данных сценария выполнения программы
@@ -246,7 +254,11 @@ static const Script TASK_SCRIPT = Script
 	SPEC::T7_USE_JHONSON,
 };
 #elif defined(T8)
-
+static const Script TASK_SCRIPT = Script
+{
+	SPEC::T8_PATH_LENGTH,
+	SPEC::T8_PATH,
+};
 #elif defined(T9)
 
 #elif defined(T10)
@@ -380,6 +392,7 @@ struct SystemSetting
 	Script m_script;
 
 	// путь до файла с данными
+	// (для 8 задачи - путь к файлу с картой)
 	std::string m_filepath;
 
 	// тип файла ввода данных
@@ -388,7 +401,12 @@ struct SystemSetting
 	// начальная и конечная точка геодезической цепи
 	Vertex m_from, m_to;
 
-		// конструктор по умолчанию
+	// Task 8 
+	// начальная и конечная клетка 
+	Cell m_begin;
+	Cell m_end;
+
+	// конструктор по умолчанию
 	SystemSetting() :
 		m_script(TASK_SCRIPT),
 		m_filepath(""),
@@ -474,6 +492,14 @@ const std::string DEVELOPER_DATA =
 -d конечная вершина\n\
 \n\
 Задание 6:\n\
+-di алгоритм Дейкстры\n\
+-be алгоритм Беллмана-Форда\n\
+-t алгоритм Левита\n\
+-n начальная вершина\n\
+\n\
+Задание 7:\n\
+\n\
+Задание 8:\n\
 -di алгоритм Дейкстры\n\
 -be алгоритм Беллмана-Форда\n\
 -t алгоритм Левита\n\

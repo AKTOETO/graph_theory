@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include "src/CommandManager.h"
-
+#include "src/Map.h"
 
 int main(int argc, char* argv[])
 {
