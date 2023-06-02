@@ -460,7 +460,7 @@ void CommandManager::SetMapFilepath(Params _data)
 void CommandManager::SetSourceCell(Params _data)
 {
 	// есть ли в строке _data неотрицательное число
-	if (!IsThereANotNegativeNumberInVector(_data))
+	if (!IsThereANotNegativeNumberInVector(_data) || _data.size() < 2)
 		ERROR("Нет начальной вершины. После -nn было введено: [" +
 			GetStringFromVector(_data) +
 			"]");
@@ -481,7 +481,7 @@ void CommandManager::SetSourceCell(Params _data)
 void CommandManager::SetDestinationCell(Params _data)
 {
 	// есть ли в строке _data неотрицательное число
-	if (!IsThereANotNegativeNumberInVector(_data))
+	if (!IsThereANotNegativeNumberInVector(_data) || _data.size() < 2)
 		ERROR("Нет конечной вершины. После -dd было введено: [" +
 			GetStringFromVector(_data) +
 			"]");
