@@ -6,6 +6,9 @@
 class PresetScriptManT8 :
     virtual public BaseScriptPresetManager
 {
+protected:
+	Params m_heur_names;
+
 public:
 
 	PresetScriptManT8(const S_PTR(GraphManager)& _graph_man);

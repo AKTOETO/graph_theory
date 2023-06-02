@@ -3,19 +3,33 @@
 
 #include "../base/BasePresetGraphMan.hpp"
 
+enum class Heuristics
+{
+	MANHATTAN,
+	CHEBYSHEV,
+	EUCLID,
+	DIJKSTRA
+};
+
 class PresetGraphManT8 :
-    virtual public BaseGraphPresetManager
+	virtual public BaseGraphPresetManager
 {
 protected:
 
-	// Кратчайшее расстояние
-	U_PTR(CellVector) m_dist;
+	// количество эвристик 
+	int numb_of_heur;
 
-	// Длина кратчайшего расстояния
-	U_PTR(int) m_dist_length;
+	// кратчайшие расстояния для 4ех эвристик
+	std::vector<S_PTR(CellVector)> m_dist;
 
-	// пройденные клетки
-	U_PTR(VisitedCell) m_used_cell;
+	// Длина кратчайшего расстояния для всех эвристик
+	U_PTR(WeightVector) m_dist_length;
+
+	// пройденные клетки для всех эвристик
+	std::vector<S_PTR(VisitedCell)> m_used_cell;
+
+	// массив эвристик
+	std::vector<HeuristicFunc> m_heur_func;
 
 	// карта
 	U_PTR(Map) m_map;
@@ -44,10 +58,13 @@ public:
 	//==================================//
 
 	// получение: Кратчайшее расстояние A*
-	const U_PTR(CellVector)& GetAStarShortestPath() const;
+	const std::vector<S_PTR(CellVector)>& GetAStarShortestPath() const;
 
 	// получение: Длина кратчайшео расстояния
-	const U_PTR(int)& GetAStarShortestPathLength() const;
+	const WeightVector& GetAStarShortestPathLength() const;
+
+	// получение: Пройденные клетки
+	const std::vector<double> GetAStarPercentUsedCells() const;
 };
 
 #endif // !PRESETGRAPHMANT6_h

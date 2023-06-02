@@ -14,6 +14,7 @@ public:
 	Cell& operator=(const Cell& _cell);
 	bool operator==(const Cell& _c1);
 	bool operator!=(const Cell& _cell);
+	friend std::ostream& operator<<(std::ostream& _ostream, const Cell&);
 
 	// set методы
 	void SetX(int _x);

@@ -923,7 +923,7 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 	// Евклидово расстояние
 	inline Weight Euclid(const Cell& _c1, const Cell& _c2)
 	{
-		return Weight(sqrt(pow(_c2.GetX() - _c1.GetX(), 2) + pow(_c2.GetY() - _c1.GetY(), 2)));
+		return Weight(round(sqrt(pow(_c2.GetX() - _c1.GetX(), 2) + pow(_c2.GetY() - _c1.GetY(), 2))));
 	}
 
 	// восстановление пути для А*
@@ -962,27 +962,27 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 	// Алгоритм А*
 	inline Weight AStar(
 		const U_PTR(Map)& _map,   // карта весов
-		U_PTR(CellVector)& _dist, // кратчайшее расстояние
-		U_PTR(VisitedCell)& _used,// посещенные клетки
+		S_PTR(CellVector)& _dist, // кратчайшее расстояние
+		S_PTR(VisitedCell)& _used,// посещенные клетки
 		const Cell& _start,       // начальная клетка
 		const Cell& _end,         // конечная клетка
-		Weight(*h)(const Cell&, const Cell&), // эвристическая функция
+		HeuristicFunc h,          // эвристическая функция
 		bool& path_found          // найден ли путь
 	)
 	{
 #define SX _start.GetX()
 #define SY _start.GetY()
-
+		// говорим, что путь не найден
 		path_found = 0;
 
 		// размер карты
 		size_t msize = _map->GetSize();
 
-		// отчищаем вектор кратчайшего расстояния
+		// очищаем вектор кратчайшего расстояния
 		_dist.reset();
 
 		// матрица пройденных клеток
-		_used = std::make_unique<VisitedCell>(msize, VisitedVert(msize, 0));
+		_used = std::make_shared<VisitedCell>(msize, VisitedVert(msize, 0));
 
 		// очередь рассматриваемых вершин
 		std::priority_queue<WeightedCell, WeightedCellVector, WeightedCellGreater> q;
@@ -991,39 +991,34 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		q.push(std::make_pair(0, _start));
 
 		// матрица ячеек, из которых пришли
-		CellMatrix came_from(msize, CellVector(msize, Cell()));
+		CellMatrix came_from(msize, CellVector(msize, Cell(-1, -1)));
 
 		// стоимость кратчайшего пути от _start в текущую
 		WeightMatrix g_score(msize, WeightVector(msize, INF));
 		g_score[SX][SY] = 0;
-
-		// стоимость кратчайшего пути от _start в текущую
-		// с учетом эвристики
-		WeightMatrix f_score(msize, WeightVector(msize, INF));
-		// TODO на сайте тут стоит h(_begin, _end)
-		f_score[SX][SY] = 0;
 
 		// пока очередь не пустая
 		while (!q.empty())
 		{
 #define CCX cur.second.GetX()
 #define СCY cur.second.GetY()
-			// выбираем клетку с минимальным весов 
+			// выбираем клетку с минимальным весом
 			WeightedCell cur = q.top();
 			(*_used)[CCX][СCY] = true;
 			q.pop();
+
 			// если соседняя вершина - конечная
 			if (cur.second == _end)
 			{
 				path_found = 1;
-				_dist = std::make_unique<CellVector>(ReconstructPath(came_from, _end));
+				_dist = std::make_shared<CellVector>(ReconstructPath(came_from, _end));
 				return g_score[_end.GetX()][_end.GetY()];
 			}
 
 			// получаем список соседей
 			NeighborsList nlst = _map->neighbors(cur.second);
 
-			// для каждого соседа ищем кратчайше расстояние
+			// для каждого соседа ищем кратчайшее расстояние
 			for (auto& el : nlst)
 			{
 #define NC el.second
@@ -1042,18 +1037,22 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 					// обновляю кратчайший путь в текущую вершину
 					g_score[NCX][NCY] = temp_g_score;
 
-					// обновляю кратчайший путь до соседа с учетом эвристики
-					f_score[NCX][NCY] = g_score[NCX][NCY] + h(NC, _end);
 					// если сосед не был пройден ранее,
 					// добавляем его в очередь
 					if (!(*_used)[NCX][NCY])
 					{
-						q.push(std::make_pair(f_score[NCX][NCY], NC));
-						(*_used)[NCX][NCY] = true;
+						// вес кратчайшего пути от _start до соседа
+						// + эвристика
+						// позволяет понять, насколько коротким может
+						// быть путь от _start до _end через соседа
+						q.push(std::make_pair(
+							g_score[NCX][NCY] + h(NC, _end), NC
+						));
 					}
 				}
 			}
 		}
+		return g_score[_end.GetX()][_end.GetY()];
 
 #undef NC
 #undef NCX
@@ -1062,7 +1061,6 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 #undef СCY
 #undef SX
 #undef SY
-		return g_score[_end.GetX()][_end.GetY()];
 	}
 }
 

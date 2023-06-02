@@ -7,7 +7,7 @@ PresetGraphManT5::PresetGraphManT5(
 	const S_PTR(StateVector) _states
 ) :// инициализация всех полей
 	BaseGraphPresetManager(_settings, _graph, _states),
-	m_dist(INF)
+	m_dist_manh(INF)
 {}
 
 PresetGraphManT5::~PresetGraphManT5()
@@ -30,10 +30,10 @@ bool PresetGraphManT5::CalculateShortPathDijkstra()
 		// поэтому _dist определен не в поле класса, а здесь
 		U_PTR(VertexArr) dist;
 		U_PTR(VertexArr) parent;
-		m_dist = ALGO::Dijkstra(m_graph, m_sys_settings->m_from, m_sys_settings->m_to, dist, parent);
+		m_dist_manh = ALGO::Dijkstra(m_graph, m_sys_settings->m_from, m_sys_settings->m_to, dist, parent);
 
 		// если есть путь
-		if (m_dist != INF)
+		if (m_dist_manh != INF)
 			// конвертация вектора предков в список ребер
 			m_short_dist_edge_list =
 			ALGO::ConvDijksrtasVectToEdgeList(m_graph, parent, m_sys_settings->m_from, m_sys_settings->m_to);
@@ -58,7 +58,7 @@ bool PresetGraphManT5::CalculateThereIsShortestPath()
 	{
 		INFO("Расчет: нет ли пути");
 
-		return m_dist != INF;
+		return m_dist_manh != INF;
 	}
 	return false;
 }
@@ -74,14 +74,14 @@ bool PresetGraphManT5::CalculateThereIsNotShortestPath()
 	{
 		INFO("Расчет: есть ли путь");
 
-		return m_dist == INF;
+		return m_dist_manh == INF;
 	}
 	return false;
 }
 
 const Weight& PresetGraphManT5::GetShortestDistToVert() const
 {
-	return m_dist;
+	return m_dist_manh;
 }
 
 const EdgeList& PresetGraphManT5::GetShortestDistEdgeList() const

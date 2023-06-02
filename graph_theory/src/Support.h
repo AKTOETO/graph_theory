@@ -251,6 +251,24 @@ inline void PrintAllShortestPath(
 	}
 }
 
+// печать вектора клеток
+inline void PrintCellVector(
+	const CellVector& _dist,
+	std::string _sep = ", ",
+	std::string _delim = ", "
+)
+{
+	for (auto it = _dist.begin(); it != _dist.end(); it++)
+	{
+		std::cout
+			<< "(" << it->GetX()
+			<< _sep << it->GetY()
+			<< ")";
+		if (std::distance(it, _dist.end()) > 1)
+			std::cout << ", ";
+	}
+}
+
 
 // проверка на наличие определенного элемента в матрице
 template<typename ScriptMan>

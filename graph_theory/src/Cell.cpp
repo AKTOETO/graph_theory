@@ -50,3 +50,9 @@ const int& Cell::GetY() const
 {
 	return m_y;
 }
+
+std::ostream& operator<<(std::ostream& _ostream, const Cell& _c)
+{
+	_ostream << "(" << _c.GetX() << ", " << _c.GetY() << ")";
+	return _ostream;
+}

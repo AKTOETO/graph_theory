@@ -44,7 +44,7 @@ Map::~Map()
 {
 }
 
-const size_t& Map::GetSize() const
+const size_t Map::GetSize() const
 {
 	return m_map.size();
 }

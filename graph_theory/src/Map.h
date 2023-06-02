@@ -14,7 +14,7 @@ public:
 	~Map();	
 	
 	// размер матрицы
-	const size_t& GetSize() const;
+	const size_t GetSize() const;
 
 	// высота в ячейке
 	const Weight& GetCellHeight(const Cell& _cell) const;

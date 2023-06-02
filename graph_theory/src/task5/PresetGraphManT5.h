@@ -14,7 +14,7 @@ protected:
 	EdgeList m_short_dist_edge_list;
 
 	// кратчайшее расстояние
-	Weight m_dist;
+	Weight m_dist_manh;
 
 public:
 	// конструктор и деструктор

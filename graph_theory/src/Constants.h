@@ -487,6 +487,9 @@ struct WeightedCellGreater
 	}
 };
 
+// тип эфристической функции
+using HeuristicFunc = Weight(*)(const Cell&, const Cell&);
+
 //==================//
 //	С П Р А В К А	//
 //==================//

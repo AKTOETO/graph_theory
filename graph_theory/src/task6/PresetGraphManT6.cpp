@@ -9,7 +9,7 @@ PresetGraphManT6::PresetGraphManT6(
 	BaseGraphPresetManager(_settings, _graph, _states),
 	m_is_there_negative_cycle(0),
 	m_is_there_negative_edges(0),
-	m_dist(nullptr)
+	m_dist_manh(nullptr)
 {}
 
 PresetGraphManT6::~PresetGraphManT6()
@@ -24,10 +24,10 @@ bool PresetGraphManT6::CalculateDijkstraShortPath()
 	// не было найдено отрицательного цикла
 	if (!m_is_there_negative_cycle)
 	{
-		m_dist.reset();
+		m_dist_manh.reset();
 		U_PTR(VertexArr) parent;
 		ALGO::NegativeDijkstra(
-			m_graph, m_sys_settings->m_from, 0, m_dist, parent, m_is_there_negative_cycle
+			m_graph, m_sys_settings->m_from, 0, m_dist_manh, parent, m_is_there_negative_cycle
 		);
 		// если есть отрицательный цикл, то отмечаем кратчайший путь не найденным
 		if (m_is_there_negative_cycle)
@@ -45,10 +45,10 @@ bool PresetGraphManT6::CalculateBellmanFordMurShortPath()
 	// не было найдено отрицательного цикла
 	if (!m_is_there_negative_cycle)
 	{
-		m_dist.reset();
+		m_dist_manh.reset();
 		U_PTR(VertexArr) parent;
 		ALGO::BellmanFord(
-			m_graph, m_sys_settings->m_from, 0, m_dist, m_is_there_negative_cycle
+			m_graph, m_sys_settings->m_from, 0, m_dist_manh, m_is_there_negative_cycle
 		);
 		// если есть отрицательный цикл, то отмечаем кратчайший путь не найденным
 		if (m_is_there_negative_cycle)
@@ -66,8 +66,8 @@ bool PresetGraphManT6::CalculateLevitShortPath()
 	// если нет отрицательных циклов
 	if (!m_is_there_negative_cycle)
 	{
-		m_dist.reset();
-		ALGO::Levit(m_graph, m_sys_settings->m_from, 0, m_dist);
+		m_dist_manh.reset();
+		ALGO::Levit(m_graph, m_sys_settings->m_from, 0, m_dist_manh);
 		return true;
 	}
 	return false;
@@ -135,5 +135,5 @@ const bool& PresetGraphManT6::GetIsThereNegativeCycle() const
 
 const VertexArr& PresetGraphManT6::GetDistancies() const
 {
-	return *m_dist;
+	return *m_dist_manh;
 }

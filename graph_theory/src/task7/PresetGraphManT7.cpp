@@ -9,7 +9,7 @@ PresetGraphManT7::PresetGraphManT7(
 	BaseGraphPresetManager(_settings, _graph, _states),
 	m_is_there_negative_cycle(0),
 	m_is_there_negative_edges(0),
-	m_dist(nullptr)
+	m_dist_manh(nullptr)
 {}
 
 PresetGraphManT7::~PresetGraphManT7()
@@ -20,9 +20,9 @@ bool PresetGraphManT7::CalculateJhonsonShortPath()
 {
 	if (!m_is_there_negative_cycle)
 	{
-		m_dist.reset();
+		m_dist_manh.reset();
 		m_is_there_negative_cycle = ALGO::Jhonson(
-			m_graph, m_dist
+			m_graph, m_dist_manh
 		);
 		// если есть отрицательный цикл, то отмечаем кратчайший путь не найденным
 		if (m_is_there_negative_cycle)
@@ -94,5 +94,5 @@ const bool& PresetGraphManT7::GetIsThereNegativeCycle() const
 
 const VertexMatrix& PresetGraphManT7::GetJhonsonDistancies() const
 {
-	return *m_dist;
+	return *m_dist_manh;
 }

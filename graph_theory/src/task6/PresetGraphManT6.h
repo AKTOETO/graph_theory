@@ -15,7 +15,7 @@ protected:
 	bool m_is_there_negative_edges;
 
 	// список путей от заданной вершины до всех остальных
-	U_PTR(VertexArr) m_dist;
+	U_PTR(VertexArr) m_dist_manh;
 
 public:
 	// конструктор и деструктор
