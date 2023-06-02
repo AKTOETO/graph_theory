@@ -13,6 +13,7 @@ MajorScriptManPreset::MajorScriptManPreset(
 	PresetScriptManT5(_graph_man),
 	PresetScriptManT6(_graph_man),
 	PresetScriptManT7(_graph_man),
+	PresetScriptManT8(_graph_man),
 	m_sys_settings(_setts)
 {
 	m_specs =
@@ -71,6 +72,9 @@ MajorScriptManPreset::MajorScriptManPreset(
 		{SPEC::T7_NEGATIVE_EDGES,			&PresetScriptManT7::PrintNegativeEdges},
 		{SPEC::T7_NEGATIVE_CYCLE,			&PresetScriptManT7::PrintNegativeCycle},
 		
+		// Task 8
+		{SPEC::T8_PATH,				&PresetScriptManT8::PrintPath},
+		{SPEC::T8_PATH_LENGTH,		&PresetScriptManT8::PrintPathLength},
 	};
 }
 

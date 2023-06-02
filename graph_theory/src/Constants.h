@@ -460,11 +460,32 @@ using mcs = std::chrono::microseconds;
 //	К А Р Т А	//
 //==============//
 
+// вектор клеток
+using CellVector = std::vector<Cell>;
+
+// матрица ячеек
+using CellMatrix = std::vector<CellVector>;
+
 // ячейка с весом
-using WeightCell = std::pair<Weight, Cell>;
+using WeightedCell = std::pair<Weight, Cell>;
+
+// посещенные клетки
+using VisitedCell = std::vector<VisitedVert>;
+
+// вектор взвешенных ячеек
+using WeightedCellVector = std::vector<WeightedCell>;
 
 // список соседей
-using NeighborsList = std::list<WeightCell>;
+using NeighborsList = std::list<WeightedCell>;
+
+// оператор сравнения взвешенных вершин
+struct WeightedCellGreater
+{
+	bool operator()(const WeightedCell& _wc1, const WeightedCell& _wc2)
+	{
+		return _wc1.first > _wc2.first;
+	}
+};
 
 //==================//
 //	С П Р А В К А	//

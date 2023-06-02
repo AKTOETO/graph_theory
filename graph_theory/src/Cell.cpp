@@ -21,6 +21,16 @@ Cell& Cell::operator=(const Cell& _cell)
 	return *this;
 }
 
+bool Cell::operator==(const Cell& _cell)
+{
+	return m_x == _cell.GetX() && m_y == _cell.GetY();
+}
+
+bool Cell::operator!=(const Cell& _cell)
+{
+	return m_x != _cell.GetX() || m_y != _cell.GetY();
+}
+
 void Cell::SetX(int _x)
 {
 	m_x = _x;

@@ -1,6 +1,7 @@
 ﻿#ifndef ALGORITHMS_HPP
 #define ALGORITHMS_HPP
 #include "Graph.h"
+#include "Map.h"
 
 namespace ALGO
 {
@@ -899,13 +900,178 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 			// учитываем метки
 			for (int j = 0; j < sizem; j++)
 			{
-				if((*_dist)[i][j] != INF)
+				if ((*_dist)[i][j] != INF)
 					(*_dist)[i][j] = (*_dist)[i][j] + (*h)[j] - (*h)[i];
 			}
 		}
 		return 0;
 	}
-}
 
+	// Эвристики
+	// Манхэттенское расстояние
+	inline Weight Manhattan(const Cell& _c1, const Cell& _c2)
+	{
+		return abs(_c1.GetX() - _c2.GetX()) + abs(_c1.GetY() - _c2.GetY());
+	}
+
+	// Расстояние Чебышева
+	inline Weight Chebyshev(const Cell& _c1, const Cell& _c2)
+	{
+		return std::max(abs(_c1.GetX() - _c2.GetX()), abs(_c1.GetY() - _c2.GetY()));
+	}
+
+	// Евклидово расстояние
+	inline Weight Euclid(const Cell& _c1, const Cell& _c2)
+	{
+		return Weight(sqrt(pow(_c2.GetX() - _c1.GetX(), 2) + pow(_c2.GetY() - _c1.GetY(), 2)));
+	}
+
+	// восстановление пути для А*
+	inline CellVector ReconstructPath(
+		const CellMatrix& _came_from,	// матрица педшествующих клеток
+		const Cell& _end,				// конец пути
+		const Cell& _begin				// начало пути
+	)
+	{
+		// конечный путь
+		CellVector path;
+
+		// добавляем в него конечную вершину
+		path.push_back(_end);
+
+		// проходим весь путь с конца к началу
+		Cell cur_cell = _end;
+		while (cur_cell != _begin)
+		{
+			path.push_back(_came_from[cur_cell.GetX()][cur_cell.GetY()]);
+			cur_cell = _came_from[cur_cell.GetX()][cur_cell.GetY()];
+		}
+
+		// инвертируем путь
+		std::reverse(path.begin(), path.end());
+		return path;
+	}
+
+	// расстояние между клетками
+	inline Weight CellDist(
+		const Cell& _c1,
+		const Cell& _c2,
+		const Map& _map
+	)
+	{
+		return Manhattan(_c1, _c2) +
+			abs(_map.GetCellHeight(_c1) - _map.GetCellHeight(_c2));
+	}
+
+	// Алгоритм А*
+	inline Weight AStar(
+		const U_PTR(Map)& _map,   // карта весов
+		U_PTR(CellVector)& _dist, // кратчайшее расстояние
+		U_PTR(VisitedCell)& _used,// посещенные клетки
+		const Cell& _start,       // начальная клетка
+		const Cell& _end,         // конечная клетка
+		Weight(*h)(const Cell&, const Cell&), // эвристическая функция
+		bool& path_found          // найден ли путь
+	)
+	{
+#define SX _start.GetX()
+#define SY _start.GetY()
+
+		path_found = 0;
+
+		// размер карты
+		size_t msize = _map->GetSize();
+
+		// отчищаем вектор кратчайшего расстояния
+		_dist.reset();
+
+		// матрица пройденных клеток
+		_used = std::make_unique<VisitedCell>(msize, VisitedVert(msize, 0));
+
+		// очередь рассматриваемых вершин
+		std::priority_queue<WeightedCell, WeightedCellVector, WeightedCellGreater> q;
+
+		// добавляем начальную клетку
+		q.push(std::make_pair(0, _start));
+
+		// матрица ячеек, из которых пришли
+		CellMatrix came_from(msize, CellVector(msize, Cell()));
+
+		// стоимость кратчайшего пути от _start в текущую
+		WeightMatrix g_score(msize, WeightVector(msize, INF));
+		g_score[SX][SY] = 0;
+
+		// стоимость кратчайшего пути от _start в текущую
+		// с учетом эвристики
+		WeightMatrix f_score(msize, WeightVector(msize, INF));
+		f_score[SX][SY] = 0;
+
+		// пока очередь не пустая
+		while (!q.empty())
+		{
+#define CCX cur.second.GetX()
+#define СCY cur.second.GetY()
+			// выбираем клетку с минимальным весов 
+			WeightedCell cur = q.top();
+			(*_used)[CCX][СCY] = true;
+			q.pop();			
+
+			// получаем список соседей
+			NeighborsList nlst = _map->neighbors(cur.second);
+
+			// для каждого соседа ищем кратчайше расстояние
+			for (auto& el : nlst)
+			{
+#define NC el.second
+#define NCX NC.GetX()
+#define NCY NC.GetY()
+				// если еще не было указано родителей
+				if (came_from[NCX][NCY] == Cell())
+					came_from[NCX][NCY] = cur.second;
+
+				// расстояние от _start до текущего соседа через текущую вершину
+				Weight temp_g_score =
+					g_score[CCX][СCY] + CellDist(cur.second, NC, *_map);
+
+				if (temp_g_score < g_score[NCX][NCY])
+				{
+					// обновляю родителя для текущей вершины
+					came_from[NCX][NCY] = cur.second;
+
+					// обновляю кратчайший путь в текущую вершину
+					g_score[NCX][NCY] = temp_g_score;
+
+				}
+				// обновляю кратчайший путь до соседа с учетом эвристики
+				f_score[NCX][NCY] = g_score[NCX][NCY] + h(NC, _end);
+
+				// если соседняя вершина - конечная
+				if (NC == _end)
+				{
+					path_found = 1;
+					_dist = std::make_unique<CellVector>(ReconstructPath(came_from, _end, _start));
+					return g_score[_end.GetX()][_end.GetY()];
+				}
+
+				// если сосед не был пройден ранее,
+				// добавляем его в очередь
+				if (!(*_used)[NCX][NCY])
+				{
+					q.push(std::make_pair(f_score[NCX][NCY], NC));
+					(*_used)[NCX][NCY] = true;
+				}
+			}
+		}
+
+#undef NC
+#undef NCX
+#undef NCY
+#undef СCX
+#undef СCY
+#undef SX
+#undef SY
+		return g_score[_end.GetX()][_end.GetY()];
+	}
+}
 
 #endif // !ALGORITHMS_HPP

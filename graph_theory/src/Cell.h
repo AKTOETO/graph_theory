@@ -12,6 +12,8 @@ public:
 	~Cell();
 
 	Cell& operator=(const Cell& _cell);
+	bool operator==(const Cell& _c1);
+	bool operator!=(const Cell& _cell);
 
 	// set методы
 	void SetX(int _x);

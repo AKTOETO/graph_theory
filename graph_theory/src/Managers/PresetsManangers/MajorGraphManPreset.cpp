@@ -11,7 +11,8 @@ MajorGraphManPreset::MajorGraphManPreset(
 	PresetGraphManT4(_settings, _graph, _states),
 	PresetGraphManT5(_settings, _graph, _states),
 	PresetGraphManT6(_settings, _graph, _states),
-	PresetGraphManT7(_settings, _graph, _states)
+	PresetGraphManT7(_settings, _graph, _states),
+	PresetGraphManT8(_settings, _graph, _states)
 {
 	m_specs =
 	{
@@ -67,6 +68,10 @@ MajorGraphManPreset::MajorGraphManPreset(
 		{SPEC::T7_NO_NEGATIVE_EDGES,		&PresetGraphManT7::CalculateIsThereNoNegativeEdges},
 		{SPEC::T7_NEGATIVE_EDGES,			&PresetGraphManT7::CalculateIsThereNegativeEdges},
 		{SPEC::T7_NEGATIVE_CYCLE,			&PresetGraphManT7::CalculaetNegativeCycle},
+
+		// Task 8
+		{SPEC::T8_PATH,				&PresetGraphManT8::CalculateAStarShortestPath},
+		{SPEC::T8_PATH_LENGTH,		&PresetGraphManT8::CalculateAStarShortestPathLength},
 	};
 }
 
