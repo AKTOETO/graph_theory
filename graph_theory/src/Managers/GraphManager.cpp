@@ -5,8 +5,9 @@ GraphManager::GraphManager(const S_PTR(SystemSetting)& _settings)
 	: m_sys_settings(_settings)
 {
 	// создание графа и массива состояний
-	
-	//m_graph = std::make_shared<Graph>(m_sys_settings->m_filepath, m_sys_settings->m_in_type);
+#if !defined(T8)
+	m_graph = std::make_shared<Graph>(m_sys_settings->m_filepath, m_sys_settings->m_in_type);
+#endif
 	m_states = std::make_shared<StateVector>(NUMBER_OF_SPECIFIERS, 0);
 
 	// создание главного пресета программы

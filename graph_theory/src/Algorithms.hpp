@@ -929,24 +929,20 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 	// восстановление пути для А*
 	inline CellVector ReconstructPath(
 		const CellMatrix& _came_from,	// матрица педшествующих клеток
-		const Cell& _end,				// конец пути
-		const Cell& _begin				// начало пути
+		const Cell& _end				// конец пути
 	)
 	{
 		// конечный путь
 		CellVector path;
 
-		// добавляем в него конечную вершину
-		path.push_back(_end);
-
 		// проходим весь путь с конца к началу
 		Cell cur_cell = _end;
-		while (cur_cell != _begin)
-		{
-			path.push_back(_came_from[cur_cell.GetX()][cur_cell.GetY()]);
+		do {
+			path.push_back(cur_cell);
 			cur_cell = _came_from[cur_cell.GetX()][cur_cell.GetY()];
-		}
-
+		} while (cur_cell != Cell());
+		// TODO можно сделать List заместо vector, чтобы в
+		// массиве делат push_front (не надо будет потом вызывать reverse)
 		// инвертируем путь
 		std::reverse(path.begin(), path.end());
 		return path;
@@ -1004,6 +1000,7 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		// стоимость кратчайшего пути от _start в текущую
 		// с учетом эвристики
 		WeightMatrix f_score(msize, WeightVector(msize, INF));
+		// TODO на сайте тут стоит h(_begin, _end)
 		f_score[SX][SY] = 0;
 
 		// пока очередь не пустая
@@ -1014,7 +1011,14 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 			// выбираем клетку с минимальным весов 
 			WeightedCell cur = q.top();
 			(*_used)[CCX][СCY] = true;
-			q.pop();			
+			q.pop();
+			// если соседняя вершина - конечная
+			if (cur.second == _end)
+			{
+				path_found = 1;
+				_dist = std::make_unique<CellVector>(ReconstructPath(came_from, _end));
+				return g_score[_end.GetX()][_end.GetY()];
+			}
 
 			// получаем список соседей
 			NeighborsList nlst = _map->neighbors(cur.second);
@@ -1025,9 +1029,6 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 #define NC el.second
 #define NCX NC.GetX()
 #define NCY NC.GetY()
-				// если еще не было указано родителей
-				if (came_from[NCX][NCY] == Cell())
-					came_from[NCX][NCY] = cur.second;
 
 				// расстояние от _start до текущего соседа через текущую вершину
 				Weight temp_g_score =
@@ -1041,24 +1042,15 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 					// обновляю кратчайший путь в текущую вершину
 					g_score[NCX][NCY] = temp_g_score;
 
-				}
-				// обновляю кратчайший путь до соседа с учетом эвристики
-				f_score[NCX][NCY] = g_score[NCX][NCY] + h(NC, _end);
-
-				// если соседняя вершина - конечная
-				if (NC == _end)
-				{
-					path_found = 1;
-					_dist = std::make_unique<CellVector>(ReconstructPath(came_from, _end, _start));
-					return g_score[_end.GetX()][_end.GetY()];
-				}
-
-				// если сосед не был пройден ранее,
-				// добавляем его в очередь
-				if (!(*_used)[NCX][NCY])
-				{
-					q.push(std::make_pair(f_score[NCX][NCY], NC));
-					(*_used)[NCX][NCY] = true;
+					// обновляю кратчайший путь до соседа с учетом эвристики
+					f_score[NCX][NCY] = g_score[NCX][NCY] + h(NC, _end);
+					// если сосед не был пройден ранее,
+					// добавляем его в очередь
+					if (!(*_used)[NCX][NCY])
+					{
+						q.push(std::make_pair(f_score[NCX][NCY], NC));
+						(*_used)[NCX][NCY] = true;
+					}
 				}
 			}
 		}
