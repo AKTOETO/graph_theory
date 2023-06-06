@@ -163,6 +163,8 @@
     <ClCompile Include="src\task7\PresetScriptManT7.cpp" />
     <ClCompile Include="src\task8\PresetGraphManT8.cpp" />
     <ClCompile Include="src\task8\PresetScriptManT8.cpp" />
+    <ClCompile Include="src\task9\PresetGraphManT9.cpp" />
+    <ClCompile Include="src\task9\PresetScriptManT9.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Cell.h" />
@@ -197,6 +199,8 @@
     <ClInclude Include="src\task7\PresetScriptManT7.h" />
     <ClInclude Include="src\task8\PresetGraphManT8.h" />
     <ClInclude Include="src\task8\PresetScriptManT8.h" />
+    <ClInclude Include="src\task9\PresetGraphManT9.h" />
+    <ClInclude Include="src\task9\PresetScriptManT9.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\graphs\adjacency_list.txt" />
@@ -370,6 +374,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

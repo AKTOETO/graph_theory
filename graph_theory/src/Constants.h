@@ -6,8 +6,8 @@
 //=========================//
 // КАКОЕ ЗАДАНИЕ ЗАПУСКАТЬ //
 //=========================//
-// T1, T2, T3, T4, T5, T6, T7, T8, MULTITASK
-#define T8
+// T1, T2, T3, T4, T5, T6, T7, T8, T9
+#define T9
 
 //===================//
 // К О Н С Т А Н Т Ы //
@@ -32,7 +32,7 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 #define INF_PRINT_WIDTH 2
 
 // Количество характеристик
-#define NUMBER_OF_SPECIFIERS 41
+#define NUMBER_OF_SPECIFIERS 43
 
 //===========================//
 // С П Е Ц И Ф И К А Т О Р Ы //
@@ -123,6 +123,13 @@ enum class SPEC
 	//==================//
 	T8_PATH,
 	T8_PATH_LENGTH,
+
+	//==================//
+	//      TASK 9      //
+	//==================//
+	T9_ANT_COLONY,
+	T9_BRANCH_AND_BOUND,
+
 };
 
 // тип данных сценария выполнения программы
@@ -260,7 +267,9 @@ static const Script TASK_SCRIPT = Script
 	SPEC::T8_PATH,
 };
 #elif defined(T9)
-
+static const Script TASK_SCRIPT = Script
+{
+};
 #elif defined(T10)
 
 #elif defined(T11)

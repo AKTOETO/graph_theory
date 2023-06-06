@@ -90,6 +90,12 @@
     <ClCompile Include="src\Cell.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\task9\PresetGraphManT9.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\task9\PresetScriptManT9.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
     <ClCompile Include="src\task8\PresetGraphManT8.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -186,6 +192,12 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\Cell.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task9\PresetGraphManT9.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task9\PresetScriptManT9.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\task8\PresetGraphManT8.h">
@@ -367,5 +379,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>
