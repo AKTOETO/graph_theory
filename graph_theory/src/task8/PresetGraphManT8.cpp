@@ -13,6 +13,8 @@ PresetGraphManT8::PresetGraphManT8(
 	m_used_cell(numb_of_heur),
 	m_dist_length(std::make_unique<WeightVector>(numb_of_heur, -1))
 {
+#if defined(T8)
+
 	m_heur_func = {
 		ALGO::Manhattan,
 		ALGO::Chebyshev,
@@ -32,6 +34,7 @@ PresetGraphManT8::PresetGraphManT8(
 		m_sys_settings->m_end.GetY() < 0
 		)
 		ERROR("Точки выходят за карту!");
+#endif
 }
 
 PresetGraphManT8::~PresetGraphManT8()
