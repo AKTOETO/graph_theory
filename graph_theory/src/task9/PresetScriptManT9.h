@@ -1,9 +1,9 @@
-﻿#ifndef PRESETSCRIPTMANT9_H
-#define PRESETSCRIPTMANT9_H
+﻿#ifndef PRESETSCRIPTMANT8_H
+#define PRESETSCRIPTMANT8_H
 
 #include "../base/BasePresetScriptMan.hpp"
 
-class PresetScriptManT9 :
+class PresetScriptManT8 :
     virtual public BaseScriptPresetManager
 {
 protected:
@@ -11,17 +11,17 @@ protected:
 
 public:
 
-	PresetScriptManT9(const S_PTR(GraphManager)& _graph_man);
+	PresetScriptManT8(const S_PTR(GraphManager)& _graph_man);
 
 	//===================================//
 	// МЕТОДЫ ПЕЧАТИ ХАРАКТЕРИСТИК ГРАФА //
 	//===================================//
 
-	// печать: Гамильтонов цикл. Муравьиная колония
-	void PrintAntColonyPath() const;
+	// печать: Кратчайший путь
+	void PrintPath() const;
 
-	// печать: Гамильтонов цикл. Ветви и границы
-	void PrintBranchAndBoundsPath() const;
+	// печать: Длина пути
+	void PrintPathLength() const;
 
 };
 

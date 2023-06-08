@@ -12,9 +12,7 @@ MajorGraphManPreset::MajorGraphManPreset(
 	PresetGraphManT5(_settings, _graph, _states),
 	PresetGraphManT6(_settings, _graph, _states),
 	PresetGraphManT7(_settings, _graph, _states),
-	PresetGraphManT8(_settings, _graph, _states),
-	PresetGraphManT9(_settings, _graph, _states),
-	PresetGraphManT10(_settings, _graph, _states)
+	PresetGraphManT8(_settings, _graph, _states)
 {
 	m_specs =
 	{
@@ -74,14 +72,6 @@ MajorGraphManPreset::MajorGraphManPreset(
 		// Task 8
 		{SPEC::T8_PATH,				&PresetGraphManT8::CalculateAStarShortestPath},
 		{SPEC::T8_PATH_LENGTH,		&PresetGraphManT8::CalculateAStarShortestPathLength},
-
-		// Task 9
-		{SPEC::T9_ANT_COLONY,		&PresetGraphManT9::CalculateAntColony},
-		{SPEC::T9_BRANCH_AND_BOUND, &PresetGraphManT9::CalculateBranchAndBounds},
-
-		// Task 10
-		{SPEC::T10_FORD_FULKERSON,	&PresetGraphManT10::CalculateMaxFlow},
-		{SPEC::T10_MAXIMUM_FLOW,	&PresetGraphManT10::CalculateFlowLength},
 	};
 }
 

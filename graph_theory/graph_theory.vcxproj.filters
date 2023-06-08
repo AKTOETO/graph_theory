@@ -102,12 +102,6 @@
     <ClCompile Include="src\task8\PresetScriptManT8.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\task10\PresetGraphManT10.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="src\task10\PresetScriptManT10.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Constants.h">
@@ -210,12 +204,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\task8\PresetScriptManT8.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="src\task10\PresetGraphManT10.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="src\task10\PresetScriptManT10.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1172,13 +1172,13 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 	)
 	{
 		// количество вершин
-		size_t num_of_vert = _graph->adjacency_matrix().size();
+		int num_of_vert = _graph->adjacency_matrix().size();
 
 		// получение матрицы кратчайших расстояний
 		VertexMatrix shortest_matr = FloydWarshal(_graph->adjacency_matrix());
 
 		// минимумы по строкам
-		VertexArr min_row = RowsMin(_graph->adjacency_matrix());
+		VertexArr min_row = RowsMin(_graph->adjacency_matrix());		
 
 		// редукция строк
 		for (int i = 0; i < num_of_vert; i++)
@@ -1271,7 +1271,7 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		VertexArr edited_min_row_with_long_way = RowsMin(shortest_matr_with_long_way);
 
 		// нахождение нижней границы
-		Weight H1 = H0 +
+		Weight H1 = H0 + 
 			std::accumulate(
 				edited_min_row_with_long_way.begin(),
 				edited_min_row_with_long_way.end(), 0
@@ -1287,138 +1287,6 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		// TODO: Это все зацикленно должно быть.......
 		// ЕЩЕ НЕ ВСЕ ПУНКЫ ДОДЕЛАНЫ ....
 
-	}
-
-	// поиск в ширину для Форда-Фалкерсона
-	inline bool BFSFordFalkerson(
-		S_PTR(VertexMatrix)& _bandwidth,	// остаточная пропускная способность
-		Vertex _source,						// источник
-		Vertex _sink,						// сток
-		VertexArr& _parent					// хранение пути
-	)
-	{
-		// размер матрицы
-		size_t length = _bandwidth->size();
-
-		// создаем массив восстановления пути
-		_parent.resize(length);
-
-		// массив посещенныъ вершин
-		StateVector visited(length, 0);
-
-		// очередь поиска
-		std::queue<Vertex> q;
-
-		// начинаем поиск с источника
-		q.push(_source);
-		visited[_source] = 1;
-		_parent[_source] = -1;
-
-		// цикл поиска
-		while (!q.empty())
-		{
-			// получаем вершину из очереди
-			int vert = q.front();
-			q.pop();
-
-			// проходимся по соседним вершинам
-			for (int v = 0; v < length; v++)
-			{
-				// если соседняя вершина ен пройдена и 
-				// осаточный поток от vert к v положительный
-				if (!visited[v] && (*_bandwidth)[vert][v] > 0)
-				{
-					// если v - сток, то мы нашли поток от
-					// источника к стоку
-					if (v == _sink)
-					{
-						_parent[v] = vert;
-						return true;
-					}
-
-					// добавляем v в очередь
-					q.push(v);
-					_parent[v] = vert;
-					visited[v] = true;
-				}
-			}
-		}
-
-		// поток не был найден
-		return false;
-	}
-
-	// поиск источника и стока
-	inline void FindSourceAndSink(
-		const S_PTR(Graph)& _graph,		// граф
-		Vertex& _source,				// источник
-		Vertex& _sink					// сток
-	)
-	{
-		// начальные значения
-		_source = -1;
-		_sink = -1;
-
-		// проходимся по всем вершинам
-		for (int i = 0; i < _graph->adjacency_matrix().size()
-			&& (_source == -1 || _sink == -1); i++)
-		{
-			// если нет исходящий ребер, то верщина - сток
-			if (_sink == -1 && _graph->list_of_edges(i).size() == 0)
-			{
-				_sink = i;
-			}
-			// нет входящих ребер, то верщина - источник 
-			else if (_source == -1 && _graph->list_of_edges_to(i).size() == 0)
-			{
-				_source = i;
-			}
-		}
-	}
-
-	// Форд-Фалкерсон
-	inline Weight FordFulkerson(
-		const S_PTR(Graph)& _graph,			// граф
-		S_PTR(VertexMatrix)& _bandwidth,	// остаточная пропускная способность
-		Vertex& _source,					// источник
-		Vertex& _sink						// сток
-	)
-	{
-		// создаем матрицу остаточной пропускной способности
-		_bandwidth = std::make_shared<VertexMatrix>(_graph->adjacency_matrix());
-
-		// ищем источник и сток
-		FindSourceAndSink(_graph, _source, _sink);
-
-		// вектор восстановления дополняющей цепи
-		VertexArr parent(_graph->adjacency_matrix().size(), -1);
-
-		// максимальный поток
-		Weight max_flow = 0;
-
-		// ищем дополняющую цепь
-		while (BFSFordFalkerson(_bandwidth, _source, _sink, parent))
-		{
-			// получаем минимальный остаточный путь
-			Weight path_flow = INF;
-
-			for (int i = _sink; i != _source; i = parent[i])
-			{
-				path_flow = std::min(path_flow, (*_bandwidth)[parent[i]][i]);
-			}
-
-			// обновляем матрицу остаточной пропускной способности
-			for (int i = _sink; i != _source; i = parent[i])
-			{
-				(*_bandwidth)[parent[i]][i] -= path_flow;
-				(*_bandwidth)[i][parent[i]] += path_flow;
-			}
-
-			// добавляем текущий поток к максимальному потоку
-			max_flow += path_flow;
-		}
-
-		return max_flow;
 	}
 }
 
