@@ -6,8 +6,8 @@
 //=========================//
 // КАКОЕ ЗАДАНИЕ ЗАПУСКАТЬ //
 //=========================//
-// T1, T2, T3, T4, T5, T6, T7, T8, T9
-#define T9
+// T1, T2, T3, T4, T5, T6, T7, T8, T9 - не сделал, T10
+#define T10
 
 //===================//
 // К О Н С Т А Н Т Ы //
@@ -32,7 +32,7 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 #define INF_PRINT_WIDTH 2
 
 // Количество характеристик
-#define NUMBER_OF_SPECIFIERS 43
+#define NUMBER_OF_SPECIFIERS 45
 
 //===========================//
 // С П Е Ц И Ф И К А Т О Р Ы //
@@ -129,6 +129,12 @@ enum class SPEC
 	//==================//
 	T9_ANT_COLONY,
 	T9_BRANCH_AND_BOUND,
+
+	//==================//
+	//      TASK 10     //
+	//==================//
+	T10_FORD_FULKERSON,
+	T10_MAXIMUM_FLOW,
 
 };
 
@@ -271,7 +277,11 @@ static const Script TASK_SCRIPT = Script
 {
 };
 #elif defined(T10)
-
+static const Script TASK_SCRIPT = Script
+{
+	SPEC::T10_MAXIMUM_FLOW,
+	SPEC::T10_FORD_FULKERSON,
+};
 #elif defined(T11)
 
 #elif defined(MULTITASK)
@@ -371,7 +381,25 @@ struct Edge
 	Vertex m_from;	// вершина, откуда исходир ребро
 	Vertex m_to;	// вершина, куда идет ребро
 	Weight m_weight;// вес ребра
+
 };
+
+// ребро с пропускной способностью
+struct EdgeBandwidth:
+	public Edge
+{
+	Weight m_bandwidth;	// пропускная способность
+	EdgeBandwidth(Vertex _f, Vertex _t, Weight _w, Weight _b)
+		:m_bandwidth(_b)
+	{
+		m_weight = _w;
+		m_from = _f;
+		m_to = _t;
+	}
+};
+
+// список ребер с пропускной способностью
+using EdgeBandwidthList = std::list<EdgeBandwidth>;
 
 // список ребер
 using EdgeList = std::list<Edge>;

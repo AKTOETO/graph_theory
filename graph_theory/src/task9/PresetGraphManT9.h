@@ -9,10 +9,10 @@ class PresetGraphManT9 :
 protected:
 
 	// минимальный гамильтонов цикл
-	U_PTR(EdgeList) m_min_hamilton_cycle;
+	U_PTR(EdgeList) m_max_flow;
 
 	// длина цикла
-	Weight m_hamilton_cycles_length;
+	Weight m_max_flow_length;
 
 public:
 	// конструктор и деструктор
