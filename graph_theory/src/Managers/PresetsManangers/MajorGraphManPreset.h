@@ -11,6 +11,7 @@
 #include "../../task8/PresetGraphManT8.h"
 #include "../../task9/PresetGraphManT9.h"
 #include "../../task10/PresetGraphManT10.h"
+#include "../../task11/PresetGraphManT11.h"
 
 class MajorGraphManPreset : 
 	public PresetGraphManT1,
@@ -22,7 +23,8 @@ class MajorGraphManPreset :
 	public PresetGraphManT7,
 	public PresetGraphManT8,
 	public PresetGraphManT9,
-	public PresetGraphManT10
+	public PresetGraphManT10,
+	public PresetGraphManT11
 
 {
 protected:

@@ -14,7 +14,8 @@ MajorGraphManPreset::MajorGraphManPreset(
 	PresetGraphManT7(_settings, _graph, _states),
 	PresetGraphManT8(_settings, _graph, _states),
 	PresetGraphManT9(_settings, _graph, _states),
-	PresetGraphManT10(_settings, _graph, _states)
+	PresetGraphManT10(_settings, _graph, _states),
+	PresetGraphManT11(_settings, _graph, _states)
 {
 	m_specs =
 	{
@@ -82,6 +83,11 @@ MajorGraphManPreset::MajorGraphManPreset(
 		// Task 10
 		{SPEC::T10_FORD_FULKERSON,	&PresetGraphManT10::CalculateMaxFlow},
 		{SPEC::T10_MAXIMUM_FLOW,	&PresetGraphManT10::CalculateFlowLength},
+
+		// Task 11
+		{SPEC::T11_BIPARTITE,		&PresetGraphManT11::CalculateIsBipartite},
+		{SPEC::T11_NO_BIPARTITE,	&PresetGraphManT11::CalculateIsNotBipartite},
+		{SPEC::T11_MAXIMUM_MATCHING,&PresetGraphManT11::CalculateMaxMatching},
 	};
 }
 

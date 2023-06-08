@@ -23,6 +23,9 @@ PresetGraphManT10::~PresetGraphManT10()
 
 bool PresetGraphManT10::CalculateMaxFlow()
 {
+	// ищем источник и ток
+	ALGO::FindSourceAndSink(m_graph, m_source, m_sink);
+
 	m_max_flow_length =
 		ALGO::FordFulkerson(m_graph, m_bandwidth, m_source, m_sink);
 

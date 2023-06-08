@@ -16,6 +16,7 @@ MajorScriptManPreset::MajorScriptManPreset(
 	PresetScriptManT8(_graph_man),
 	PresetScriptManT9(_graph_man),
 	PresetScriptManT10(_graph_man),
+	PresetScriptManT11(_graph_man),
 	m_sys_settings(_setts)
 {
 	m_specs =
@@ -85,6 +86,11 @@ MajorScriptManPreset::MajorScriptManPreset(
 		// Task 10
 		{SPEC::T10_FORD_FULKERSON,	&PresetScriptManT10::PrintFlow},
 		{SPEC::T10_MAXIMUM_FLOW,	&PresetScriptManT10::PrintFlowLength},
+
+		// Task 10
+		{SPEC::T11_BIPARTITE,		&PresetScriptManT11::PrintIsBipartite},
+		{SPEC::T11_NO_BIPARTITE,	&PresetScriptManT11::PrintIsNotBipartite},
+		{SPEC::T11_MAXIMUM_MATCHING,&PresetScriptManT11::PrintMatching},
 	};
 }
 

@@ -137,6 +137,8 @@
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\task10\PresetGraphManT10.cpp" />
     <ClCompile Include="src\task10\PresetScriptManT10.cpp" />
+    <ClCompile Include="src\task11\PresetGraphManT11.cpp" />
+    <ClCompile Include="src\task11\PresetScriptManT11.cpp" />
     <ClCompile Include="src\task6\PresetScriptManT6.cpp" />
     <ClCompile Include="src\task6\PresetGraphManT6.cpp" />
     <ClCompile Include="src\task5\PresetScriptManT5.cpp" />
@@ -173,6 +175,8 @@
     <ClInclude Include="src\Map.h" />
     <ClInclude Include="src\task10\PresetGraphManT10.h" />
     <ClInclude Include="src\task10\PresetScriptManT10.h" />
+    <ClInclude Include="src\task11\PresetGraphManT11.h" />
+    <ClInclude Include="src\task11\PresetScriptManT11.h" />
     <ClInclude Include="src\task6\PresetScriptManT6.h" />
     <ClInclude Include="src\task6\PresetGraphManT6.h" />
     <ClInclude Include="src\task5\PresetScriptManT5.h" />

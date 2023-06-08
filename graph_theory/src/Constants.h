@@ -6,8 +6,8 @@
 //=========================//
 // КАКОЕ ЗАДАНИЕ ЗАПУСКАТЬ //
 //=========================//
-// T1, T2, T3, T4, T5, T6, T7, T8, T9 - не сделал, T10
-#define T10
+// T1, T2, T3, T4, T5, T6, T7, T8, T9 - не сделал, T10, T11
+#define T11
 
 //===================//
 // К О Н С Т А Н Т Ы //
@@ -32,7 +32,7 @@ const std::string RESULT_FILE_PATH = "assets/results/";
 #define INF_PRINT_WIDTH 2
 
 // Количество характеристик
-#define NUMBER_OF_SPECIFIERS 45
+#define NUMBER_OF_SPECIFIERS 48
 
 //===========================//
 // С П Е Ц И Ф И К А Т О Р Ы //
@@ -115,7 +115,7 @@ enum class SPEC
 
 	T7_NO_NEGATIVE_EDGES,
 	T7_NEGATIVE_EDGES,
-	 
+
 	T7_NEGATIVE_CYCLE,
 
 	//==================//
@@ -135,6 +135,13 @@ enum class SPEC
 	//==================//
 	T10_FORD_FULKERSON,
 	T10_MAXIMUM_FLOW,
+
+	//==================//
+	//      TASK 11     //
+	//==================//
+	T11_NO_BIPARTITE,
+	T11_BIPARTITE,
+	T11_MAXIMUM_MATCHING
 
 };
 
@@ -283,33 +290,12 @@ static const Script TASK_SCRIPT = Script
 	SPEC::T10_FORD_FULKERSON,
 };
 #elif defined(T11)
-
-#elif defined(MULTITASK)
 static const Script TASK_SCRIPT = Script
 {
-	SPEC::DEGREES_IN_OUT,
-	SPEC::DEGREES_IN,
-	SPEC::DEGREES_OUT,
-	SPEC::SHORTEST_DIST_MATR,
-	SPEC::ECCENTR,
-	SPEC::DIAMETER,
-	SPEC::RADIUS,
-	SPEC::CENTRAL_VERT,
-	SPEC::PERIPHERAL_VERT,
-	SPEC::IS_CONNECTED,
-	SPEC::IS_NOT_CONNECTED,
-	SPEC::IS_DIGRAPH_CONNECTED,
-	SPEC::IS_DIGRAPH_NOT_CONNECTED,
-
-	SPEC::CONNECTED_COMPONENTS,
-	SPEC::DIGRAPH_WEAKLY_CONNECTED_COMPONENTS,
-
-	SPEC::IS_DIGRAPH_STRONGLY_CONNECTED,
-	SPEC::IS_DIGRAPH_WEAKLY_CONNECTED,
-
-	SPEC::DIGRAPH_STRONGLY_CONNECTED_COMPONENTS,
+	SPEC::T11_NO_BIPARTITE,
+	SPEC::T11_BIPARTITE,
+	SPEC::T11_MAXIMUM_MATCHING
 };
-
 #endif 
 
 
@@ -385,7 +371,7 @@ struct Edge
 };
 
 // ребро с пропускной способностью
-struct EdgeBandwidth:
+struct EdgeBandwidth :
 	public Edge
 {
 	Weight m_bandwidth;	// пропускная способность

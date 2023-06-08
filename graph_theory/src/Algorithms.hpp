@@ -1387,8 +1387,8 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		// создаем матрицу остаточной пропускной способности
 		_bandwidth = std::make_shared<VertexMatrix>(_graph->adjacency_matrix());
 
-		// ищем источник и сток
-		FindSourceAndSink(_graph, _source, _sink);
+		//// ищем источник и сток
+		//FindSourceAndSink(_graph, _source, _sink);
 
 		// вектор восстановления дополняющей цепи
 		VertexArr parent(_graph->adjacency_matrix().size(), -1);
@@ -1420,6 +1420,98 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 
 		return max_flow;
 	}
+
+	// проверка двудольности графа 
+	// через поиск в глубину для каждой вершины графа
+	inline bool DFSBipartite(
+		const S_PTR(Graph)& _graph,				// граф
+		const U_PTR(VertexArr)& _marked_vert,	// массив маркированный вершин
+		const int& _start_vert,					// начальная вершина 
+		const int& _numb_of_part				// номер доли
+	)
+	{
+		(*_marked_vert)[_start_vert] = _numb_of_part;
+
+		// список ребер инцидентных вершине _start_vert
+		auto lst = _graph->list_of_edges(_start_vert);
+
+		for (auto& el : lst)
+		{
+			// если еще не посещали вершину
+			if ((*_marked_vert)[el.m_to] == 0)
+			{
+				if (!DFSBipartite(_graph, _marked_vert, el.m_to, (_numb_of_part == 1 ? 2 : 1)))
+					return false;
+			}
+			else if ((*_marked_vert)[el.m_to] == _numb_of_part)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	// поиск паросочетаний
+	inline int MaximumMatching(
+		const S_PTR(Graph)& _graph,				// граф
+		const U_PTR(VertexArr)& _marked_vert,	// массив маркированный вершин
+		S_PTR(VertexMatrix)& _bandwidth			// остаточная пропускная способность
+	)
+	{
+		// количество вершин в графе
+		int len = int(_graph->adjacency_matrix().size());
+
+		// индексы источника и стока
+		int source = len;
+		int sink = len + 1;
+
+		// список ребер графа 
+		auto lst = _graph->list_of_edges();
+
+		// добавление ребер источника и стока
+		for (size_t v = 0; v < len; v++)
+		{
+			// добавление ребер от источника ко всем вершинам первой доли
+			if ((*_marked_vert)[v] == 1)
+			{
+				lst.push_back({ source, int(v), 1 });
+			}
+
+			// добавление ребер от всех вершин второй доли к стоку
+			if ((*_marked_vert)[v] == 2)
+			{
+				lst.push_back({ int(v), sink, 1 });
+			}
+		}
+
+		// граф с новым списком ребер
+		S_PTR(Graph) web(new Graph(lst));
+
+		// остаточная пропускная способность, 
+		// после использования Форда-Фалкерсона
+		_bandwidth = nullptr;
+
+		auto matr = web->adjacency_matrix();
+
+		// удаляем ребра из второй доли графа в первую
+		for (size_t i = 0; i < len; i++)
+		{
+			for (size_t j = 0; j < len; j++)
+			{
+				if ((*_marked_vert)[i] == 2 && (*_marked_vert)[j] == 1)
+				{
+					matr[i][j] = 0;
+				}
+			}
+		}
+		web.reset(new Graph(matr));
+		// в данном случае, максимальный поток
+		// будет являтся максимальным количеством ребер 
+		// в паросочетании
+		int answ = FordFulkerson(web, _bandwidth, source, sink);
+		return answ;
+	}
+
 }
 
 #endif // !ALGORITHMS_HPP
