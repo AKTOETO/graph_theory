@@ -135,6 +135,8 @@
   <ItemGroup>
     <ClCompile Include="src\Cell.cpp" />
     <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\task10\PresetGraphManT10.cpp" />
+    <ClCompile Include="src\task10\PresetScriptManT10.cpp" />
     <ClCompile Include="src\task6\PresetScriptManT6.cpp" />
     <ClCompile Include="src\task6\PresetGraphManT6.cpp" />
     <ClCompile Include="src\task5\PresetScriptManT5.cpp" />
@@ -169,6 +171,8 @@
   <ItemGroup>
     <ClInclude Include="src\Cell.h" />
     <ClInclude Include="src\Map.h" />
+    <ClInclude Include="src\task10\PresetGraphManT10.h" />
+    <ClInclude Include="src\task10\PresetScriptManT10.h" />
     <ClInclude Include="src\task6\PresetScriptManT6.h" />
     <ClInclude Include="src\task6\PresetGraphManT6.h" />
     <ClInclude Include="src\task5\PresetScriptManT5.h" />

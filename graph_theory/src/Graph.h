@@ -108,6 +108,13 @@ public:
 	EdgeList list_of_edges(Vertex _v) const;
 
 	/// <summary>
+	/// Ребра графа, входящие в вершину _v
+	/// </summary>
+	/// <param name="_v"> - исходная вершина</param>
+	/// <returns> - список ребер</returns>
+	EdgeList list_of_edges_to(Vertex _v) const;
+
+	/// <summary>
 	/// Возврат true, если граф ориентированный,
 	/// иначе - false
 	/// </summary>

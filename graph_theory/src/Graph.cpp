@@ -368,6 +368,21 @@ EdgeList Graph::list_of_edges(Vertex _v) const
 	return out;
 }
 
+EdgeList Graph::list_of_edges_to(Vertex _v) const
+{
+	EdgeList out;
+
+	for (int i = 0; i < m_adjacency_matrix.size(); i++)
+	{
+		if (is_edge(i, _v))
+		{
+			out.push_back({ i, _v,(weight(i, _v) == NULLW ? 0 : weight(i, _v)) });
+		}
+	}
+
+	return out;
+}
+
 // ориентирован ли граф
 bool Graph::is_directed() const
 {
