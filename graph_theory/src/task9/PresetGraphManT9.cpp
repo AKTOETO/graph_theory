@@ -71,6 +71,11 @@ bool PresetGraphManT9::CalculateAntColony()
 }
 
 
+const U_PTR(EdgeList)& PresetGraphManT9::GetMinHamiltonCycle() const
+{
+	// TODO: вставьте здесь оператор return
+}
+
 const Weight& PresetGraphManT9::GetHamiltonCyclesLength() const
 {
 	// TODO: вставьте здесь оператор return

@@ -5,6 +5,56 @@
 
 namespace ALGO
 {
+	// поиск кратчайших путей Флойдом-Уоршелом
+	inline VertexMatrix FloydWarshal(
+		const VertexMatrix& _adjacency_matrix
+	)
+	{
+		// матрица кратчайших расстояний
+		VertexMatrix shortest_distances(
+			_adjacency_matrix.size(),
+			VertexArr(_adjacency_matrix.size())
+		);
+
+		// копирование значений матрицы смежности в матрицу расстояний
+		for (int i = 0; i < _adjacency_matrix.size(); i++)
+		{
+			for (int j = 0; j < _adjacency_matrix.size(); j++)
+			{
+				// если это не элемент главной диагонали
+				if (i != j)
+				{
+					// если ребра нет, пишем на его месте бесконечность ,
+					// иначе саму длину ребра
+					(shortest_distances)[i][j] =
+						_adjacency_matrix[i][j] != 0 ? _adjacency_matrix[i][j] : INF;
+				}
+				else
+				{
+					// пишем 0 на главной диагонали
+					(shortest_distances)[i][j] = 0;
+				}
+			}
+		}
+
+		// алгоритм Флойда-Уоршелла получения матрицы кратчайших расстояний
+		for (int k = 0; k < shortest_distances.size(); ++k)
+		{
+			for (int i = 0; i < shortest_distances.size(); ++i)
+			{
+				for (int j = 0; j < shortest_distances.size(); ++j)
+				{
+					// если дистанция ikj короче, чем ij, то запоминаем эту дистанцию
+					if (
+						(shortest_distances)[i][j] >
+						(shortest_distances)[i][k] + (shortest_distances)[k][j]
+						)
+						(shortest_distances)[i][j] = (shortest_distances)[i][k] + (shortest_distances)[k][j];
+				}
+			}
+		}
+	}
+
 	// создание соотнесенного графа
 	inline Graph CorrelatedGraph(
 		const S_PTR(Graph)& _graph	// обычный граф
@@ -1061,6 +1111,182 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 #undef СCY
 #undef SX
 #undef SY
+
+	};
+
+	// минимум в строке
+	inline Weight RowMin(
+		const VertexMatrix& _matr,
+		int _row_num
+	)
+	{
+		Weight min_row = INF;
+		for (int j = 0; j < _matr.size(); j++)
+		{
+			min_row = std::min(min_row, _matr[j][_row_num]);
+		}
+		return min_row;
+	}
+
+	// минимум с столбце
+	inline Weight ColumnMin(
+		const VertexMatrix& _matr,
+		int _column_num
+	)
+	{
+		Weight min_column = INF;
+		for (int j = 0; j < _matr.size(); j++)
+		{
+			min_column = std::min(min_column, _matr[_column_num][j]);
+		}
+		return min_column;
+	}
+
+	// получение минимума в строках
+	inline WeightVector RowsMin(
+		const VertexMatrix& _matr
+	)
+	{
+		VertexArr min_row(_matr.size(), INF);
+		for (int i = 0; i < _matr.size(); i++)
+		{
+			min_row[i] = RowMin(_matr, i);
+		}
+	}
+
+	// получение минимума в столбцах
+	inline WeightVector ColumnsMin(
+		const VertexMatrix& _matr
+	)
+	{
+		VertexArr min_columns(_matr.size(), INF);
+		for (int i = 0; i < _matr.size(); i++)
+		{
+			min_columns[i] = ColumnMin(_matr, i);
+		}
+	}
+
+	// метод ветвей и границ
+	inline EdgeList BranchAndBounds(
+		S_PTR(Graph) _graph
+	)
+	{
+		// количество вершин
+		int num_of_vert = _graph->adjacency_matrix().size();
+
+		// получение матрицы кратчайших расстояний
+		VertexMatrix shortest_matr = FloydWarshal(_graph->adjacency_matrix());
+
+		// минимумы по строкам
+		VertexArr min_row = RowsMin(_graph->adjacency_matrix());		
+
+		// редукция строк
+		for (int i = 0; i < num_of_vert; i++)
+		{
+			for (int j = 0; j < num_of_vert; j++)
+			{
+				if (i != j)
+					shortest_matr[j][i] -= min_row[i];
+			}
+		}
+
+		// минимумы по столбцам
+		VertexArr min_column = ColumnsMin(_graph->adjacency_matrix());
+
+		// редукция столбцов
+		for (int i = 0; i < num_of_vert; i++)
+		{
+			for (int j = 0; j < num_of_vert; j++)
+			{
+				if (i != j)
+					shortest_matr[i][j] -= min_column[i];
+			}
+		}
+
+		// нахождение нижней границы
+		Weight H0 =
+			std::accumulate(min_row.begin(), min_row.end(), 0) +
+			std::accumulate(min_column.begin(), min_column.end(), 0);
+
+		// оценка нулей
+
+		// матрица оценки нулей
+		WeightMatrix null_matrix(num_of_vert, VertexArr(num_of_vert, 0));
+
+		// минимум по столбцам
+		VertexArr edited_min_col = ColumnsMin(_graph->adjacency_matrix());
+
+		// минимум по строкам
+		VertexArr edited_min_row = RowsMin(_graph->adjacency_matrix());
+
+		// ищем минимум в нулевых ячейках
+		for (int i = 0; i < num_of_vert; i++)
+		{
+			for (int j = 0; j < num_of_vert; j++)
+			{
+				if (_graph->adjacency_matrix()[i][j] == 0)
+				{
+					null_matrix[i][j] = edited_min_col[i] + edited_min_row[j];
+				}
+			}
+		}
+
+		// нулевая клетка с максимальным смещением
+		Cell max_shift;
+		for (int i = 0; i < num_of_vert; i++)
+		{
+			for (int j = 0; j < num_of_vert; j++)
+			{
+				if (_graph->adjacency_matrix()[i][j] == 0)
+				{
+					if (null_matrix[i][j] > null_matrix[max_shift.GetX()][max_shift.GetY()])
+					{
+						max_shift = Cell(i, j);
+					}
+				}
+			}
+		}
+
+		// уменьшенная матрица с длинным путем
+		VertexMatrix shortest_matr_with_long_way = shortest_matr;
+
+		// убираем этот путь и обратный путь
+		shortest_matr_with_long_way[max_shift.GetX()][max_shift.GetY()] =
+			shortest_matr_with_long_way[max_shift.GetY()][max_shift.GetX()] =
+			INF;
+
+		// убираем строки и столбцы, на пересечении которых находится
+		// ячейка max_shift
+		for (int i = 0; i < num_of_vert; i++)
+			shortest_matr_with_long_way[i][max_shift.GetY()] = INF;
+
+		for (int i = 0; i < num_of_vert; i++)
+			shortest_matr_with_long_way[max_shift.GetX()][i] = INF;
+
+		// вычисление нижней границы с учетом длинного пути
+		// минимум по столбцам
+		VertexArr edited_min_col_with_long_way = ColumnsMin(shortest_matr_with_long_way);
+
+		// минимум по строкам
+		VertexArr edited_min_row_with_long_way = RowsMin(shortest_matr_with_long_way);
+
+		// нахождение нижней границы
+		Weight H1 = H0 + 
+			std::accumulate(
+				edited_min_row_with_long_way.begin(),
+				edited_min_row_with_long_way.end(), 0
+			) +
+			std::accumulate(
+				edited_min_col_with_long_way.begin(),
+				edited_min_col_with_long_way.end(), 0
+			);
+
+		// нижняя граница для второй ветви
+		Weight H11 = H1 + null_matrix[max_shift.GetX()][max_shift.GetY()];
+
+		// TODO: Это все зацикленно должно быть.......
+		// ЕЩЕ НЕ ВСЕ ПУНКЫ ДОДЕЛАНЫ ....
+
 	}
 }
 
