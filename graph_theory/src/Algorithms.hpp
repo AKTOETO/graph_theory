@@ -1114,6 +1114,9 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 
 	};
 
+	// муравьиная колония
+
+
 	// минимум в строке
 	inline Weight RowMin(
 		const VertexMatrix& _matr,
@@ -1287,6 +1290,8 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		// TODO: Это все зацикленно должно быть.......
 		// ЕЩЕ НЕ ВСЕ ПУНКЫ ДОДЕЛАНЫ ....
 
+
+		return EdgeList();
 	}
 }
 
