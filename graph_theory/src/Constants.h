@@ -6,8 +6,8 @@
 //=========================//
 // КАКОЕ ЗАДАНИЕ ЗАПУСКАТЬ //
 //=========================//
-// T1, T2, T3, T4, T5, T6, T7, T8, T9
-#define T7
+// T1, T2, T3, T4, T5, T6, T7, T8, T9 - не сделал, T10, T11
+#define T9
 
 //===================//
 // К О Н С Т А Н Т Ы //
@@ -269,6 +269,7 @@ static const Script TASK_SCRIPT = Script
 #elif defined(T9)
 static const Script TASK_SCRIPT = Script
 {
+	SPEC::T9_ANT_COLONY,
 };
 #elif defined(T10)
 
