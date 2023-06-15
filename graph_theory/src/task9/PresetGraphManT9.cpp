@@ -7,8 +7,10 @@ PresetGraphManT9::PresetGraphManT9(
 	const S_PTR(StateVector) _states
 ) :// инициализация всех полей
 	BaseGraphPresetManager(_settings, _graph, _states),
-	m_min_hamilton_cycle(nullptr),
-	m_hamilton_cycles_length(-1)
+	m_min_hamilton_cycle_ant(nullptr),
+	m_hamilton_cycles_length_ant(-1),
+	m_min_hamilton_cycle_bnb(nullptr),
+	m_hamilton_cycles_length_bnb(-1)
 {
 }
 
@@ -71,12 +73,22 @@ bool PresetGraphManT9::CalculateAntColony()
 }
 
 
-const U_PTR(EdgeList)& PresetGraphManT9::GetMinHamiltonCycle() const
+const U_PTR(EdgeList)& PresetGraphManT9::GetMinHamiltonCycleAnt() const
 {
-	// TODO: вставьте здесь оператор return
+	return m_min_hamilton_cycle_ant;
 }
 
-const Weight& PresetGraphManT9::GetHamiltonCyclesLength() const
+const Weight& PresetGraphManT9::GetHamiltonCyclesLengthAnt() const
 {
-	// TODO: вставьте здесь оператор return
+	return m_hamilton_cycles_length_ant;
+}
+
+const U_PTR(EdgeList)& PresetGraphManT9::GetMinHamiltonCycleBnb() const
+{
+	return m_min_hamilton_cycle_bnb;
+}
+
+const Weight& PresetGraphManT9::GetHamiltonCyclesLengthBnb() const
+{
+	return m_hamilton_cycles_length_bnb;
 }

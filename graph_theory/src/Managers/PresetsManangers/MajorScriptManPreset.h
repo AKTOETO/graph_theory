@@ -21,6 +21,7 @@ class MajorScriptManPreset:
 	public PresetScriptManT5,
 	public PresetScriptManT6,
 	public PresetScriptManT7,
+	public PresetScriptManT8,
 	public PresetScriptManT9
 {
 protected:

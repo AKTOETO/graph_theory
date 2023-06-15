@@ -1115,7 +1115,25 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 	};
 
 	// муравьиная колония
+	inline Weight AntAlgorithm(
+		const S_PTR(Graph)& _graph,	// граф
+		VertexArr& _min_cycle,		// минимальынй цикл
+		int _iter_numb				// количество итераций
+	)
+	{
+		//================================//
+		// Задание изначальных параметров //
+		//================================//
+		const float alpha = 2;	// влияние феромона на выбор следующего ребра
+		const float beta = 1;	// влияние близости на выбор следующего ребра
+		const float E = 1;		// изменение влияния близости на выбор следующего ребра
+		const float p = 0.2;	// коэффициент испарения
+		const float Q = 1;		//
 
+
+
+
+	}
 
 	// минимум в строке
 	inline Weight RowMin(

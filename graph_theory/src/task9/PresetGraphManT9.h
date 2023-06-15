@@ -8,11 +8,19 @@ class PresetGraphManT9 :
 {
 protected:
 
+	// муравьиный алгоритм
 	// минимальный гамильтонов цикл
-	U_PTR(EdgeList) m_min_hamilton_cycle;
+	U_PTR(EdgeList) m_min_hamilton_cycle_ant;
 
 	// длина цикла
-	Weight m_hamilton_cycles_length;
+	Weight m_hamilton_cycles_length_ant;
+
+	// ветви и границы
+	// минимальный гамильтонов цикл
+	U_PTR(EdgeList) m_min_hamilton_cycle_bnb;
+
+	// длина цикла
+	Weight m_hamilton_cycles_length_bnb;
 
 public:
 	// конструктор и деструктор
@@ -40,11 +48,19 @@ public:
 	//            GET МЕТОДЫ            //
 	//==================================//
 
+	// муравьиный алгоритм
 	// получение: Кратчайший цикл
-	const U_PTR(EdgeList)& GetMinHamiltonCycle() const;
+	const U_PTR(EdgeList)& GetMinHamiltonCycleAnt() const;
 
 	// получение: Длина кратчайшего пути
-	const Weight& GetHamiltonCyclesLength() const;
+	const Weight& GetHamiltonCyclesLengthAnt() const;
+
+	// ветви и границы
+	// получение: Кратчайший цикл
+	const U_PTR(EdgeList)& GetMinHamiltonCycleBnb() const;
+
+	// получение: Длина кратчайшего пути
+	const Weight& GetHamiltonCyclesLengthBnb() const;
 };
 
 #endif // !PRESETGRAPHMANT9_h

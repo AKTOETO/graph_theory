@@ -1,27 +1,24 @@
-﻿#ifndef PRESETSCRIPTMANT8_H
-#define PRESETSCRIPTMANT8_H
+﻿#ifndef PRESETSCRIPTMANT9_H
+#define PRESETSCRIPTMANT9_H
 
 #include "../base/BasePresetScriptMan.hpp"
 
-class PresetScriptManT8 :
+class PresetScriptManT9 :
     virtual public BaseScriptPresetManager
 {
-protected:
-	Params m_heur_names;
-
 public:
 
-	PresetScriptManT8(const S_PTR(GraphManager)& _graph_man);
+	PresetScriptManT9(const S_PTR(GraphManager)& _graph_man);
 
 	//===================================//
 	// МЕТОДЫ ПЕЧАТИ ХАРАКТЕРИСТИК ГРАФА //
 	//===================================//
 
-	// печать: Кратчайший путь
-	void PrintPath() const;
+	// печать: Муравьиная колонпя
+	void PrintAntColony() const;
 
-	// печать: Длина пути
-	void PrintPathLength() const;
+	// печать: Ветви и границы
+	void PrintBranchAndBounds() const;
 
 };
 
