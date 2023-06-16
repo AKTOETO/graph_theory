@@ -1177,7 +1177,7 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 
 		// определение параметров алгоритма
 		const int numAnts = nvert;			// количество муравьев
-		const int numIterations = 39;		// количество итераций
+		const int numIterations = numAnts*1.5;		// количество итераций
 		const float start_pherom = 1.0f;		// начальный феромон
 		const float alpha = 2.0f;				// влияние феромона на выбор ребра
 		const float beta = 1.0f;			// влияние веса ребра на его выбор
