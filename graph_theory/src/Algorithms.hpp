@@ -1166,7 +1166,7 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		auto edge_lst = _graph->list_of_edges();	// список ребер		
 		const int nvert = (int)adj_mat.size();		// количество вершин
 
-		std::cout << "nvert = " << nvert<<"\n";
+		std::cout << "nvert = " << nvert << "\n";
 
 		// получение ребра с максимальной длиной
 		Edge max_edge =
@@ -1180,13 +1180,12 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		// определение параметров алгоритма
 		const int numAnts = nvert;			// количество муравьев
 		const int numIterations = 20;		// количество итераций
-		const double alpha = 2;				// влияние феромона на выбор ребра
-		const double beta = 1;				// влияние веса ребра на его выбор
-		const double rho = 0.2;				// коэффициент испарения
-		const double Q = 1;//max_edge.m_weight / 2;	// для обновления феромонного следа
-		const double Qp = 1;//max_edge.m_weight * 2;// изменение веса ребра 
-		const double start_pherom = 1.0;	// начальный феромон
-		const double infinum_pherom = 0.001; // минимальоне значение феромона
+		const double start_pherom = 1;		// начальный феромон
+		const double alpha = 1;				// влияние феромона на выбор ребра
+		const double beta = 3;			// влияние веса ребра на его выбор
+		const double rho = 0.2;			// коэффициент испарения
+		const double Qpher = nvert*25;//max_edge.m_weight / 15.0;	// интенсивность отложения феромона
+		const double Qlen = 1;//max_edge.m_weight * 2;// изменение веса ребра 
 
 		// муравьиная колония
 		AntColony ants(numAnts, Ant(nvert));
@@ -1203,28 +1202,26 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 			// каждый муравей проходит весь цикл
 			for (int i = 0; i < numAnts; ++i)
 			{
-				Ant& ant = ants[i];
-
 				// начальная точка
 				int start = (i + (_start_vert == -1 ? 0 : _start_vert)) % nvert;
 
 				//std::cout << "start: " << start << "\n";
 				// помечаем начальную точку пройденной
-				ant.visited[start] = true;
-				ant.tour.push_back(start);
+				ants[i].visited[start] = true;
+				ants[i].tour.push_back(start);
 
 				// пока путь муравья не включает в себя все вершины
-				while (ant.tour.size() != nvert)
+				while (ants[i].tour.size() != nvert)
 				{
 					// сумма желаний перейти в другие города
 					double total = 0;
 
 					for (int j = 0; j < nvert; ++j)
 					{
-						if (!ant.visited[j])
+						if (!ants[i].visited[j])
 						{
-							total += pow(tau[ant.tour.back()][j], alpha)
-								* pow(Qp / adj_mat[ant.tour.back()][j], beta);
+							total += pow(tau[ants[i].tour.back()][j], alpha)
+								* pow(Qlen / adj_mat[ants[i].tour.back()][j], beta);
 						}
 					}
 
@@ -1237,22 +1234,22 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 					{
 						++next;
 						//std::cout << next << " ";
-						if (!ant.visited[next])
+						if (!ants[i].visited[next])
 						{
 							// вычитаем желание перейти в город next
-							r -= pow(tau[ant.tour.back()][next], alpha)
-								* pow(Qp / adj_mat[ant.tour.back()][next], beta);
+							r -= pow(tau[ants[i].tour.back()][next], alpha)
+								* pow(Qlen / adj_mat[ants[i].tour.back()][next], beta);
 						}
 					}
 					//std::cout << std::endl;
 
 					// добавление найденной вершины в путь
-					ant.tour.push_back(next);
-					ant.visited[next] = true;
+					ants[i].tour.push_back(next);
+					ants[i].visited[next] = true;
 				}
 
 				// расчет длины пути муравья
-				СalculateRouteLength(ant, edge_lst);
+				СalculateRouteLength(ants[i], edge_lst);
 			}
 
 			// обновление матрицы феромонов
@@ -1260,8 +1257,7 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 			{
 				for (int j = 0; j < nvert; ++j)
 				{
-					if(tau[i][j] > infinum_pherom)
-						tau[i][j] *= (1 - rho);
+					tau[i][j] *= (1 - rho);
 
 					for (int l = 0; l < numAnts; ++l)
 					{
@@ -1270,11 +1266,13 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 						// в пути муравья ants[l]
 						if (IsEdgeInThePath(ants[l], i, j))
 						{
-							tau[i][j] += (Q / ants[l].length);
+							tau[i][j] += (Qpher / ants[l].length);
 
 							// если граф неориентированный
-							if(!_graph->is_directed())
-								tau[j][i] += (Q / ants[l].length);
+							if (!_graph->is_directed())
+							{
+								tau[j][i] += (Qpher / ants[l].length);
+							}
 						}
 					}
 				}
