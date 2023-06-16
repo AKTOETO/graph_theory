@@ -1176,18 +1176,17 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		);
 
 		// определение параметров алгоритма
-		const int numAnts = nvert;			// количество муравьев
+		const int numAnts = nvert;					// количество муравьев
 		const int numIterations = numAnts*1.5;		// количество итераций
-		const float start_pherom = 1.0f;		// начальный феромон
-		const float alpha = 2.0f;				// влияние феромона на выбор ребра
-		const float beta = 1.0f;			// влияние веса ребра на его выбор
-		const float rho = 0.2f;			// коэффициент испарения
+		const float start_pherom = 1.0f;			// начальный феромон
+		const float alpha = 2.0f;					// влияние феромона на выбор ребра
+		const float beta = 1.0f;					// влияние веса ребра на его выбор
+		const float rho = 0.2f;						// коэффициент испарения
 		const float Qpher = float(max_edge.m_weight / 2);	// интенсивность отложения феромона
-		const float Qlen = float(max_edge.m_weight * 2);// изменение веса ребра 
-		const float infinum_pheromone = 0.001f;//нижняя граница феромона
+		const float Qlen = float(max_edge.m_weight * 2);	// изменение веса ребра 
+		const float infinum_pheromone = 0.001f;		//нижняя граница феромона
 
 		// муравьиная колония
-		//AntColony ants(numAnts, Ant(nvert));
 		U_PTR(AntColony) ants = nullptr;
 
 		// матрица феромонов (изначально все феромоны имеют значение start_pherom)
@@ -1197,9 +1196,7 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		for (int k = 0; k < numIterations; ++k) {
 
 			// создание муравьев
-			//ants.assign(ants.size(), Ant(nvert));
 			ants.reset(new AntColony(numAnts, Ant(nvert)));
-			//ants = std::make_unique<AntColony>(numAnts, Ant(nvert));
 
 			// каждый муравей проходит весь цикл
 			for (int i = 0; i < numAnts; ++i)
