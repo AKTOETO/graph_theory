@@ -33,6 +33,10 @@ CommandManager::CommandManager(int argc, char* _keys[])
 		{"-m", &CommandManager::SetMapFilepath},
 		{"-nn", &CommandManager::SetSourceCell},
 		{"-dd", &CommandManager::SetDestinationCell},
+
+		// Task9
+		{"-aa", &CommandManager::SetAntColony},
+		{"-bb", &CommandManager::SetBranchAndBounds},
 	};
 
 	// использование сценария программы по умолчанию
@@ -155,6 +159,14 @@ void CommandManager::CheckKeys()
 		// Task 8
 		// проверка на наличие ключей -m -nn -dd
 		if (!IsCorrectNumberOfMNNDD()) ERROR("Неверное количество ключей: -m -nn -dd. Должны быть все!");
+#endif
+
+#if defined(T9)
+		// Task 9
+		// проверка на наличие ключей -aa -bb
+		if (!IsCorrectNumberOfAABB()) ERROR("Неверное количество ключей: -aa -bb. Должен быть хотя бы один!");
+		// проверка на наличиче ключа -n
+		if (!IsCorrectNumberOfN()) ERROR("Неверное количество ключей: -n.");
 
 #endif
 
@@ -307,6 +319,17 @@ bool CommandManager::IsCorrectNumberOfMNNDD()
 				return _str == "-nn";
 			}) != end(m_param)
 			);
+}
+
+bool CommandManager::IsCorrectNumberOfAABB()
+{
+	// если есть любой ключ из -a -b,
+	// то все нормально
+	return std::find_if(
+		begin(m_param), end(m_param), [](const std::string& _str)
+		{
+			return _str == "-aa" || _str == "-bb";
+		}) != end(m_param);
 }
 
 void CommandManager::ConverCharArrayToStrVec(int argc, char* _keys[])
@@ -497,5 +520,17 @@ void CommandManager::SetDestinationCell(Params _data)
 		std::to_string(m_sys_settings.m_end.GetY()) +
 		"]"
 	);
+}
+
+void CommandManager::SetAntColony(Params _data)
+{
+	INFO("Установка алгоритма Муравьиной колонии");
+	m_sys_settings.m_script.push_back(SPEC::T9_ANT_COLONY);
+}
+
+void CommandManager::SetBranchAndBounds(Params _data)
+{
+	INFO("Установка алгоритма Ветвей и границ");
+	m_sys_settings.m_script.push_back(SPEC::T9_BRANCH_AND_BOUND);
 }
 

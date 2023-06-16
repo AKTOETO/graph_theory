@@ -70,6 +70,9 @@ public:
 	// Task8 проверка наличия ключей -m -nn -dd
 	bool IsCorrectNumberOfMNNDD();
 
+	// Task9 проверка наличия ключей -a или -b
+	bool IsCorrectNumberOfAABB();
+
 	////////////////////////////////////////////
 	// функции, выполняющие введенные команды
 	////////////////////////////////////////////
@@ -152,6 +155,15 @@ public:
 
 	// -dd конечная вершина x y
 	void SetDestinationCell(Params _data);
+
+	// TASK 9
+	// Обработка ключей
+
+	// -a метод муравьиной колонии
+	void SetAntColony(Params _data);
+
+	// -b метод ветвей и границ
+	void SetBranchAndBounds(Params _data);
 
 };
 

@@ -269,7 +269,6 @@ static const Script TASK_SCRIPT = Script
 #elif defined(T9)
 static const Script TASK_SCRIPT = Script
 {
-	//SPEC::T9_ANT_COLONY,
 };
 #elif defined(T10)
 
@@ -425,6 +424,32 @@ struct SystemSetting
 		m_to(0)
 	{}
 };
+
+//==================//
+//	М У Р А В Е Й	//
+//==================//
+
+struct Ant
+{
+	std::vector<int> tour;	// пройденный путь
+	StateVector visited;	// посещенные вершины
+	double length;	// длина пути
+	Ant(int _n) :tour(), visited(StateVector(_n, 0)), length(0)
+	{};
+};
+
+// муравьиная колония
+using AntColony = std::vector<Ant>;
+
+// Феромон
+using Pheromone = double;
+
+// массив феромонов
+using PheromoneArray = std::vector<double>;
+
+// феромонная матрица
+using PheromoneMatrix = std::vector<PheromoneArray>;
+
 
 //==================//
 //	ОСТОВНОЕ ДЕРЕВО	//

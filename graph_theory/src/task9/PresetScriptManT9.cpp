@@ -10,6 +10,10 @@ PresetScriptManT9::PresetScriptManT9(
 
 void PresetScriptManT9::PrintAntColony() const
 {
+	std::cout << "Hamiltonian cycle has length "
+		<< G_MAN_PRES->GetHamiltonCyclesLengthAnt()
+		<< ".\n";
+	PrintEdgeListVertically(*G_MAN_PRES->GetMinHamiltonCycleAnt(), " - ", 1, " : ");
 }
 
 void PresetScriptManT9::PrintBranchAndBounds() const

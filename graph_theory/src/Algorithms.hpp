@@ -1112,28 +1112,232 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 #undef SX
 #undef SY
 
-	};
+	}
+
+	// расчет длины пути муравья
+	inline void СalculateRouteLength(Ant& _ant, const EdgeList& _edges)
+	{
+		_ant.tour.push_back(_ant.tour[0]);
+		_ant.length = 0;
+		for (unsigned int i = 0; i < _ant.tour.size() - 1; ++i) {
+
+			// начальная и конечная точка ребра
+			int start = _ant.tour[i], end = _ant.tour[i + 1];
+
+			// поиск и учет веса подходящего ребра
+			for (auto& edge : _edges)
+			{
+				if (edge.m_from == start && edge.m_to == end)
+				{
+					_ant.length += edge.m_weight;
+					break;
+				}
+			}
+		}
+	}
+
+	// есть ли ребро uv в пути муравья _ant
+	inline bool IsEdgeInThePath(const Ant& _ant, int u, int v)
+	{
+		// итератор на вершину u в пути муравья
+		auto pos = find(_ant.tour.begin(), _ant.tour.end(), u);
+
+		// если вершина u есть в списке 
+		// и рядом с ней стоит вершина v
+		// (то есть, есть ребро uv)
+		// возвращаем true
+		if (pos != _ant.tour.end()
+			&& ((pos != _ant.tour.begin() && *(pos - 1) == v) ||
+				((pos + 1) != _ant.tour.end() && *(pos + 1) == v))
+			) return true;
+
+		// иначе false
+		return false;
+	}
 
 	// муравьиная колония
-	inline Weight AntAlgorithm(
+	inline AntColony AntColonyOptimization(
 		const S_PTR(Graph)& _graph,	// граф
-		VertexArr& _min_cycle,		// минимальынй цикл
-		int _iter_numb				// количество итераций
+		Vertex _start_vert = -1		// Начальная вершина
 	)
 	{
-		//================================//
-		// Задание изначальных параметров //
-		//================================//
-		const float alpha = 2;	// влияние феромона на выбор следующего ребра
-		const float beta = 1;	// влияние близости на выбор следующего ребра
-		const float E = 1;		// изменение влияния близости на выбор следующего ребра
-		const float p = 0.2;	// коэффициент испарения
-		const float Q = 1;		//
+		// характеристики графа
+		auto adj_mat = _graph->adjacency_matrix();	// матрица смежности		
+		auto edge_lst = _graph->list_of_edges();	// список ребер		
+		const int nvert = (int)adj_mat.size();		// количество вершин
 
+		std::cout << "nvert = " << nvert<<"\n";
 
+		// получение ребра с максимальной длиной
+		Edge max_edge =
+			*max_element(edge_lst.begin(), edge_lst.end(),
+				[](const Edge& el, const Edge& el2)
+				{
+					return el.m_weight < el2.m_weight;
+				}
+		);
 
+		// определение параметров алгоритма
+		const int numAnts = nvert;			// количество муравьев
+		const int numIterations = 20;		// количество итераций
+		const double alpha = 2;				// влияние феромона на выбор ребра
+		const double beta = 1;				// влияние веса ребра на его выбор
+		const double rho = 0.2;				// коэффициент испарения
+		const double Q = 1;//max_edge.m_weight / 2;	// для обновления феромонного следа
+		const double Qp = 1;//max_edge.m_weight * 2;// изменение веса ребра 
+		const double start_pherom = 1.0;	// начальный феромон
+		const double infinum_pherom = 0.001; // минимальоне значение феромона
 
+		// муравьиная колония
+		AntColony ants(numAnts, Ant(nvert));
+
+		// матрица феромонов (изначально все феромоны имеют значение start_pherom)
+		PheromoneMatrix tau(nvert, PheromoneArray(nvert, start_pherom));
+
+		// выполнение поиска путей всеми муравьями numIterations раз
+		for (int k = 0; k < numIterations; ++k) {
+
+			// создание муравьев
+			ants.assign(ants.size(), Ant(nvert));
+
+			// каждый муравей проходит весь цикл
+			for (int i = 0; i < numAnts; ++i)
+			{
+				Ant& ant = ants[i];
+
+				// начальная точка
+				int start = (i + (_start_vert == -1 ? 0 : _start_vert)) % nvert;
+
+				//std::cout << "start: " << start << "\n";
+				// помечаем начальную точку пройденной
+				ant.visited[start] = true;
+				ant.tour.push_back(start);
+
+				// пока путь муравья не включает в себя все вершины
+				while (ant.tour.size() != nvert)
+				{
+					// сумма желаний перейти в другие города
+					double total = 0;
+
+					for (int j = 0; j < nvert; ++j)
+					{
+						if (!ant.visited[j])
+						{
+							total += pow(tau[ant.tour.back()][j], alpha)
+								* pow(Qp / adj_mat[ant.tour.back()][j], beta);
+						}
+					}
+
+					// поиск вершины, на которую следует перейти
+					double r = ((double)rand() / RAND_MAX) * total;
+
+					// следующая вершина
+					int next = -1;
+					while (r > 0)
+					{
+						++next;
+						//std::cout << next << " ";
+						if (!ant.visited[next])
+						{
+							// вычитаем желание перейти в город next
+							r -= pow(tau[ant.tour.back()][next], alpha)
+								* pow(Qp / adj_mat[ant.tour.back()][next], beta);
+						}
+					}
+					//std::cout << std::endl;
+
+					// добавление найденной вершины в путь
+					ant.tour.push_back(next);
+					ant.visited[next] = true;
+				}
+
+				// расчет длины пути муравья
+				СalculateRouteLength(ant, edge_lst);
+			}
+
+			// обновление матрицы феромонов
+			for (int i = 0; i < nvert; ++i)
+			{
+				for (int j = 0; j < nvert; ++j)
+				{
+					if(tau[i][j] > infinum_pherom)
+						tau[i][j] *= (1 - rho);
+
+					for (int l = 0; l < numAnts; ++l)
+					{
+
+						// проверка на наличие ребра ij 
+						// в пути муравья ants[l]
+						if (IsEdgeInThePath(ants[l], i, j))
+						{
+							tau[i][j] += (Q / ants[l].length);
+
+							// если граф неориентированный
+							if(!_graph->is_directed())
+								tau[j][i] += (Q / ants[l].length);
+						}
+					}
+				}
+			}
+		}
+
+		// возвращение всех муравьев 
+		return ants;
 	}
+
+	// получение веса ребра
+	inline double GetEdgeWeight(int from, int to, const EdgeList& _edges)
+	{
+		for (auto& edge : _edges)
+			if (edge.m_from == from && edge.m_to == to)
+				return edge.m_weight;
+
+		return -1;
+	}
+
+	// расчет списка ребер муравья
+	inline EdgeList CalcEdgeListPath(Ant& _ant, const EdgeList& _edges)
+	{
+		EdgeList out;
+		for (int i = 0; i < _ant.tour.size() - 1; i++)
+		{
+			out.push_back(
+				Edge({
+					_ant.tour[i],
+					_ant.tour[i + 1],
+					(int)GetEdgeWeight(_ant.tour[i], _ant.tour[i + 1], _edges)
+					})
+			);
+		}
+		return out;
+	}
+
+	// получение списка ребер муравья с наименьшим 
+	// путем и длины пути
+	inline double GetAntsListOfEdges(
+		const S_PTR(Graph)& _graph,	// граф
+		AntColony& _colony,			// колония
+		U_PTR(EdgeList)& _list		// список ребер муравья
+	)
+	{
+		// муравьей с минимальным путем
+		auto min_ant = *min_element(_colony.begin(), _colony.end(),
+			[](const Ant& _ant, const Ant& _ant2)
+			{
+				return _ant.length < _ant2.length;
+			}
+		);
+
+		// выделение памяти под список ребер
+		_list.reset(new EdgeList());
+
+		// расчет списка ребер
+		*_list = CalcEdgeListPath(min_ant, _graph->list_of_edges());
+
+		// возврат длины пути муравья
+		return min_ant.length;
+	}
+
 
 	// минимум в строке
 	inline Weight RowMin(
@@ -1193,13 +1397,13 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 	)
 	{
 		// количество вершин
-		int num_of_vert = _graph->adjacency_matrix().size();
+		int num_of_vert = (int)_graph->adjacency_matrix().size();
 
 		// получение матрицы кратчайших расстояний
 		VertexMatrix shortest_matr = FloydWarshal(_graph->adjacency_matrix());
 
 		// минимумы по строкам
-		VertexArr min_row = RowsMin(_graph->adjacency_matrix());		
+		VertexArr min_row = RowsMin(_graph->adjacency_matrix());
 
 		// редукция строк
 		for (int i = 0; i < num_of_vert; i++)
@@ -1292,7 +1496,7 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		VertexArr edited_min_row_with_long_way = RowsMin(shortest_matr_with_long_way);
 
 		// нахождение нижней границы
-		Weight H1 = H0 + 
+		Weight H1 = H0 +
 			std::accumulate(
 				edited_min_row_with_long_way.begin(),
 				edited_min_row_with_long_way.end(), 0

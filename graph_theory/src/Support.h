@@ -182,6 +182,55 @@ inline void PrintEdgeList(
 	}
 }
 
+// печать списка ребер вертикально
+inline void PrintEdgeListVertically(
+	const EdgeList& _edge_l,	// список ребер
+	std::string _delim = ", ",	// разделитель элементов при печати
+	bool _is_need_weight = 0,	// нужно ли печатать вес ребра
+	std::string _weight_delim = ":"	// разделитель веса
+)
+{
+	auto it = _edge_l.begin();
+	for (; it != _edge_l.end(); it++)
+	{
+		std::cout
+			<< it->m_from + 1
+			<< _delim
+			<< it->m_to + 1;
+
+		if (_is_need_weight)
+			std::cout << _weight_delim
+			<< it->m_weight
+			<<"\n";
+
+		////печать разделителя
+		//if (std::distance(it, _edge_l.end()) > 1)
+		//	std::cout << _delim;
+	}
+}
+
+// Печать всей муравьиной колонии
+inline void PrintFullAntColony(
+	const AntColony& _colony
+)
+{
+	for (auto& ant : _colony)
+	{
+		std::cout << "len: " << ant.length;
+		std::cout << "\npath: ";
+
+		for (auto& el : ant.tour)
+			std::cout << el + 1 << " ";
+
+		//for (auto& el : CalcPath(ant, _edges))
+		//{
+		//	cout << el.start << " - " << el.end << " : (" << el.weight << ")\n";
+		//}
+		std::cout << "\n";
+		std::cout << "\n";
+	}
+}
+
 // печать массива шарниров
 inline void PrintPivotsInConsole(
 	const PivotArr& _vec,

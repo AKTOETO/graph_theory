@@ -43,7 +43,7 @@ bool PresetGraphManT9::CalculateCanCalculateCycle()
 	// проверка условия deg(v) >= n/2
 	for (auto& el : m_degrees)
 	{
-		if (el < m_graph->adjacency_matrix().size())
+		if (el < m_graph->adjacency_matrix().size()/2)
 		{
 			ERROR("Условие гамильтонова цикла deg(v) >= n/2 не выполняется!");
 			return false;
@@ -57,7 +57,7 @@ bool PresetGraphManT9::CalculateBranchAndBounds()
 	// если граф подходит
 	if (CalculateCanCalculateCycle())
 	{
-
+		
 	}
 	return false;
 }
@@ -67,7 +67,16 @@ bool PresetGraphManT9::CalculateAntColony()
 	// если граф подходит
 	if (CalculateCanCalculateCycle())
 	{
+		// колония муравьев
+		AntColony colony = ALGO::AntColonyOptimization(m_graph, m_sys_settings->m_from);
 
+		PrintFullAntColony(colony);
+
+		// получение длины пути муравья и списка ребер
+		m_hamilton_cycles_length_ant =
+			ALGO::GetAntsListOfEdges(m_graph, colony, m_min_hamilton_cycle_ant);
+
+		return true;
 	}
 	return false;
 }
