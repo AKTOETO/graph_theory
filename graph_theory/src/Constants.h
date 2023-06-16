@@ -433,7 +433,7 @@ struct Ant
 {
 	std::vector<int> tour;	// пройденный путь
 	StateVector visited;	// посещенные вершины
-	double length;	// длина пути
+	float length;	// длина пути
 	Ant(int _n) :tour(), visited(StateVector(_n, 0)), length(0)
 	{};
 };
@@ -442,10 +442,10 @@ struct Ant
 using AntColony = std::vector<Ant>;
 
 // Феромон
-using Pheromone = double;
+using Pheromone = float;
 
 // массив феромонов
-using PheromoneArray = std::vector<double>;
+using PheromoneArray = std::vector<float>;
 
 // феромонная матрица
 using PheromoneMatrix = std::vector<PheromoneArray>;

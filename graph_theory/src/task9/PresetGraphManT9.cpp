@@ -70,7 +70,7 @@ bool PresetGraphManT9::CalculateAntColony()
 		// колония муравьев
 		AntColony colony = ALGO::AntColonyOptimization(m_graph, m_sys_settings->m_from);
 
-		PrintFullAntColony(colony);
+		//PrintFullAntColony(colony);
 
 		// получение длины пути муравья и списка ребер
 		m_hamilton_cycles_length_ant =

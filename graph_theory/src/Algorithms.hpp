@@ -1146,10 +1146,8 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		// и рядом с ней стоит вершина v
 		// (то есть, есть ребро uv)
 		// возвращаем true
-		if (pos != _ant.tour.end()
-			&& ((pos != _ant.tour.begin() && *(pos - 1) == v) ||
-				((pos + 1) != _ant.tour.end() && *(pos + 1) == v))
-			) return true;
+		if (pos != _ant.tour.end() && (*(pos + 1) == v))
+			return true;
 
 		// иначе false
 		return false;
@@ -1166,7 +1164,7 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		auto edge_lst = _graph->list_of_edges();	// список ребер		
 		const int nvert = (int)adj_mat.size();		// количество вершин
 
-		std::cout << "nvert = " << nvert << "\n";
+		//std::cout << "nvert = " << nvert << "\n";
 
 		// получение ребра с максимальной длиной
 		Edge max_edge =
@@ -1179,16 +1177,18 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 
 		// определение параметров алгоритма
 		const int numAnts = nvert;			// количество муравьев
-		const int numIterations = 20;		// количество итераций
-		const double start_pherom = 1;		// начальный феромон
-		const double alpha = 1;				// влияние феромона на выбор ребра
-		const double beta = 3;			// влияние веса ребра на его выбор
-		const double rho = 0.2;			// коэффициент испарения
-		const double Qpher = nvert*25;//max_edge.m_weight / 15.0;	// интенсивность отложения феромона
-		const double Qlen = 1;//max_edge.m_weight * 2;// изменение веса ребра 
+		const int numIterations = 39;		// количество итераций
+		const float start_pherom = 1.0f;		// начальный феромон
+		const float alpha = 2.0f;				// влияние феромона на выбор ребра
+		const float beta = 1.0f;			// влияние веса ребра на его выбор
+		const float rho = 0.2f;			// коэффициент испарения
+		const float Qpher = float(max_edge.m_weight / 2);	// интенсивность отложения феромона
+		const float Qlen = float(max_edge.m_weight * 2);// изменение веса ребра 
+		const float infinum_pheromone = 0.001f;//нижняя граница феромона
 
 		// муравьиная колония
-		AntColony ants(numAnts, Ant(nvert));
+		//AntColony ants(numAnts, Ant(nvert));
+		U_PTR(AntColony) ants = nullptr;
 
 		// матрица феромонов (изначально все феромоны имеют значение start_pherom)
 		PheromoneMatrix tau(nvert, PheromoneArray(nvert, start_pherom));
@@ -1197,7 +1197,9 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		for (int k = 0; k < numIterations; ++k) {
 
 			// создание муравьев
-			ants.assign(ants.size(), Ant(nvert));
+			//ants.assign(ants.size(), Ant(nvert));
+			ants.reset(new AntColony(numAnts, Ant(nvert)));
+			//ants = std::make_unique<AntColony>(numAnts, Ant(nvert));
 
 			// каждый муравей проходит весь цикл
 			for (int i = 0; i < numAnts; ++i)
@@ -1207,26 +1209,26 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 
 				//std::cout << "start: " << start << "\n";
 				// помечаем начальную точку пройденной
-				ants[i].visited[start] = true;
-				ants[i].tour.push_back(start);
+				(*ants)[i].visited[start] = true;
+				(*ants)[i].tour.push_back(start);
 
 				// пока путь муравья не включает в себя все вершины
-				while (ants[i].tour.size() != nvert)
+				while ((*ants)[i].tour.size() != nvert)
 				{
 					// сумма желаний перейти в другие города
-					double total = 0;
+					float total = 0;
 
 					for (int j = 0; j < nvert; ++j)
 					{
-						if (!ants[i].visited[j])
+						if (!(*ants)[i].visited[j])
 						{
-							total += pow(tau[ants[i].tour.back()][j], alpha)
-								* pow(Qlen / adj_mat[ants[i].tour.back()][j], beta);
+							total += pow(tau[(*ants)[i].tour.back()][j], alpha)
+								* pow(Qlen / adj_mat[(*ants)[i].tour.back()][j], beta);
 						}
 					}
 
 					// поиск вершины, на которую следует перейти
-					double r = ((double)rand() / RAND_MAX) * total;
+					float r = ((float)rand() / RAND_MAX) * total;
 
 					// следующая вершина
 					int next = -1;
@@ -1234,22 +1236,22 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 					{
 						++next;
 						//std::cout << next << " ";
-						if (!ants[i].visited[next])
+						if (!(*ants)[i].visited[next])
 						{
 							// вычитаем желание перейти в город next
-							r -= pow(tau[ants[i].tour.back()][next], alpha)
-								* pow(Qlen / adj_mat[ants[i].tour.back()][next], beta);
+							r -= pow(tau[(*ants)[i].tour.back()][next], alpha)
+								* pow(Qlen / adj_mat[(*ants)[i].tour.back()][next], beta);
 						}
 					}
 					//std::cout << std::endl;
 
 					// добавление найденной вершины в путь
-					ants[i].tour.push_back(next);
-					ants[i].visited[next] = true;
+					(*ants)[i].tour.push_back(next);
+					(*ants)[i].visited[next] = true;
 				}
 
 				// расчет длины пути муравья
-				СalculateRouteLength(ants[i], edge_lst);
+				СalculateRouteLength((*ants)[i], edge_lst);
 			}
 
 			// обновление матрицы феромонов
@@ -1257,21 +1259,22 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 			{
 				for (int j = 0; j < nvert; ++j)
 				{
-					tau[i][j] *= (1 - rho);
+					// испарение феромона
+					if (tau[i][j] > infinum_pheromone)
+						tau[i][j] *= (1 - rho);
 
 					for (int l = 0; l < numAnts; ++l)
 					{
-
 						// проверка на наличие ребра ij 
 						// в пути муравья ants[l]
-						if (IsEdgeInThePath(ants[l], i, j))
+						if (IsEdgeInThePath((*ants)[l], i, j))
 						{
-							tau[i][j] += (Qpher / ants[l].length);
+							tau[i][j] += (Qpher / (*ants)[l].length);
 
 							// если граф неориентированный
 							if (!_graph->is_directed())
 							{
-								tau[j][i] += (Qpher / ants[l].length);
+								tau[j][i] += (Qpher / (*ants)[l].length);
 							}
 						}
 					}
@@ -1280,7 +1283,7 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 		}
 
 		// возвращение всех муравьев 
-		return ants;
+		return (*ants);
 	}
 
 	// получение веса ребра
@@ -1312,7 +1315,7 @@ _graph->adjacency_matrix()[(*_parent)[curr_vert]][curr_vert]
 
 	// получение списка ребер муравья с наименьшим 
 	// путем и длины пути
-	inline double GetAntsListOfEdges(
+	inline float GetAntsListOfEdges(
 		const S_PTR(Graph)& _graph,	// граф
 		AntColony& _colony,			// колония
 		U_PTR(EdgeList)& _list		// список ребер муравья
