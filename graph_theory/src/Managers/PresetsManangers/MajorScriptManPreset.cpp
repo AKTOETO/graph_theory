@@ -79,10 +79,6 @@ MajorScriptManPreset::MajorScriptManPreset(
 		{SPEC::T8_PATH,				&PresetScriptManT8::PrintPath},
 		{SPEC::T8_PATH_LENGTH,		&PresetScriptManT8::PrintPathLength},
 
-		// Task 9
-		{SPEC::T9_ANT_COLONY,				&PresetScriptManT9::PrintAntColonyPath},
-		{SPEC::T9_BRANCH_AND_BOUND,			&PresetScriptManT9::PrintBranchAndBoundsPath},
-
 		// Task 10
 		{SPEC::T10_FORD_FULKERSON,	&PresetScriptManT10::PrintFlow},
 		{SPEC::T10_MAXIMUM_FLOW,	&PresetScriptManT10::PrintFlowLength},
