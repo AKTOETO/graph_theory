@@ -50,7 +50,8 @@ inline void PrintInfinity(
 
 	// вывод символа бесконечности
 	std::cout << std::fixed
-		<< std::setw(_setwidth + INF_PRINT_WIDTH)
+		<< std::setw(static_cast<std::streamsize>(_setwidth)
+			+ INF_PRINT_WIDTH)
 		<< std::setfill(' ') << u8"∞";
 
 	// смена локали на русскую
